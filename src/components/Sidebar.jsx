@@ -10,10 +10,6 @@ const Sidebar = () => {
       </Heading>
       <VStack align="stretch" spacing="3">
         <Menu>
-          <MenuButton as={Link}>Main Sections</MenuButton>
-          <MenuList></MenuList>
-        </Menu>
-        <Menu>
           <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
             <MenuItem as={RouterLink} to="/unit-names">
