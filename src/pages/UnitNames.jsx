@@ -3,6 +3,7 @@ import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, H
 
 const UnitNames = () => {
   const [unitNames, setUnitNames] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [newUnit, setNewUnit] = useState({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
 
   const handleNewUnitChange = (e) => {
@@ -21,6 +22,9 @@ const UnitNames = () => {
   return (
     <Box p={4}>
       <Heading mb={6}>Unit Names</Heading>
+      <Box mb={6}>
+        <Input placeholder="Search by code, name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+      </Box>
       <HStack
         spacing={4}
         as="form"
@@ -75,105 +79,107 @@ const UnitNames = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {unitNames.map((unit, index) => {
-              const handleEditUnit = (indexToEdit) => {
-                setUnitNames(
-                  unitNames.map((u, idx) => {
-                    if (idx === indexToEdit) {
-                      return { ...u, isEditing: true };
-                    }
-                    return u;
-                  }),
+            {unitNames
+              .filter((unit) => unit.code.toLowerCase().includes(searchTerm.toLowerCase()) || unit.englishName.toLowerCase().includes(searchTerm.toLowerCase()) || unit.arabicName.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map((unit, index) => {
+                const handleEditUnit = (indexToEdit) => {
+                  setUnitNames(
+                    unitNames.map((u, idx) => {
+                      if (idx === indexToEdit) {
+                        return { ...u, isEditing: true };
+                      }
+                      return u;
+                    }),
+                  );
+                };
+
+                const handleSaveUnit = (indexToSave) => {
+                  setUnitNames(
+                    unitNames.map((u, idx) => {
+                      if (idx === indexToSave) {
+                        return { ...u, isEditing: false };
+                      }
+                      return u;
+                    }),
+                  );
+                };
+
+                const handleCancelEdit = (indexToCancel) => {
+                  setUnitNames(
+                    unitNames.map((u, idx) => {
+                      if (idx === indexToCancel) {
+                        return { ...u, isEditing: false };
+                      }
+                      return u;
+                    }),
+                  );
+                };
+
+                const handleUnitChange = (e, indexToChange) => {
+                  const { name, value, checked, type } = e.target;
+                  setUnitNames(
+                    unitNames.map((u, idx) => {
+                      if (idx === indexToChange) {
+                        return {
+                          ...u,
+                          [name]: type === "checkbox" ? checked : value,
+                        };
+                      }
+                      return u;
+                    }),
+                  );
+                };
+
+                const handleDeleteUnit = (indexToDelete) => {
+                  setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
+                };
+
+                return unit.isEditing ? (
+                  <Tr key={index}>
+                    <Td>
+                      <Input type="text" name="code" value={unit.code} onChange={(e) => handleUnitChange(e, index)} />
+                    </Td>
+                    <Td>
+                      <Input type="text" name="englishName" value={unit.englishName} onChange={(e) => handleUnitChange(e, index)} />
+                    </Td>
+                    <Td>
+                      <Input type="text" name="arabicName" value={unit.arabicName} dir="rtl" onChange={(e) => handleUnitChange(e, index)} />
+                    </Td>
+                    <Td>
+                      <Checkbox isChecked={unit.active} name="active" onChange={(e) => handleUnitChange(e, index)}>
+                        {unit.active ? "Yes" : "No"}
+                      </Checkbox>
+                    </Td>
+                    <Td>
+                      <Input type="text" name="linkedUnit" value={unit.linkedUnit} onChange={(e) => handleUnitChange(e, index)} />
+                    </Td>
+                    <Td>
+                      <Button colorScheme="green" onClick={() => handleSaveUnit(index)}>
+                        Save
+                      </Button>
+                      <Button colorScheme="red" ml={2} onClick={() => handleCancelEdit(index)}>
+                        Cancel
+                      </Button>
+                    </Td>
+                  </Tr>
+                ) : (
+                  <Tr key={index}>
+                    <Td>{unit.code}</Td>
+                    <Td>{unit.englishName}</Td>
+                    <Td>{unit.arabicName}</Td>
+                    <Td>{unit.active ? "Yes" : "No"}</Td>
+                    <Td>{unit.linkedUnit}</Td>
+                    <Td>
+                      <Button colorScheme="blue" onClick={() => handleEditUnit(index)}>
+                        Edit
+                      </Button>
+                      <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
+                        Delete
+                      </Button>
+                    </Td>
+                  </Tr>
                 );
-              };
-
-              const handleSaveUnit = (indexToSave) => {
-                setUnitNames(
-                  unitNames.map((u, idx) => {
-                    if (idx === indexToSave) {
-                      return { ...u, isEditing: false };
-                    }
-                    return u;
-                  }),
-                );
-              };
-
-              const handleCancelEdit = (indexToCancel) => {
-                setUnitNames(
-                  unitNames.map((u, idx) => {
-                    if (idx === indexToCancel) {
-                      return { ...u, isEditing: false };
-                    }
-                    return u;
-                  }),
-                );
-              };
-
-              const handleUnitChange = (e, indexToChange) => {
-                const { name, value, checked, type } = e.target;
-                setUnitNames(
-                  unitNames.map((u, idx) => {
-                    if (idx === indexToChange) {
-                      return {
-                        ...u,
-                        [name]: type === "checkbox" ? checked : value,
-                      };
-                    }
-                    return u;
-                  }),
-                );
-              };
-
-              const handleDeleteUnit = (indexToDelete) => {
-                setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
-              };
-
-              return unit.isEditing ? (
-                <Tr key={index}>
-                  <Td>
-                    <Input type="text" name="code" value={unit.code} onChange={(e) => handleUnitChange(e, index)} />
-                  </Td>
-                  <Td>
-                    <Input type="text" name="englishName" value={unit.englishName} onChange={(e) => handleUnitChange(e, index)} />
-                  </Td>
-                  <Td>
-                    <Input type="text" name="arabicName" value={unit.arabicName} dir="rtl" onChange={(e) => handleUnitChange(e, index)} />
-                  </Td>
-                  <Td>
-                    <Checkbox isChecked={unit.active} name="active" onChange={(e) => handleUnitChange(e, index)}>
-                      {unit.active ? "Yes" : "No"}
-                    </Checkbox>
-                  </Td>
-                  <Td>
-                    <Input type="text" name="linkedUnit" value={unit.linkedUnit} onChange={(e) => handleUnitChange(e, index)} />
-                  </Td>
-                  <Td>
-                    <Button colorScheme="green" onClick={() => handleSaveUnit(index)}>
-                      Save
-                    </Button>
-                    <Button colorScheme="red" ml={2} onClick={() => handleCancelEdit(index)}>
-                      Cancel
-                    </Button>
-                  </Td>
-                </Tr>
-              ) : (
-                <Tr key={index}>
-                  <Td>{unit.code}</Td>
-                  <Td>{unit.englishName}</Td>
-                  <Td>{unit.arabicName}</Td>
-                  <Td>{unit.active ? "Yes" : "No"}</Td>
-                  <Td>{unit.linkedUnit}</Td>
-                  <Td>
-                    <Button colorScheme="blue" onClick={() => handleEditUnit(index)}>
-                      Edit
-                    </Button>
-                    <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
-                      Delete
-                    </Button>
-                  </Td>
-                </Tr>
-              );
-            })}
+              })}
           </Tbody>
         </Table>
       </Box>
