@@ -11,8 +11,13 @@ const Index = () => {
   };
 
   const addNewItem = () => {
-    setInventoryItems([...inventoryItems, newItem]);
-    setNewItem({ name: "", category: "", store: "", quantity: 0 });
+    const isDuplicate = inventoryItems.some((item) => item.code === newItem.code || item.name === newItem.name);
+    if (!isDuplicate) {
+      setInventoryItems([...inventoryItems, newItem]);
+      setNewItem({ code: "", name: "", category: "", store: "", quantity: 0, price: "" });
+    } else {
+      alert("An item with the same code or name already exists.");
+    }
   };
 
   return (

@@ -16,8 +16,13 @@ const UnitNames = () => {
   };
 
   const addNewUnit = () => {
-    setUnitNames([...unitNames, newUnit]);
-    setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+    const isDuplicate = unitNames.some((unit) => unit.code === newUnit.code || unit.englishName === newUnit.englishName);
+    if (!isDuplicate) {
+      setUnitNames([...unitNames, newUnit]);
+      setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+    } else {
+      alert("A unit with the same code or English name already exists.");
+    }
   };
 
   return (
