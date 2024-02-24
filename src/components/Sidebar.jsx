@@ -10,7 +10,7 @@ const Sidebar = () => {
       </Heading>
       <VStack align="stretch" spacing="3">
         <Link as={RouterLink} to="/">
-          Home
+          Stores
         </Link>
         <Link as={RouterLink} to="/inventory">
           Inventory
