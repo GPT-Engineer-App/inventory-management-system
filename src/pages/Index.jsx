@@ -4,7 +4,7 @@ import { FaPlus, FaUserCircle, FaStoreAlt } from "react-icons/fa";
 
 const Index = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
-  const [newItem, setNewItem] = useState({ name: "", category: "", store: "", quantity: 0 });
+  const [newItem, setNewItem] = useState({ name: "", category: "", store: "", quantity: 0, price: "" });
 
   const handleNewItemChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
@@ -54,6 +54,10 @@ const Index = () => {
                 <FormLabel>Quantity</FormLabel>
                 <Input type="number" name="quantity" value={newItem.quantity} onChange={handleNewItemChange} />
               </FormControl>
+              <FormControl id="itemPrice" isRequired>
+                <FormLabel>Price</FormLabel>
+                <Input type="number" name="price" value={newItem.price} onChange={handleNewItemChange} />
+              </FormControl>
               <Button leftIcon={<FaPlus />} colorScheme="teal" onClick={addNewItem}>
                 Add Item
               </Button>
@@ -70,6 +74,7 @@ const Index = () => {
                   <Th>Category</Th>
                   <Th>Store</Th>
                   <Th isNumeric>Quantity</Th>
+                  <Th isNumeric>Price ($)</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -79,6 +84,7 @@ const Index = () => {
                     <Td>{item.category}</Td>
                     <Td>{item.store}</Td>
                     <Td isNumeric>{item.quantity}</Td>
+                    <Td isNumeric>{item.price}</Td>
                   </Tr>
                 ))}
               </Tbody>
