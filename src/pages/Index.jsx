@@ -123,7 +123,9 @@ const Index = () => {
                       <Button colorScheme="blue" mr={2}>
                         Edit
                       </Button>
-                      <Button colorScheme="red">Delete</Button>
+                      <Button colorScheme="red" onClick={() => handleDeleteItem(index)}>
+                        Delete
+                      </Button>
                     </Td>
                   </Tr>
                 ))}
