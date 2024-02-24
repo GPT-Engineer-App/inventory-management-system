@@ -11,7 +11,14 @@ const Sidebar = () => {
       <VStack align="stretch" spacing="3">
         <Menu>
           <MenuButton as={Link}>Main Sections</MenuButton>
+          <MenuList></MenuList>
+        </Menu>
+        <Menu>
+          <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
+            <MenuItem as={RouterLink} to="/unit-names">
+              Unit Names
+            </MenuItem>
             <MenuItem as={RouterLink} to="/">
               Stores
             </MenuItem>
@@ -20,14 +27,6 @@ const Sidebar = () => {
             </MenuItem>
             <MenuItem as={RouterLink} to="/items">
               Items
-            </MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton as={Link}>Basic Definitions</MenuButton>
-          <MenuList>
-            <MenuItem as={RouterLink} to="/unit-names">
-              Unit Names
             </MenuItem>
             {/* Other Basic Definitions items will go here */}
           </MenuList>
