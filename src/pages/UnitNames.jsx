@@ -76,8 +76,19 @@ const UnitNames = () => {
           </Thead>
           <Tbody>
             {unitNames.map((unit, index) => {
-              const handleEditUnit = () => {
-                console.log("edit unit", unit);
+              const [editingUnitIndex, setEditingUnitIndex] = useState(null);
+
+              const handleEditUnit = (index) => {
+                setEditingUnitIndex(index);
+                setNewUnit(unitNames[index]);
+              };
+
+              const handleSaveUnit = () => {
+                const updatedUnitNames = [...unitNames];
+                updatedUnitNames[editingUnitIndex] = newUnit;
+                setUnitNames(updatedUnitNames);
+                setEditingUnitIndex(null);
+                setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
               };
 
               const handleDeleteUnit = (indexToDelete) => {
@@ -92,9 +103,14 @@ const UnitNames = () => {
                   <Td>{unit.active ? "Yes" : "No"}</Td>
                   <Td>{unit.linkedUnit}</Td>
                   <Td>
-                    <Button colorScheme="blue" onClick={handleEditUnit}>
+                    <Button colorScheme="blue" onClick={() => handleEditUnit(index)}>
                       Edit
                     </Button>
+                    {editingUnitIndex === index && (
+                      <Button colorScheme="green" ml={2} onClick={handleSaveUnit}>
+                        Save
+                      </Button>
+                    )}
                     <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
                       Delete
                     </Button>
