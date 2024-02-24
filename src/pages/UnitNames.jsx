@@ -75,15 +75,26 @@ const UnitNames = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {unitNames.map((unit, index) => (
-              <Tr key={index}>
-                <Td>{unit.code}</Td>
-                <Td>{unit.englishName}</Td>
-                <Td>{unit.arabicName}</Td>
-                <Td>{unit.active ? "Yes" : "No"}</Td>
-                <Td>{unit.linkedUnit}</Td>
-              </Tr>
-            ))}
+            {unitNames.map((unit, index) => {
+              const handleEditUnit = () => {
+                console.log("edit unit", unit);
+              };
+
+              return (
+                <Tr key={index}>
+                  <Td>{unit.code}</Td>
+                  <Td>{unit.englishName}</Td>
+                  <Td>{unit.arabicName}</Td>
+                  <Td>{unit.active ? "Yes" : "No"}</Td>
+                  <Td>{unit.linkedUnit}</Td>
+                  <Td>
+                    <Button colorScheme="blue" onClick={handleEditUnit}>
+                      Edit
+                    </Button>
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </Box>
