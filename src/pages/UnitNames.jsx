@@ -13,7 +13,8 @@ const UnitNames = () => {
     });
   };
 
-  const addNewUnit = () => {
+  const addNewUnit = (event) => {
+    event.preventDefault();
     setUnitNames([...unitNames, newUnit]);
     setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
   };
