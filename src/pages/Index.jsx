@@ -20,41 +20,41 @@ const Index = () => {
     }
   };
 
-  const handleEditItem = (index) => {
+  const handleEditItem = (indexToEdit) => {
+    setInventoryItems(
+      inventoryItems.map((item, idx) => ({
+        ...item,
+        isEditing: idx === indexToEdit,
+      })),
+    );
+  };
+
+  const handleSaveItem = (indexToSave) => {
     setInventoryItems(
       inventoryItems.map((item, idx) => {
-        if (idx === index) {
-          return { ...item, isEditing: true };
+        if (idx === indexToSave) {
+          return {
+            ...item,
+            storeCode: newItem.storeCode,
+            storeName: newItem.storeName,
+            storeAddress: newItem.storeAddress,
+            storekeeperName: newItem.storekeeperName,
+            storekeeperPhoneNumber: newItem.storekeeperPhoneNumber,
+            isEditing: false,
+          };
         }
         return item;
       }),
     );
+    setNewItem({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
   };
 
-  const handleSaveItem = (index) => {
-    setInventoryItems(
-      inventoryItems.map((item, idx) => {
-        if (idx === index) {
-          return { ...item, isEditing: false };
-        }
-        return item;
-      }),
-    );
+  const handleCancelEdit = () => {
+    setInventoryItems(inventoryItems.map((item) => ({ ...item, isEditing: false })));
   };
 
-  const handleCancelEdit = (index) => {
-    setInventoryItems(
-      inventoryItems.map((item, idx) => {
-        if (idx === index) {
-          return { ...item, isEditing: false };
-        }
-        return item;
-      }),
-    );
-  };
-
-  const handleDeleteItem = (index) => {
-    setInventoryItems(inventoryItems.filter((_, idx) => idx !== index));
+  const handleDeleteItem = (indexToDelete) => {
+    setInventoryItems(inventoryItems.filter((_, idx) => idx !== indexToDelete));
   };
 
   return (
@@ -114,11 +114,11 @@ const Index = () => {
               <Tbody>
                 {inventoryItems.map((item, index) => (
                   <Tr key={index}>
-                    <Td>{item.isEditing ? <Input value={newItem.storeCode} onChange={handleNewItemChange} /> : item.storeCode}</Td>
-                    <Td>{item.isEditing ? <Input value={newItem.storeName} onChange={handleNewItemChange} /> : item.storeName}</Td>
-                    <Td>{item.isEditing ? <Input value={newItem.storeAddress} onChange={handleNewItemChange} /> : item.storeAddress}</Td>
-                    <Td>{item.isEditing ? <Input value={newItem.storekeeperName} onChange={handleNewItemChange} /> : item.storekeeperName}</Td>
-                    <Td>{item.isEditing ? <Input type="tel" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} /> : item.storekeeperPhoneNumber}</Td>
+                    <Td>{item.isEditing ? <Input name="storeCode" value={newItem.storeCode} onChange={handleNewItemChange} /> : item.storeCode}</Td>
+                    <Td>{item.isEditing ? <Input name="storeName" value={newItem.storeName} onChange={handleNewItemChange} /> : item.storeName}</Td>
+                    <Td>{item.isEditing ? <Input name="storeAddress" value={newItem.storeAddress} onChange={handleNewItemChange} /> : item.storeAddress}</Td>
+                    <Td>{item.isEditing ? <Input name="storekeeperName" value={newItem.storekeeperName} onChange={handleNewItemChange} /> : item.storekeeperName}</Td>
+                    <Td>{item.isEditing ? <Input type="tel" name="storekeeperPhoneNumber" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} /> : item.storekeeperPhoneNumber}</Td>
                     <Td>
                       {item.isEditing ? (
                         <>
