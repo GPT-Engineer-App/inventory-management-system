@@ -12,9 +12,7 @@ const Sidebar = () => {
         <Link as={RouterLink} to="/">
           Stores
         </Link>
-        <Link as={RouterLink} to="/inventory">
-          Inventory
-        </Link>
+
         <Link as={RouterLink} to="/transactions">
           Transactions
         </Link>
