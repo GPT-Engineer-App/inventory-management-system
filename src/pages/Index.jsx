@@ -31,7 +31,7 @@ const Index = () => {
           </HStack>
           <Box w="full" p={4} borderWidth="1px" borderRadius="lg">
             <Heading size="md" mb={4}>
-              <FaStoreAlt /> Add New Inventory Item
+              <FaStoreAlt /> Stores
             </Heading>
             <HStack>
               <FormControl id="storeCode" isRequired>
