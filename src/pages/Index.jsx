@@ -71,6 +71,7 @@ const Index = () => {
                   <Th>Store Address</Th>
                   <Th>Storekeeper's Name</Th>
                   <Th>Storekeeper's Phone Number</Th>
+                  <Th>Actions</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -81,6 +82,12 @@ const Index = () => {
                     <Td>{item.storeAddress}</Td>
                     <Td>{item.storekeeperName}</Td>
                     <Td>{item.storekeeperPhoneNumber}</Td>
+                    <Td>
+                      <Button colorScheme="blue" mr={2}>
+                        Edit
+                      </Button>
+                      <Button colorScheme="red">Delete</Button>
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
