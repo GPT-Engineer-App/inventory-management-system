@@ -42,10 +42,12 @@ const UnitNames = () => {
           <FormLabel>Arabic Name</FormLabel>
           <Input type="text" name="arabicName" value={newUnit.arabicName} onChange={handleNewUnitChange} dir="rtl" />
         </FormControl>
-        <FormControl id="active">
-          <Checkbox name="active" isChecked={newUnit.active} onChange={handleNewUnitChange}>
-            Active
-          </Checkbox>
+        <FormControl id="active" isRequired>
+          <FormLabel>Active</FormLabel>
+          <Select name="active" value={newUnit.active ? "active" : "notActive"} onChange={handleNewUnitChange}>
+            <option value="active">Active</option>
+            <option value="notActive">Not Active</option>
+          </Select>
         </FormControl>
         <FormControl id="linkedUnit">
           <FormLabel>Linked to a unit</FormLabel>
