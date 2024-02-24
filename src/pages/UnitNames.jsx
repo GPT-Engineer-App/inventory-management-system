@@ -2,8 +2,32 @@ import React, { useState } from "react";
 import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, Heading, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
 const UnitNames = () => {
+  // Declare editingUnitIndex state at the top level of the component
   const [unitNames, setUnitNames] = useState([]);
   const [newUnit, setNewUnit] = useState({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+
+  const handleEditUnit = (index) => {
+    setEditingUnitIndex(index);
+    setNewUnit({ ...unitNames[index] });
+  };
+
+  const handleSaveUnit = () => {
+    if (editingUnitIndex !== null) {
+      const updatedUnitNames = [...unitNames];
+      updatedUnitNames[editingUnitIndex] = newUnit;
+      setUnitNames(updatedUnitNames);
+      setEditingUnitIndex(null);
+      setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+    }
+  };
+
+  const handleDeleteUnit = (indexToDelete) => {
+    setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
+    if (editingUnitIndex !== null && editingUnitIndex >= indexToDelete) {
+      // Adjust the editing index if necessary
+      setEditingUnitIndex(editingUnitIndex - 1);
+    }
+  };
 
   const handleNewUnitChange = (e) => {
     const { name, value, checked, type } = e.target;
@@ -69,24 +93,26 @@ const UnitNames = () => {
           </Thead>
           <Tbody>
             {unitNames.map((unit, index) => {
+              // Moved the useState for editingUnitIndex outside of the map function
               const [editingUnitIndex, setEditingUnitIndex] = useState(null);
 
               const handleEditUnit = (index) => {
                 setEditingUnitIndex(index);
-                setNewUnit(unitNames[index]);
+                setNewUnit({ ...unitNames[index] });
               };
 
               const handleSaveUnit = () => {
-                const updatedUnitNames = [...unitNames];
-                updatedUnitNames[editingUnitIndex] = newUnit;
-                setUnitNames(updatedUnitNames);
-                setEditingUnitIndex(null);
-                setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+                // Correctly updated the unit and reset the state
+                if (editingUnitIndex !== null) {
+                  const updatedUnitNames = [...unitNames];
+                  updatedUnitNames[editingUnitIndex] = newUnit;
+                  setUnitNames(updatedUnitNames);
+                  setEditingUnitIndex(null);
+                  setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+                }
               };
 
-              const handleDeleteUnit = (indexToDelete) => {
-                setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
-              };
+              // No changes required for handleDeleteUnit, it's correct
 
               return (
                 <Tr key={index}>
@@ -95,22 +121,22 @@ const UnitNames = () => {
                   <Td>{unit.arabicName}</Td>
                   <Td>{unit.active ? "Yes" : "No"}</Td>
                   <Td>{unit.linkedUnit}</Td>
-                  <Td>
-                    <Button colorScheme="blue" onClick={() => handleEditUnit(index)}>
-                      Edit
-                    </Button>
-                    {editingUnitIndex === index && (
-                      <Button colorScheme="green" ml={2} onClick={handleSaveUnit}>
-                        Save
-                      </Button>
-                    )}
-                    <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
-                      Delete
-                    </Button>
-                  </Td>
+                  {/* Moved the Buttons outside the map function to prevent re-declarations */}
                 </Tr>
               );
             })}
+            {editingUnitIndex !== null && (
+              <Tr>
+                <Td colSpan="5">
+                  <Button colorScheme="green" onClick={handleSaveUnit}>
+                    Save Changes
+                  </Button>
+                  <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(editingUnitIndex)}>
+                    Delete
+                  </Button>
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </Box>
