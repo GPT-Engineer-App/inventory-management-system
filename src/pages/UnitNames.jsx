@@ -80,6 +80,10 @@ const UnitNames = () => {
                 console.log("edit unit", unit);
               };
 
+              const handleDeleteUnit = (indexToDelete) => {
+                setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
+              };
+
               return (
                 <Tr key={index}>
                   <Td>{unit.code}</Td>
@@ -90,6 +94,9 @@ const UnitNames = () => {
                   <Td>
                     <Button colorScheme="blue" onClick={handleEditUnit}>
                       Edit
+                    </Button>
+                    <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
+                      Delete
                     </Button>
                   </Td>
                 </Tr>
