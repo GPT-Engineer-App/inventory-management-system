@@ -64,7 +64,7 @@ const Index = () => {
           <Heading>Inventory Management System</Heading>
           <HStack>
             <FaUserCircle size={30} />
-            <Text fontWeight="bold">User Role: Manager</Text>
+            <Text fontWeight="extrabold">User Role: Manager</Text>
           </HStack>
           <Box w="full" p={4} borderWidth="1px" borderRadius="lg">
             <Heading size="md" mb={4}>

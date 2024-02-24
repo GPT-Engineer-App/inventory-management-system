@@ -27,7 +27,9 @@ const UnitNames = () => {
 
   return (
     <Box p={4}>
-      <Heading mb={6}>Unit Names</Heading>
+      <Heading mb={6} fontWeight="extrabold">
+        Unit Names
+      </Heading>
       <Box mb={6}>
         <InputGroup size="md">
           <InputLeftElement pointerEvents="none">
