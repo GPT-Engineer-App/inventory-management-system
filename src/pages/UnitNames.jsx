@@ -47,7 +47,7 @@ const UnitNames = () => {
             Active
           </Checkbox>
         </FormControl>
-        <FormControl id="linkedUnit" isRequired>
+        <FormControl id="linkedUnit">
           <FormLabel>Linked to a unit</FormLabel>
           <Select name="linkedUnit" value={newUnit.linkedUnit} onChange={handleNewUnitChange} placeholder="Select option">
             {/* Options should be populated dynamically */}
