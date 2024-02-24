@@ -14,12 +14,16 @@ const Index = () => {
     const { storeCode, storeName, storeAddress, storekeeperName, storekeeperPhoneNumber } = newItem;
     const isDuplicate = inventoryItems.some((item) => item.storeCode === storeCode);
     const isEmpty = !storeCode || !storeName || !storeAddress || !storekeeperName || !storekeeperPhoneNumber;
-    if (!isDuplicate && !isEmpty) {
-      setInventoryItems([...inventoryItems, { ...newItem, isEditing: false }]);
-      setNewItem({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
-    } else {
-      alert("A store with the same store code already exists.");
+    if (isEmpty) {
+      alert("Please fill in all fields.");
+      return;
     }
+    if (isDuplicate) {
+      alert("A store with the same store code already exists.");
+      return;
+    }
+    setInventoryItems([...inventoryItems, { ...newItem }]);
+    setNewItem({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
   };
 
   const handleEditItem = (indexToEdit) => {
