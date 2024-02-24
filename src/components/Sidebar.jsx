@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, VStack, Link, Heading } from "@chakra-ui/react";
+import { Box, VStack, Heading, Menu, MenuButton, MenuList, MenuItem, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 const Sidebar = () => {
@@ -19,12 +19,15 @@ const Sidebar = () => {
         <Link as={RouterLink} to="/items">
           Items
         </Link>
-        <Link as={RouterLink} to="/basic-definitions">
-          Basic Definitions
-        </Link>
-        <Link as={RouterLink} to="/unit-names">
-          Unit Names
-        </Link>
+        <Menu>
+          <MenuButton as={Link}>Basic Definitions</MenuButton>
+          <MenuList>
+            <MenuItem as={RouterLink} to="/unit-names">
+              Unit Names
+            </MenuItem>
+            {/* Other Basic Definitions items will go here */}
+          </MenuList>
+        </Menu>
       </VStack>
     </Box>
   );
