@@ -102,53 +102,29 @@ const UnitNames = () => {
             {unitNames
               .filter((unit) => unit.code.toLowerCase().includes(searchTerm.toLowerCase()) || unit.englishName.toLowerCase().includes(searchTerm.toLowerCase()) || unit.arabicName.toLowerCase().includes(searchTerm.toLowerCase()))
               .map((unit, index) => {
-                const handleEditUnit = (indexToEdit) => {
-                  setUnitNames(
-                    unitNames.map((u, idx) => {
-                      if (idx === indexToEdit) {
-                        return { ...u, isEditing: true };
-                      }
-                      return u;
-                    }),
-                  );
+                // These functions will be modified to handle row-wise editing
+
+                const handleEditUnit = (unitToEdit) => {
+                  setNewUnit({ ...unitToEdit, isEditing: true });
                 };
 
-                const handleSaveUnit = (indexToSave) => {
+                const handleSaveUnit = () => {
                   setUnitNames(
-                    unitNames.map((u, idx) => {
-                      if (idx === indexToSave) {
-                        return { ...u, isEditing: false };
+                    unitNames.map((unit) => {
+                      if (unit.code === newUnit.code) {
+                        return { ...newUnit, isEditing: false };
                       }
-                      return u;
+                      return unit;
                     }),
                   );
+                  setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
                 };
 
-                const handleCancelEdit = (indexToCancel) => {
-                  setUnitNames(
-                    unitNames.map((u, idx) => {
-                      if (idx === indexToCancel) {
-                        return { ...u, isEditing: false };
-                      }
-                      return u;
-                    }),
-                  );
+                const handleCancelEdit = () => {
+                  setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
                 };
 
-                const handleUnitChange = (e, indexToChange) => {
-                  const { name, value, checked, type } = e.target;
-                  setUnitNames(
-                    unitNames.map((u, idx) => {
-                      if (idx === indexToChange) {
-                        return {
-                          ...u,
-                          [name]: type === "checkbox" ? checked : value,
-                        };
-                      }
-                      return u;
-                    }),
-                  );
-                };
+                // This function will be removed as part of the updates
 
                 const handleDeleteUnit = (indexToDelete) => {
                   setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
@@ -157,21 +133,21 @@ const UnitNames = () => {
                 return unit.isEditing ? (
                   <Tr key={index}>
                     <Td>
-                      <Input type="text" name="code" value={unit.code} onChange={(e) => handleUnitChange(e, index)} />
+                      <Input type="text" name="code" value={unit.code} onChange={(e) => setNewUnit({ ...newUnit, code: e.target.value })} />
                     </Td>
                     <Td>
-                      <Input type="text" name="englishName" value={unit.englishName} onChange={(e) => handleUnitChange(e, index)} />
+                      <Input type="text" name="englishName" value={unit.englishName} onChange={(e) => setNewUnit({ ...newUnit, englishName: e.target.value })} />
                     </Td>
                     <Td>
-                      <Input type="text" name="arabicName" value={unit.arabicName} dir="rtl" onChange={(e) => handleUnitChange(e, index)} />
+                      <Input type="text" name="arabicName" value={unit.arabicName} dir="rtl" onChange={(e) => setNewUnit({ ...newUnit, arabicName: e.target.value })} />
                     </Td>
                     <Td>
-                      <Checkbox isChecked={unit.active} name="active" onChange={(e) => handleUnitChange(e, index)}>
+                      <Checkbox isChecked={unit.active} name="active" onChange={(e) => setNewUnit({ ...newUnit, active: e.target.checked })}>
                         {unit.active ? "Yes" : "No"}
                       </Checkbox>
                     </Td>
                     <Td>
-                      <Input type="text" name="linkedUnit" value={unit.linkedUnit} onChange={(e) => handleUnitChange(e, index)} />
+                      <Input type="text" name="linkedUnit" value={unit.linkedUnit} onChange={(e) => setNewUnit({ ...newUnit, linkedUnit: e.target.value })} />
                     </Td>
                     <Td>
                       <Button colorScheme="green" onClick={() => handleSaveUnit(index)}>
