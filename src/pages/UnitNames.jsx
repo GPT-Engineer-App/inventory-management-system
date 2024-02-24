@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, VStack, Heading } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, Heading } from "@chakra-ui/react";
 
 const UnitNames = () => {
   return (
     <Box p={4}>
       <Heading mb={6}>Unit Names</Heading>
-      <VStack spacing={4}>
+      <HStack spacing={4} align="start">
         <FormControl id="code">
           <FormLabel>Code</FormLabel>
           <Input type="text" />
@@ -26,7 +26,7 @@ const UnitNames = () => {
           <Select placeholder="Select option">{/* Options should be populated dynamically */}</Select>
         </FormControl>
         <Button colorScheme="blue">Submit</Button>
-      </VStack>
+      </HStack>
     </Box>
   );
 };
