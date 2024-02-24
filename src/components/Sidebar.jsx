@@ -9,16 +9,20 @@ const Sidebar = () => {
         Menu
       </Heading>
       <VStack align="stretch" spacing="3">
-        <Link as={RouterLink} to="/">
-          Stores
-        </Link>
-
-        <Link as={RouterLink} to="/users">
-          Users
-        </Link>
-        <Link as={RouterLink} to="/items">
-          Items
-        </Link>
+        <Menu>
+          <MenuButton as={Link}>Main Sections</MenuButton>
+          <MenuList>
+            <MenuItem as={RouterLink} to="/">
+              Stores
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/users">
+              Users
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/items">
+              Items
+            </MenuItem>
+          </MenuList>
+        </Menu>
         <Menu>
           <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
