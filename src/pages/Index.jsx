@@ -4,7 +4,7 @@ import { FaPlus, FaUserCircle, FaStoreAlt } from "react-icons/fa";
 
 const Index = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
-  const [newItem, setNewItem] = useState({ code: "", name: "", category: "", store: "", quantity: 0, price: "" });
+  const [newItem, setNewItem] = useState({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
 
   const handleNewItemChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
@@ -34,38 +34,25 @@ const Index = () => {
               <FaStoreAlt /> Add New Inventory Item
             </Heading>
             <HStack>
-              <FormControl id="itemName" isRequired>
-                <FormLabel>Item Name</FormLabel>
-                <Input name="name" value={newItem.name} onChange={handleNewItemChange} />
+              <FormControl id="storeCode" isRequired>
+                <FormLabel>Store Code</FormLabel>
+                <Input name="storeCode" value={newItem.storeCode} onChange={handleNewItemChange} />
               </FormControl>
-              <FormControl id="itemCategory" isRequired>
-                <FormLabel>Category</FormLabel>
-                <Select name="category" value={newItem.category} onChange={handleNewItemChange}>
-                  {/* Categories can be dynamically loaded */}
-                  <option value="electronics">Electronics</option>
-                  <option value="apparel">Apparel</option>
-                  <option value="home-goods">Home Goods</option>
-                </Select>
+              <FormControl id="storeName" isRequired>
+                <FormLabel>Store Name</FormLabel>
+                <Input name="storeName" value={newItem.storeName} onChange={handleNewItemChange} />
               </FormControl>
-              <FormControl id="itemStore" isRequired>
-                <FormLabel>Store</FormLabel>
-                <Select name="store" value={newItem.store} onChange={handleNewItemChange}>
-                  {/* Stores can be dynamically loaded */}
-                  <option value="store-1">Store 1</option>
-                  <option value="store-2">Store 2</option>
-                </Select>
+              <FormControl id="storeAddress" isRequired>
+                <FormLabel>Store Address</FormLabel>
+                <Input name="storeAddress" value={newItem.storeAddress} onChange={handleNewItemChange} />
               </FormControl>
-              <FormControl id="itemCode" isRequired>
-                <FormLabel>Item Code</FormLabel>
-                <Input name="code" value={newItem.code} onChange={handleNewItemChange} />
+              <FormControl id="storekeeperName" isRequired>
+                <FormLabel>Storekeeper's Name</FormLabel>
+                <Input name="storekeeperName" value={newItem.storekeeperName} onChange={handleNewItemChange} />
               </FormControl>
-              <FormControl id="itemQuantity" isRequired>
-                <FormLabel>Quantity</FormLabel>
-                <Input type="number" name="quantity" value={newItem.quantity} onChange={handleNewItemChange} />
-              </FormControl>
-              <FormControl id="itemPrice" isRequired>
-                <FormLabel>Price</FormLabel>
-                <Input type="number" name="price" value={newItem.price} onChange={handleNewItemChange} />
+              <FormControl id="storekeeperPhoneNumber" isRequired>
+                <FormLabel>Storekeeper's Phone Number</FormLabel>
+                <Input type="tel" name="storekeeperPhoneNumber" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} />
               </FormControl>
               <Button leftIcon={<FaPlus />} colorScheme="teal" onClick={addNewItem}>
                 Add Item
@@ -79,23 +66,21 @@ const Index = () => {
             <Table variant="simple">
               <Thead>
                 <Tr>
-                  <Th>Code</Th>
-                  <Th>Item Name</Th>
-                  <Th>Category</Th>
-                  <Th>Store</Th>
-                  <Th isNumeric>Quantity</Th>
-                  <Th isNumeric>Price ($)</Th>
+                  <Th>Store Code</Th>
+                  <Th>Store Name</Th>
+                  <Th>Store Address</Th>
+                  <Th>Storekeeper's Name</Th>
+                  <Th>Storekeeper's Phone Number</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {inventoryItems.map((item, index) => (
                   <Tr key={index}>
-                    <Td>{item.code}</Td>
-                    <Td>{item.name}</Td>
-                    <Td>{item.category}</Td>
-                    <Td>{item.store}</Td>
-                    <Td isNumeric>{item.quantity}</Td>
-                    <Td isNumeric>{item.price}</Td>
+                    <Td>{item.storeCode}</Td>
+                    <Td>{item.storeName}</Td>
+                    <Td>{item.storeAddress}</Td>
+                    <Td>{item.storekeeperName}</Td>
+                    <Td>{item.storekeeperPhoneNumber}</Td>
                   </Tr>
                 ))}
               </Tbody>
