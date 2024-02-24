@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, Heading, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, Heading, Table, Thead, Tbody, Tr, Th, Td, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { FaSearch } from "react-icons/fa";
 
 const UnitNames = () => {
   const [unitNames, setUnitNames] = useState([]);
@@ -23,7 +24,12 @@ const UnitNames = () => {
     <Box p={4}>
       <Heading mb={6}>Unit Names</Heading>
       <Box mb={6}>
-        <Input placeholder="Search by code, name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <InputGroup size="md">
+          <InputLeftElement pointerEvents="none">
+            <FaSearch />
+          </InputLeftElement>
+          <Input placeholder="Search by code, name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        </InputGroup>
       </Box>
       <HStack
         spacing={4}
