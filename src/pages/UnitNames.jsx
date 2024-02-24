@@ -4,30 +4,6 @@ import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, H
 const UnitNames = () => {
   const [unitNames, setUnitNames] = useState([]);
   const [newUnit, setNewUnit] = useState({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
-  const [editingUnitIndex, setEditingUnitIndex] = useState(null);
-
-  const handleEditUnit = (index) => {
-    setEditingUnitIndex(index);
-    setNewUnit({ ...unitNames[index] });
-  };
-
-  const handleSaveUnit = () => {
-    if (editingUnitIndex !== null) {
-      const updatedUnitNames = [...unitNames];
-      updatedUnitNames[editingUnitIndex] = newUnit;
-      setUnitNames(updatedUnitNames);
-      setEditingUnitIndex(null);
-      setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
-    }
-  };
-
-  const handleDeleteUnit = (indexToDelete) => {
-    setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
-    if (editingUnitIndex !== null && editingUnitIndex >= indexToDelete) {
-      // Adjust the editing index if necessary
-      setEditingUnitIndex(editingUnitIndex - 1);
-    }
-  };
 
   const handleNewUnitChange = (e) => {
     const { name, value, checked, type } = e.target;
@@ -37,8 +13,7 @@ const UnitNames = () => {
     });
   };
 
-  const addNewUnit = (event) => {
-    event.preventDefault();
+  const addNewUnit = () => {
     setUnitNames([...unitNames, newUnit]);
     setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
   };
@@ -46,7 +21,15 @@ const UnitNames = () => {
   return (
     <Box p={4}>
       <Heading mb={6}>Unit Names</Heading>
-      <HStack spacing={4} align="start" as="form" onSubmit={addNewUnit}>
+      <HStack
+        spacing={4}
+        as="form"
+        align="start"
+        onSubmit={(e) => {
+          e.preventDefault();
+          addNewUnit();
+        }}
+      >
         <FormControl id="code" isRequired>
           <FormLabel>Code</FormLabel>
           <Input type="text" name="code" value={newUnit.code} onChange={handleNewUnitChange} />
@@ -93,26 +76,9 @@ const UnitNames = () => {
           </Thead>
           <Tbody>
             {unitNames.map((unit, index) => {
-              // Moved the useState for editingUnitIndex outside of the map function
-              const [editingUnitIndex, setEditingUnitIndex] = useState(null);
-
-              const handleEditUnit = (index) => {
-                setEditingUnitIndex(index);
-                setNewUnit({ ...unitNames[index] });
+              const handleEditUnit = () => {
+                console.log("edit unit", unit);
               };
-
-              const handleSaveUnit = () => {
-                // Correctly updated the unit and reset the state
-                if (editingUnitIndex !== null) {
-                  const updatedUnitNames = [...unitNames];
-                  updatedUnitNames[editingUnitIndex] = newUnit;
-                  setUnitNames(updatedUnitNames);
-                  setEditingUnitIndex(null);
-                  setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
-                }
-              };
-
-              // No changes required for handleDeleteUnit, it's correct
 
               return (
                 <Tr key={index}>
@@ -121,7 +87,11 @@ const UnitNames = () => {
                   <Td>{unit.arabicName}</Td>
                   <Td>{unit.active ? "Yes" : "No"}</Td>
                   <Td>{unit.linkedUnit}</Td>
-                  {/* Moved the Buttons outside the map function to prevent re-declarations */}
+                  <Td>
+                    <Button colorScheme="blue" onClick={handleEditUnit}>
+                      Edit
+                    </Button>
+                  </Td>
                 </Tr>
               );
             })}
