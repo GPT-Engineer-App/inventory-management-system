@@ -21,6 +21,15 @@ const Sidebar = () => {
         <Link as={RouterLink} to="/inventory-dashboard">
           Inventory Dashboard
         </Link>
+        <Link as={RouterLink} to="/inventory">
+          Inventory
+        </Link>
+        <Link as={RouterLink} to="/transactions">
+          Transactions
+        </Link>
+        <Link as={RouterLink} to="/inventory-dashboard">
+          Inventory Dashboard
+        </Link>
         <Link as={RouterLink} to="/users">
           Users
         </Link>
