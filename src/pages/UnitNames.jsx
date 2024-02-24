@@ -25,7 +25,7 @@ const UnitNames = () => {
           <FormLabel>Linked to a unit</FormLabel>
           <Select placeholder="Select option">{/* Options should be populated dynamically */}</Select>
         </FormControl>
-        <Button colorScheme="blue">Submit</Button>
+        <Button colorScheme="blue">Add</Button>
       </HStack>
     </Box>
   );
