@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Box, FormControl, FormLabel, Input, Checkbox, Select, Button, HStack, Heading, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
 const UnitNames = () => {
-  // Declare editingUnitIndex state at the top level of the component
   const [unitNames, setUnitNames] = useState([]);
   const [newUnit, setNewUnit] = useState({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
+  const [editingUnitIndex, setEditingUnitIndex] = useState(null);
 
   const handleEditUnit = (index) => {
     setEditingUnitIndex(index);
@@ -125,18 +125,6 @@ const UnitNames = () => {
                 </Tr>
               );
             })}
-            {editingUnitIndex !== null && (
-              <Tr>
-                <Td colSpan="5">
-                  <Button colorScheme="green" onClick={handleSaveUnit}>
-                    Save Changes
-                  </Button>
-                  <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(editingUnitIndex)}>
-                    Delete
-                  </Button>
-                </Td>
-              </Tr>
-            )}
           </Tbody>
         </Table>
       </Box>
