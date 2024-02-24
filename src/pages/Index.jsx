@@ -11,13 +11,50 @@ const Index = () => {
   };
 
   const addNewItem = () => {
-    const isDuplicate = inventoryItems.some((item) => item.code === newItem.code || item.name === newItem.name);
+    const isDuplicate = inventoryItems.some((item) => item.storeCode === newItem.storeCode);
     if (!isDuplicate) {
-      setInventoryItems([...inventoryItems, newItem]);
-      setNewItem({ code: "", name: "", category: "", store: "", quantity: 0, price: "" });
+      setInventoryItems([...inventoryItems, { ...newItem, isEditing: false }]);
+      setNewItem({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
     } else {
-      alert("An item with the same code or name already exists.");
+      alert("A store with the same store code already exists.");
     }
+  };
+
+  const handleEditItem = (index) => {
+    setInventoryItems(
+      inventoryItems.map((item, idx) => {
+        if (idx === index) {
+          return { ...item, isEditing: true };
+        }
+        return item;
+      }),
+    );
+  };
+
+  const handleSaveItem = (index) => {
+    setInventoryItems(
+      inventoryItems.map((item, idx) => {
+        if (idx === index) {
+          return { ...item, isEditing: false };
+        }
+        return item;
+      }),
+    );
+  };
+
+  const handleCancelEdit = (index) => {
+    setInventoryItems(
+      inventoryItems.map((item, idx) => {
+        if (idx === index) {
+          return { ...item, isEditing: false };
+        }
+        return item;
+      }),
+    );
+  };
+
+  const handleDeleteItem = (index) => {
+    setInventoryItems(inventoryItems.filter((_, idx) => idx !== index));
   };
 
   return (
