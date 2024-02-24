@@ -21,15 +21,7 @@ const UnitNames = () => {
   return (
     <Box p={4}>
       <Heading mb={6}>Unit Names</Heading>
-      <HStack
-        spacing={4}
-        as="form"
-        align="start"
-        onSubmit={(e) => {
-          e.preventDefault();
-          addNewUnit();
-        }}
-      >
+      <HStack spacing={4} align="start" as="form" onSubmit={addNewUnit}>
         <FormControl id="code" isRequired>
           <FormLabel>Code</FormLabel>
           <Input type="text" name="code" value={newUnit.code} onChange={handleNewUnitChange} />
