@@ -124,41 +124,11 @@ const UnitNames = () => {
                   setNewUnit({ code: "", englishName: "", arabicName: "", active: true, linkedUnit: "" });
                 };
 
-                // This function will be removed as part of the updates
-
                 const handleDeleteUnit = (indexToDelete) => {
                   setUnitNames(unitNames.filter((_, index) => index !== indexToDelete));
                 };
 
-                return unit.isEditing ? (
-                  <Tr key={index}>
-                    <Td>
-                      <Input type="text" name="code" value={unit.code} onChange={(e) => setNewUnit({ ...newUnit, code: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Input type="text" name="englishName" value={unit.englishName} onChange={(e) => setNewUnit({ ...newUnit, englishName: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Input type="text" name="arabicName" value={unit.arabicName} dir="rtl" onChange={(e) => setNewUnit({ ...newUnit, arabicName: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Checkbox isChecked={unit.active} name="active" onChange={(e) => setNewUnit({ ...newUnit, active: e.target.checked })}>
-                        {unit.active ? "Yes" : "No"}
-                      </Checkbox>
-                    </Td>
-                    <Td>
-                      <Input type="text" name="linkedUnit" value={unit.linkedUnit} onChange={(e) => setNewUnit({ ...newUnit, linkedUnit: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Button colorScheme="green" onClick={() => handleSaveUnit(index)}>
-                        Save
-                      </Button>
-                      <Button colorScheme="red" ml={2} onClick={() => handleCancelEdit(index)}>
-                        Cancel
-                      </Button>
-                    </Td>
-                  </Tr>
-                ) : (
+                return (
                   <Tr key={index}>
                     <Td>{unit.code}</Td>
                     <Td>{unit.englishName}</Td>
@@ -166,7 +136,7 @@ const UnitNames = () => {
                     <Td>{unit.active ? "Yes" : "No"}</Td>
                     <Td>{unit.linkedUnit}</Td>
                     <Td>
-                      <Button colorScheme="blue" onClick={() => handleEditUnit(index)}>
+                      <Button colorScheme="blue" onClick={() => handleEditUnit(unit)}>
                         Edit
                       </Button>
                       <Button colorScheme="red" ml={2} onClick={() => handleDeleteUnit(index)}>
