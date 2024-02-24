@@ -11,8 +11,10 @@ const Index = () => {
   };
 
   const addNewItem = () => {
-    const isDuplicate = inventoryItems.some((item) => item.storeCode === newItem.storeCode);
-    if (!isDuplicate) {
+    const { storeCode, storeName, storeAddress, storekeeperName, storekeeperPhoneNumber } = newItem;
+    const isDuplicate = inventoryItems.some((item) => item.storeCode === storeCode);
+    const isEmpty = !storeCode || !storeName || !storeAddress || !storekeeperName || !storekeeperPhoneNumber;
+    if (!isDuplicate && !isEmpty) {
       setInventoryItems([...inventoryItems, { ...newItem, isEditing: false }]);
       setNewItem({ storeCode: "", storeName: "", storeAddress: "", storekeeperName: "", storekeeperPhoneNumber: "" });
     } else {
