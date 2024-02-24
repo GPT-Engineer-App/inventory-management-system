@@ -19,6 +19,9 @@ const Sidebar = () => {
         <Link as={RouterLink} to="/items">
           Items
         </Link>
+        <Link as={RouterLink} to="/basic-definitions">
+          Basic Definitions
+        </Link>
         <Link as={RouterLink} to="/unit-names">
           Unit Names
         </Link>
