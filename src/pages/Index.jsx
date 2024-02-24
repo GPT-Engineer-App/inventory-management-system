@@ -114,13 +114,34 @@ const Index = () => {
               <Tbody>
                 {inventoryItems.map((item, index) => (
                   <Tr key={index}>
-                    <Td>{item.storeCode}</Td>
-                    <Td>{item.storeName}</Td>
-                    <Td>{item.storeAddress}</Td>
-                    <Td>{item.storekeeperName}</Td>
-                    <Td>{item.storekeeperPhoneNumber}</Td>
+                    <Td>{item.isEditing ? <Input value={newItem.storeCode} onChange={handleNewItemChange} /> : item.storeCode}</Td>
+                    <Td>{item.isEditing ? <Input value={newItem.storeName} onChange={handleNewItemChange} /> : item.storeName}</Td>
+                    <Td>{item.isEditing ? <Input value={newItem.storeAddress} onChange={handleNewItemChange} /> : item.storeAddress}</Td>
+                    <Td>{item.isEditing ? <Input value={newItem.storekeeperName} onChange={handleNewItemChange} /> : item.storekeeperName}</Td>
+                    <Td>{item.isEditing ? <Input type="tel" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} /> : item.storekeeperPhoneNumber}</Td>
                     <Td>
-                      <Button colorScheme="blue" mr={2}>
+                      {item.isEditing ? (
+                        <>
+                          <Button colorScheme="green" mr={2} onClick={() => handleSaveItem(index)}>
+                            Save
+                          </Button>
+                          <Button colorScheme="yellow" onClick={() => handleCancelEdit(index)}>
+                            Cancel
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button colorScheme="blue" mr={2} onClick={() => handleEditItem(index)}>
+                            Edit
+                          </Button>
+                          <Button colorScheme="red" onClick={() => handleDeleteItem(index)}>
+                            Delete
+                          </Button>
+                        </>
+                      )}
+                    </Td>
+                    <Td>
+                      <Button colorScheme="blue" mr={2} onClick={() => handleEditItem(index)}>
                         Edit
                       </Button>
                       <Button colorScheme="red" onClick={() => handleDeleteItem(index)}>
