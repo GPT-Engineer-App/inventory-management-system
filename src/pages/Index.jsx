@@ -4,7 +4,7 @@ import { FaPlus, FaUserCircle, FaStoreAlt } from "react-icons/fa";
 
 const Index = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
-  const [newItem, setNewItem] = useState({ name: "", category: "", store: "", quantity: 0, price: "" });
+  const [newItem, setNewItem] = useState({ code: "", name: "", category: "", store: "", quantity: 0, price: "" });
 
   const handleNewItemChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
@@ -50,6 +50,10 @@ const Index = () => {
                   <option value="store-2">Store 2</option>
                 </Select>
               </FormControl>
+              <FormControl id="itemCode" isRequired>
+                <FormLabel>Item Code</FormLabel>
+                <Input name="code" value={newItem.code} onChange={handleNewItemChange} />
+              </FormControl>
               <FormControl id="itemQuantity" isRequired>
                 <FormLabel>Quantity</FormLabel>
                 <Input type="number" name="quantity" value={newItem.quantity} onChange={handleNewItemChange} />
@@ -70,6 +74,7 @@ const Index = () => {
             <Table variant="simple">
               <Thead>
                 <Tr>
+                  <Th>Code</Th>
                   <Th>Item Name</Th>
                   <Th>Category</Th>
                   <Th>Store</Th>
@@ -80,6 +85,7 @@ const Index = () => {
               <Tbody>
                 {inventoryItems.map((item, index) => (
                   <Tr key={index}>
+                    <Td>{item.code}</Td>
                     <Td>{item.name}</Td>
                     <Td>{item.category}</Td>
                     <Td>{item.store}</Td>
