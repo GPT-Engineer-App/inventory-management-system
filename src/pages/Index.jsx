@@ -61,7 +61,7 @@ const Index = () => {
           </Box>
           <Box w="full" p={4} borderWidth="1px" borderRadius="lg">
             <Heading size="md" mb={4}>
-              Inventory List
+              Stores List
             </Heading>
             <Table variant="simple">
               <Thead>
