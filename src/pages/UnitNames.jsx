@@ -28,7 +28,16 @@ const UnitNames = () => {
           <InputLeftElement pointerEvents="none">
             <FaSearch />
           </InputLeftElement>
-          <Input placeholder="Search by code, name..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <Input
+            placeholder="Search by code, name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+            }}
+          />
         </InputGroup>
       </Box>
       <HStack
