@@ -140,14 +140,6 @@ const Index = () => {
                         </>
                       )}
                     </Td>
-                    <Td>
-                      <Button colorScheme="blue" mr={2} onClick={() => handleEditItem(index)}>
-                        Edit
-                      </Button>
-                      <Button colorScheme="red" onClick={() => handleDeleteItem(index)}>
-                        Delete
-                      </Button>
-                    </Td>
                   </Tr>
                 ))}
               </Tbody>
