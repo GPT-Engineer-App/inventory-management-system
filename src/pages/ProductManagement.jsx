@@ -98,10 +98,15 @@ export default function ProductManagement() {
           ))}
         </Tbody>
       </Table>
-      <HStack justifyContent="space-between" mt="8">
+      <HStack justifyContent="center" spacing={2} mt="8">
         <Button onClick={handlePreviousPage} isDisabled={currentPage <= 1}>
           Back
         </Button>
+        {[...Array(Math.ceil(products.length / PAGE_SIZE)).keys()].map((pageNum) => (
+          <Button key={pageNum} onClick={() => setCurrentPage(pageNum + 1)} colorScheme={currentPage === pageNum + 1 ? "blue" : "gray"}>
+            {pageNum + 1}
+          </Button>
+        ))}
         <Button onClick={handleNextPage} isDisabled={products.length <= currentPage * PAGE_SIZE}>
           Next
         </Button>
