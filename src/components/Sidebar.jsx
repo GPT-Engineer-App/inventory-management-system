@@ -24,6 +24,9 @@ const Sidebar = () => {
             <MenuItem as={RouterLink} to="/items">
               Items
             </MenuItem>
+            <MenuItem as={RouterLink} to="/products">
+              Products
+            </MenuItem>
             {/* Other Basic Definitions items will go here */}
           </MenuList>
         </Menu>
