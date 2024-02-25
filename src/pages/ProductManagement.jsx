@@ -4,15 +4,15 @@ import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", price: "", quantity: "", unit: "" });
+  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", price: "", unit: "" });
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
   const addNewProduct = () => {
-    setProducts([...products, { ...newProduct, code: newProduct.code, quantity: parseInt(newProduct.quantity) }]);
-    setNewProduct({ name: "", description: "", price: "", quantity: "", unit: "" });
+    setProducts([...products, { ...newProduct, code: newProduct.code }]);
+    setNewProduct({ name: "", description: "", price: "", unit: "" });
   };
 
   return (
@@ -31,10 +31,7 @@ export default function ProductManagement() {
           <FormLabel>Description</FormLabel>
           <Input placeholder="Product description" name="description" value={newProduct.description} onChange={handleNewProductChange} />
         </FormControl>
-        <FormControl>
-          <FormLabel>Quantity</FormLabel>
-          <Input placeholder="Product quantity" name="quantity" type="number" value={newProduct.quantity} onChange={handleNewProductChange} />
-        </FormControl>
+
         <FormControl>
           <FormLabel>Unit</FormLabel>
           <Input placeholder="Unit of measure" name="unit" value={newProduct.unit} onChange={handleNewProductChange} />
@@ -53,7 +50,7 @@ export default function ProductManagement() {
             <Th>Code</Th>
             <Th>Name</Th>
             <Th>Description</Th>
-            <Th>Quantity</Th>
+
             <Th>Unit</Th>
             <Th isNumeric>Price</Th>
             <Th>Actions</Th>
@@ -65,7 +62,7 @@ export default function ProductManagement() {
               <Td>{product.code}</Td>
               <Td>{product.name}</Td>
               <Td>{product.description}</Td>
-              <Td>{product.quantity}</Td>
+
               <Td>{product.unit}</Td>
               <Td isNumeric>{product.price}</Td>
               <Td>
