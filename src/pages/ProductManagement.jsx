@@ -4,15 +4,15 @@ import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "" });
+  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "", productGroup: "" });
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
   const addNewProduct = () => {
-    setProducts([...products, { ...newProduct, code: newProduct.code }]);
-    setNewProduct({ name: "", description: "", price: "", unit: "" });
+    setProducts([...products, { ...newProduct }]);
+    setNewProduct({ code: "", name: "", description: "", unit: "", productGroup: "" });
   };
 
   return (
@@ -48,6 +48,7 @@ export default function ProductManagement() {
             <Th>Name</Th>
             <Th>Description</Th>
 
+            <Th>Product Group</Th>
             <Th>Unit</Th>
 
             <Th>Actions</Th>
@@ -60,6 +61,7 @@ export default function ProductManagement() {
               <Td>{product.name}</Td>
               <Td>{product.description}</Td>
 
+              <Td>{product.productGroup}</Td>
               <Td>{product.unit}</Td>
 
               <Td>
