@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import RTLProvider from "./RTLProvider";
 
 const colors = {
   brand: {
@@ -16,8 +15,8 @@ const theme = extendTheme({ colors });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RTLProvider>
+    <ChakraProvider theme={theme}>
       <App />
-    </RTLProvider>
-  </React.StrictMode>,
+    </ChakraProvider>
+  </React.StrictMode>
 );
