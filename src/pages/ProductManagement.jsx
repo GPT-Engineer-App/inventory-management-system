@@ -4,7 +4,7 @@ import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", price: "", unit: "" });
+  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "" });
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -36,10 +36,7 @@ export default function ProductManagement() {
           <FormLabel>Unit</FormLabel>
           <Input placeholder="Unit of measure" name="unit" value={newProduct.unit} onChange={handleNewProductChange} />
         </FormControl>
-        <FormControl>
-          <FormLabel>Price</FormLabel>
-          <Input placeholder="Product price" name="price" value={newProduct.price} onChange={handleNewProductChange} />
-        </FormControl>
+
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewProduct}>
           Add Product
         </Button>
@@ -52,7 +49,7 @@ export default function ProductManagement() {
             <Th>Description</Th>
 
             <Th>Unit</Th>
-            <Th isNumeric>Price</Th>
+
             <Th>Actions</Th>
           </Tr>
         </Thead>
@@ -64,7 +61,7 @@ export default function ProductManagement() {
               <Td>{product.description}</Td>
 
               <Td>{product.unit}</Td>
-              <Td isNumeric>{product.price}</Td>
+
               <Td>
                 <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm">
                   Edit
