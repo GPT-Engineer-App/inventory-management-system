@@ -3,7 +3,18 @@ import { Box, Heading, Button, Input, FormControl, FormLabel, Table, Thead, Tbod
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ProductManagement() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    { code: "P001", name: "Notebook", description: "200 pages notebook", unit: "Pcs", productGroup: "Stationery" },
+    { code: "P002", name: "Ball Pen", description: "Blue ink ball pen", unit: "Pcs", productGroup: "Stationery" },
+    { code: "P003", name: "Desk Chair", description: "Adjustable office chair", unit: "Pcs", productGroup: "Furniture" },
+    { code: "P004", name: "Monitor", description: "24 inch LED monitor", unit: "Pcs", productGroup: "Electronics" },
+    { code: "P005", name: "Keyboard", description: "Mechanical keyboard", unit: "Pcs", productGroup: "Electronics" },
+    { code: "P006", name: "Mouse", description: "Wireless mouse", unit: "Pcs", productGroup: "Electronics" },
+    { code: "P007", name: "Printer", description: "Laser printer", unit: "Pcs", productGroup: "Electronics" },
+    { code: "P008", name: "Desk Lamp", description: "LED desk lamp", unit: "Pcs", productGroup: "Furniture" },
+    { code: "P009", name: "Stapler", description: "Heavy duty stapler", unit: "Pcs", productGroup: "Stationery" },
+    { code: "P010", name: "Marker Pens", description: "Set of 4 colors", unit: "Set", productGroup: "Stationery" },
+  ]);
   const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "", productGroup: "" });
 
   const handleNewProductChange = (e) => {
