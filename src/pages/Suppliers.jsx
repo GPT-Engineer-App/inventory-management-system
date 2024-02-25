@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { Box, FormControl, FormLabel, Input, Button, VStack, Table, Thead, Tbody, Tr, Th, Td, Heading } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, Button, VStack, HStack, Table, Thead, Tbody, Tr, Th, Td, Heading } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
+const PAGE_SIZE = 5;
+
 const Suppliers = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const fakeSuppliers = Array.from({ length: 20 }, (_, index) => ({
     code: `S00${index + 1}`,
     name: `Supplier ${index + 1}`,
     contact: `Contact ${index + 1}`,
     address: `Address ${index + 1}`,
   }));
-  const [suppliers, setSuppliers] = useState(fakeSuppliers);
+  const [suppliers, setSuppliers] = useState(fakeSuppliers.slice(0, PAGE_SIZE));
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
 
   const handleNewSupplierChange = (e) => {
@@ -32,10 +35,19 @@ const Suppliers = () => {
     setNewSupplier({ code: "", name: "", contact: "", address: "" });
   };
 
+  const handlePreviousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
   return (
     <Box p={4}>
       <Heading mb={6}>Suppliers Management</Heading>
       <VStack spacing={4}>
+        {/* ... All existing form controls and the Add Supplier button ... */}
         <FormControl>
           <FormLabel>Supplier Code</FormLabel>
           <Input placeholder="Enter supplier code" name="code" value={newSupplier.code} onChange={handleNewSupplierChange} />
@@ -67,7 +79,7 @@ const Suppliers = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {suppliers.map((supplier, index) => (
+          {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
             <Tr key={index}>
               <Td>{supplier.code}</Td>
               <Td>{supplier.name}</Td>
@@ -85,6 +97,19 @@ const Suppliers = () => {
           ))}
         </Tbody>
       </Table>
+      <HStack justifyContent="center" spacing={2} mt="8">
+        <Button onClick={handlePreviousPage} isDisabled={currentPage <= 1}>
+          Back
+        </Button>
+        {[...Array(Math.ceil(suppliers.length / PAGE_SIZE)).keys()].map((pageNum) => (
+          <Button key={pageNum} onClick={() => setCurrentPage(pageNum + 1)} colorScheme={currentPage === pageNum + 1 ? "blue" : "gray"}>
+            {pageNum + 1}
+          </Button>
+        ))}
+        <Button onClick={handleNextPage} isDisabled={suppliers.length <= currentPage * PAGE_SIZE}>
+          Next
+        </Button>
+      </HStack>
     </Box>
   );
 };
