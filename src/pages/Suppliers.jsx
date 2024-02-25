@@ -109,9 +109,12 @@ const Suppliers = () => {
             {pageNum + 1}
           </Button>
         ))}
-        <Button onClick={handleNextPage} isDisabled={suppliers.length <= currentPage * PAGE_SIZE}>
-          Next
-        </Button>
+        <HStack>
+          <Text>Total Suppliers: {suppliers.length}</Text>
+          <Button onClick={handleNextPage} isDisabled={suppliers.length <= currentPage * PAGE_SIZE}>
+            Next
+          </Button>
+        </HStack>
       </HStack>
     </Box>
   );
