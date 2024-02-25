@@ -6,13 +6,16 @@ const PAGE_SIZE = 5;
 
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const fakeSuppliers = Array.from({ length: 20 }, (_, index) => ({
-    code: `S00${index + 1}`,
-    name: `Supplier ${index + 1}`,
-    contact: `Contact ${index + 1}`,
-    address: `Address ${index + 1}`,
-  }));
-  const [suppliers, setSuppliers] = useState(fakeSuppliers.slice(0, PAGE_SIZE));
+  const fakeSuppliers = Array.from({ length: 20 }, (_, index) => {
+    const paddedIndex = (index + 1).toString().padStart(3, "0");
+    return {
+      code: `S${paddedIndex}`,
+      name: `Supplier ${paddedIndex}`,
+      contact: `Contact ${paddedIndex}`,
+      address: `Address ${paddedIndex}`,
+    };
+  });
+  const [suppliers, setSuppliers] = useState(fakeSuppliers);
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
 
   const handleNewSupplierChange = (e) => {
