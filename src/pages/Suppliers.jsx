@@ -109,12 +109,9 @@ const Suppliers = () => {
             {pageNum + 1}
           </Button>
         ))}
-        <Button onClick={handleNextPage} isDisabled={suppliers.length <= currentPage * PAGE_SIZE} mr={2}>
+        <Button onClick={handleNextPage} isDisabled={suppliers.length <= currentPage * PAGE_SIZE}>
           Next
         </Button>
-        <Text>
-          {(currentPage - 1) * PAGE_SIZE + 1} - {Math.min(currentPage * PAGE_SIZE, suppliers.length)} of {suppliers.length}
-        </Text>
       </HStack>
     </Box>
   );
