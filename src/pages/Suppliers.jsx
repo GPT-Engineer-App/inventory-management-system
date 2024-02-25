@@ -3,7 +3,13 @@ import { Box, FormControl, FormLabel, Input, Button, VStack, Table, Thead, Tbody
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 const Suppliers = () => {
-  const [suppliers, setSuppliers] = useState([]);
+  const fakeSuppliers = Array.from({ length: 20 }, (_, index) => ({
+    code: `S00${index + 1}`,
+    name: `Supplier ${index + 1}`,
+    contact: `Contact ${index + 1}`,
+    address: `Address ${index + 1}`,
+  }));
+  const [suppliers, setSuppliers] = useState(fakeSuppliers);
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
 
   const handleNewSupplierChange = (e) => {
