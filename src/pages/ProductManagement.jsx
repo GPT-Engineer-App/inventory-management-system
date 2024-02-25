@@ -4,14 +4,14 @@ import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", description: "", price: "", quantity: "", unit: "" });
+  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", price: "", quantity: "", unit: "" });
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
   const addNewProduct = () => {
-    setProducts([...products, { ...newProduct, quantity: parseInt(newProduct.quantity) }]);
+    setProducts([...products, { ...newProduct, code: newProduct.code, quantity: parseInt(newProduct.quantity) }]);
     setNewProduct({ name: "", description: "", price: "", quantity: "", unit: "" });
   };
 
@@ -19,6 +19,10 @@ export default function ProductManagement() {
     <Box p={4}>
       <Heading mb={6}>Product Management</Heading>
       <VStack spacing={4}>
+        <FormControl>
+          <FormLabel>Code</FormLabel>
+          <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} />
+        </FormControl>
         <FormControl>
           <FormLabel>Name</FormLabel>
           <Input placeholder="Product name" name="name" value={newProduct.name} onChange={handleNewProductChange} />
@@ -46,6 +50,7 @@ export default function ProductManagement() {
       <Table variant="simple" mt={10}>
         <Thead>
           <Tr>
+            <Th>Code</Th>
             <Th>Name</Th>
             <Th>Description</Th>
             <Th>Quantity</Th>
@@ -57,6 +62,7 @@ export default function ProductManagement() {
         <Tbody>
           {products.map((product, index) => (
             <Tr key={index}>
+              <Td>{product.code}</Td>
               <Td>{product.name}</Td>
               <Td>{product.description}</Td>
               <Td>{product.quantity}</Td>
