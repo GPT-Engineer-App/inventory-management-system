@@ -1,8 +1,21 @@
 import React, { useState } from "react";
-import { Box, Heading, Button, Input, FormControl, FormLabel, Table, Thead, Tbody, Tr, Th, Td, VStack } from "@chakra-ui/react";
+import { Box, Heading, Button, Input, FormControl, FormLabel, Table, Thead, Tbody, Tr, Th, Td, VStack, HStack } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
+const PAGE_SIZE = 5;
+
 export default function ProductManagement() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePreviousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  // Rest of the component remains unchanged
   const [products, setProducts] = useState([
     { code: "P001", name: "Notebook", description: "200 pages notebook", unit: "Pcs", productGroup: "Stationery" },
     { code: "P002", name: "Ball Pen", description: "Blue ink ball pen", unit: "Pcs", productGroup: "Stationery" },
@@ -66,7 +79,7 @@ export default function ProductManagement() {
           </Tr>
         </Thead>
         <Tbody>
-          {products.map((product, index) => (
+          {products.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((product, index) => (
             <Tr key={index}>
               <Td>{product.code}</Td>
               <Td>{product.name}</Td>
@@ -85,6 +98,14 @@ export default function ProductManagement() {
           ))}
         </Tbody>
       </Table>
+      <HStack justifyContent="space-between" mt="8">
+        <Button onClick={handlePreviousPage} isDisabled={currentPage <= 1}>
+          Back
+        </Button>
+        <Button onClick={handleNextPage} isDisabled={products.length <= currentPage * PAGE_SIZE}>
+          Next
+        </Button>
+      </HStack>
     </Box>
   );
 }
