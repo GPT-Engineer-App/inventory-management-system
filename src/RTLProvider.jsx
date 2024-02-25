@@ -1,12 +1,11 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
-const theme = (direction) =>
-  extendTheme({
-    direction: direction, // Toggles between 'rtl' and 'ltr'
-  });
+const theme = extendTheme({
+  direction: "rtl", // Right-to-left support
+});
 
-const RTLProvider = ({ children, direction }) => {
-  return <ChakraProvider theme={theme(direction)}>{children}</ChakraProvider>;
+const RTLProvider = ({ children }) => {
+  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
 
 export default RTLProvider;

@@ -30,9 +30,11 @@ export default function App() {
     </Router>
   );
 
-  return (
-    <RTLProvider direction={isRTL ? "rtl" : "ltr"}>
+  return isRTL ? (
+    <RTLProvider>
       <Application />
     </RTLProvider>
+  ) : (
+    <Application />
   );
 }
