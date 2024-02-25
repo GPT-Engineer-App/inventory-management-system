@@ -31,12 +31,14 @@ export default function ProductManagement() {
           <FormLabel>Description</FormLabel>
           <Input placeholder="Product description" name="description" value={newProduct.description} onChange={handleNewProductChange} />
         </FormControl>
-
         <FormControl>
           <FormLabel>Unit</FormLabel>
           <Input placeholder="Unit of measure" name="unit" value={newProduct.unit} onChange={handleNewProductChange} />
         </FormControl>
-
+        <FormControl>
+          <FormLabel>Product Group</FormLabel>
+          <Input placeholder="Product group" name="productGroup" value={newProduct.productGroup} onChange={handleNewProductChange} />
+        </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewProduct}>
           Add Product
         </Button>
@@ -47,10 +49,8 @@ export default function ProductManagement() {
             <Th>Code</Th>
             <Th>Name</Th>
             <Th>Description</Th>
-
             <Th>Product Group</Th>
             <Th>Unit</Th>
-
             <Th>Actions</Th>
           </Tr>
         </Thead>
@@ -60,10 +60,8 @@ export default function ProductManagement() {
               <Td>{product.code}</Td>
               <Td>{product.name}</Td>
               <Td>{product.description}</Td>
-
               <Td>{product.productGroup}</Td>
               <Td>{product.unit}</Td>
-
               <Td>
                 <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm">
                   Edit
