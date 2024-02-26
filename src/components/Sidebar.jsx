@@ -9,33 +9,30 @@ const Sidebar = () => {
         Menu
       </Heading>
       <VStack align="stretch" spacing="3">
-        <Menu>
-          <MenuButton as={Link}>Basic Definitions</MenuButton>
-          <MenuList>
-            <MenuItem as={RouterLink} to="/users">
-              Users
-            </MenuItem>
-            <MenuItem as={RouterLink} to="/warehouse-management">
-              Warehouse Management
-            </MenuItem>
-
-            <MenuItem as={RouterLink} to="/products">
-              Products
-            </MenuItem>
-            <MenuItem as={RouterLink} to="/unit-management">
-              Unit Management
-            </MenuItem>
-            <MenuItem as={RouterLink} to="/suppliers">
-              Suppliers
-            </MenuItem>
-            <MenuItem as={RouterLink} to="/about">
-              About
-            </MenuItem>
-            <MenuItem as={RouterLink} to="/chat-history">
-              Chat History
-            </MenuItem>
-          </MenuList>
-        </Menu>
+        <MenuItem as={RouterLink} to="/inventory">
+          Inventory Dashboard
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/products">
+          Products
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/suppliers">
+          Suppliers
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/users">
+          Users
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/warehouse-management">
+          Warehouse Management
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/unit-management">
+          Unit Management
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/about">
+          About
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/chat-history">
+          Chat History
+        </MenuItem>
       </VStack>
     </Box>
   );
