@@ -17,12 +17,10 @@ export default function App() {
       <HStack spacing={0} align="start">
         <Sidebar />
         <Routes>
-          <Route exact path="/" element={<Index />} />
           <Route path="/inventory" element={<InventoryDashboard />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/users" element={<UserManagement />} />
-          <Route path="/warehouse-management" element={<WarehouseManagement />} />
           <Route path="/warehouse-management" element={<WarehouseManagement />} />
         </Routes>
       </HStack>
