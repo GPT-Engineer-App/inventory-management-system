@@ -52,20 +52,20 @@ const Suppliers = () => {
   };
 
   const addNewSupplier = () => {
-    const { code, name, phone, email } = newSupplier;
-    const isEmpty = !code || !name || !phone || !email;
+    const { code, name, contact, address, email } = newSupplier;
+    const isEmpty = !code || !name || !contact || !address || !email;
     const isDuplicate = suppliers.some((supplier) => supplier.code === code);
     const isEmailValid = validateEmail(email);
 
     if (isEmpty) {
-      alert("Please fill in all fields.");
+      alert("Please fill in all the fields.");
     } else if (isDuplicate) {
-      alert("Supplier with this code already exists.");
+      alert("A supplier with this code already exists.");
     } else if (!isEmailValid) {
       alert("Please enter a valid email address.");
     } else {
-      setSuppliers([...suppliers, newSupplier]);
-      setNewSupplier({ code: "", name: "", phone: "", email: "" });
+      setSuppliers([...suppliers, { code, name, contact, address, email }]);
+      setNewSupplier({ code: "", name: "", contact: "", address: "", email: "" });
     }
   };
 
