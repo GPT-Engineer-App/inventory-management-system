@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+const PAGE_SIZE = 5;
 import { Box, VStack, Heading, Text, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const WarehouseManagement = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [warehouses, setWarehouses] = useState([
     { warehouseCode: "WH001", warehouseName: "Central Warehouse", warehouseAddress: "1234 Central St", managerName: "John Doe", managerPhone: "555-1234", managerEmail: "johndoe@example.com" },
     { warehouseCode: "WH002", warehouseName: "East Warehouse", warehouseAddress: "5678 East Ave", managerName: "Jane Smith", managerPhone: "555-5678", managerEmail: "janesmith@example.com" },
@@ -116,8 +118,20 @@ const WarehouseManagement = () => {
           </Tbody>
         </Table>
       </VStack>
+      <HStack justifyContent="center" spacing={2} mt="8">
+        <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage <= 1}>
+          Back
+        </Button>
+        {[...Array(Math.ceil(warehouses.length / PAGE_SIZE)).keys()].map((pageNum) => (
+          <Button key={pageNum} onClick={() => setCurrentPage(pageNum + 1)} colorScheme={currentPage === pageNum + 1 ? "blue" : "gray"}>
+            {pageNum + 1}
+          </Button>
+        ))}
+        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={warehouses.length <= currentPage * PAGE_SIZE}>
+          Next
+        </Button>
+      </HStack>
     </Box>
   );
 };
-
 export default WarehouseManagement;
