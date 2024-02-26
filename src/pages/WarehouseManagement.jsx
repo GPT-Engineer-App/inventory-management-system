@@ -26,13 +26,14 @@ const WarehouseManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editWarehouse, setEditWarehouse] = useState({});
 
-  const handleEditWarehouse = (warehouse) => {
-    setEditWarehouse(warehouse);
+  const handleEditWarehouse = (warehouseCode) => {
+    const warehouseToEdit = warehouses.find((wh) => wh.warehouseCode === warehouseCode);
+    setEditWarehouse(warehouseToEdit);
     setIsEditing(true);
   };
 
   const handleSaveEditedWarehouse = () => {
-    setWarehouses(warehouses.map((wh) => (wh.warehouseCode === editWarehouse.warehouseCode ? editWarehouse : wh)));
+    setWarehouses(warehouses.map((wh) => (wh.warehouseCode === editWarehouse.warehouseCode ? { ...wh, ...editWarehouse } : wh)));
     setEditWarehouse({});
     setIsEditing(false);
   };
@@ -100,16 +101,7 @@ const WarehouseManagement = () => {
           <FormLabel>Warehouse Manager Email</FormLabel>
           <Input placeholder="Enter warehouse manager's email" type="email" name="managerEmail" value={newWarehouse.managerEmail} onChange={handleWarehouseChange} />
         </FormControl>
-        <Button
-          colorScheme="blue"
-          onClick={() => {
-            if (!newWarehouse.managerName || !newWarehouse.managerPhone || !newWarehouse.managerEmail) {
-              alert("Please fill in all the manager fields.");
-              return;
-            }
-            addWarehouse();
-          }}
-        >
+        <Button colorScheme="blue" onClick={addWarehouse}>
           Add Warehouse
         </Button>
         <Table variant="simple">
@@ -126,32 +118,32 @@ const WarehouseManagement = () => {
           <Tbody>
             {warehouses.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((warehouse, index) => (
               <Tr key={index}>
-                {isEditing && editWarehouse.warehouseCode === warehouse.warehouseCode ? (
-                  <>
+                {isEditing && editWarehouse.warehouseCode == warehouse.warehouseCode ? (
+                  <Tr key={warehouse.warehouseCode}>
                     <Td>
-                      <Input value={editWarehouse.warehouseCode} onChange={handleWarehouseChange} name="warehouseCode" />
+                      <Input value={editWarehouse.warehouseCode} isReadOnly name="warehouseCode" />
                     </Td>
                     <Td>
-                      <Input value={editWarehouse.warehouseName} onChange={handleWarehouseChange} name="warehouseName" />
+                      <Input value={editWarehouse.warehouseName} onChange={(e) => setEditWarehouse({ ...editWarehouse, warehouseName: e.target.value })} />
                     </Td>
                     <Td>
-                      <Input value={editWarehouse.managerName} onChange={handleWarehouseChange} name="managerName" />
+                      <Input value={editWarehouse.managerName} onChange={(e) => setEditWarehouse({ ...editWarehouse, managerName: e.target.value })} />
                     </Td>
                     <Td>
-                      <Input value={editWarehouse.managerPhone} onChange={handleWarehouseChange} name="managerPhone" />
+                      <Input value={editWarehouse.managerPhone} onChange={(e) => setEditWarehouse({ ...editWarehouse, managerPhone: e.target.value })} />
                     </Td>
                     <Td>
-                      <Input value={editWarehouse.managerEmail} onChange={handleWarehouseChange} name="managerEmail" />
+                      <Input value={editWarehouse.managerEmail} onChange={(e) => setEditWarehouse({ ...editWarehouse, managerEmail: e.target.value })} />
                     </Td>
                     <Td>
-                      <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={handleSaveEditedWarehouse}>
+                      <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveEditedWarehouse(warehouse.warehouseCode)}>
                         Save
                       </Button>
                       <Button leftIcon={<FaTrash />} colorScheme="gray" size="sm" onClick={handleCancelEdit}>
                         Cancel
                       </Button>
                     </Td>
-                  </>
+                  </Tr>
                 ) : (
                   <>
                     <Td>{warehouse.warehouseCode}</Td>
