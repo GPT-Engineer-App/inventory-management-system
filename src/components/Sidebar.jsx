@@ -12,24 +12,28 @@ const Sidebar = () => {
         <Menu>
           <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
-            <MenuItem as={RouterLink} to="/">
-              Index
+            <MenuItem as={RouterLink} to="/unit-names">
+              Unit Names
             </MenuItem>
-            <MenuItem as={RouterLink} to="/dashboard">
-              Inventory Dashboard
+            <MenuItem as={RouterLink} to="/">
+              Stores
             </MenuItem>
             <MenuItem as={RouterLink} to="/users">
-              User Management
+              Users
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/items">
+              Items
             </MenuItem>
             <MenuItem as={RouterLink} to="/products">
-              Product Management
+              Products
             </MenuItem>
             <MenuItem as={RouterLink} to="/suppliers">
               Suppliers
             </MenuItem>
-            <MenuItem as={RouterLink} to="/units">
-              Unit Names
+            <MenuItem as={RouterLink} to="/users">
+              Users
             </MenuItem>
+            {/* Other Basic Definitions items will go here */}
           </MenuList>
         </Menu>
       </VStack>
