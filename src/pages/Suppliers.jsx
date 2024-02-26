@@ -126,7 +126,7 @@ const Suppliers = () => {
               <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input value={editingSupplier.address} onChange={(e) => setEditingSupplier({ ...editingSupplier, address: e.target.value })} name="address" /> : supplier.address}</Td>
               <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input type="email" value={editingSupplier.email} onChange={(e) => setEditingSupplier({ ...editingSupplier, email: e.target.value })} name="email" /> : supplier.email}</Td>
               <Td>
-                {supplier.isEditing ? (
+                {editingSupplier && supplier.code === editingSupplier.code ? (
                   <>
                     <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleSaveEditSupplier(index)}>
                       Save
