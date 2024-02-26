@@ -68,23 +68,23 @@ export default function ProductManagement() {
       <VStack spacing={4} align="stretch">
         <FormControl>
           <FormLabel>Product Code</FormLabel>
-          <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} />
+          <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Product Name</FormLabel>
-          <Input placeholder="Product name" name="name" value={newProduct.name} onChange={handleNewProductChange} />
+          <Input placeholder="Product name" name="name" value={newProduct.name} onChange={handleNewProductChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Product Description</FormLabel>
-          <Input placeholder="Product description" name="description" value={newProduct.description} onChange={handleNewProductChange} />
+          <Input placeholder="Product description" name="description" value={newProduct.description} onChange={handleNewProductChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Unit</FormLabel>
-          <Input placeholder="Unit of measure" name="unit" value={newProduct.unit} onChange={handleNewProductChange} />
+          <Input placeholder="Unit of measure" name="unit" value={newProduct.unit} onChange={handleNewProductChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Product Group</FormLabel>
-          <Input placeholder="Product group" name="productGroup" value={newProduct.productGroup} onChange={handleNewProductChange} />
+          <Input placeholder="Product group" name="productGroup" value={newProduct.productGroup} onChange={handleNewProductChange} size="md" />
         </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewProduct}>
           Add Product

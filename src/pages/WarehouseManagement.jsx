@@ -82,23 +82,23 @@ const WarehouseManagement = () => {
 
         <FormControl>
           <FormLabel>Warehouse Code</FormLabel>
-          <Input placeholder="Enter warehouse code" name="warehouseCode" value={newWarehouse.warehouseCode} onChange={handleWarehouseChange} />
+          <Input placeholder="Enter warehouse code" name="warehouseCode" value={newWarehouse.warehouseCode} onChange={handleWarehouseChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Warehouse Name</FormLabel>
-          <Input placeholder="Enter warehouse name" name="warehouseName" value={newWarehouse.warehouseName} onChange={handleWarehouseChange} />
+          <Input placeholder="Enter warehouse name" name="warehouseName" value={newWarehouse.warehouseName} onChange={handleWarehouseChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Warehouse Manager Name</FormLabel>
-          <Input placeholder="Enter warehouse manager's name" name="managerName" value={newWarehouse.managerName} onChange={handleWarehouseChange} />
+          <Input placeholder="Enter warehouse manager's name" name="managerName" value={newWarehouse.managerName} onChange={handleWarehouseChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Warehouse Manager Phone</FormLabel>
-          <Input placeholder="Enter warehouse manager's phone" name="managerPhone" value={newWarehouse.managerPhone} onChange={handleWarehouseChange} />
+          <Input placeholder="Enter warehouse manager's phone" name="managerPhone" value={newWarehouse.managerPhone} onChange={handleWarehouseChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Warehouse Manager Email</FormLabel>
-          <Input placeholder="Enter warehouse manager's email" type="email" name="managerEmail" value={newWarehouse.managerEmail} onChange={handleWarehouseChange} />
+          <Input placeholder="Enter warehouse manager's email" type="email" name="managerEmail" value={newWarehouse.managerEmail} onChange={handleWarehouseChange} size="md" />
         </FormControl>
         <Button
           colorScheme="blue"

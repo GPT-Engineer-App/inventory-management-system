@@ -57,11 +57,11 @@ const UnitManagement = () => {
         <Heading>Unit Management</Heading>
         <FormControl>
           <FormLabel>Unit Code</FormLabel>
-          <Input placeholder="Enter unit code" name="code" value={newUnit.code} onChange={handleUnitChange} />
+          <Input placeholder="Enter unit code" name="code" value={newUnit.code} onChange={handleUnitChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Unit Name</FormLabel>
-          <Input placeholder="Enter unit name" name="name" value={newUnit.name} onChange={handleUnitChange} />
+          <Input placeholder="Enter unit name" name="name" value={newUnit.name} onChange={handleUnitChange} size="md" />
         </FormControl>
         <Button colorScheme="blue" onClick={addUnit}>
           {editMode ? "Save Changes" : "Add Unit"}

@@ -111,23 +111,23 @@ const Suppliers = () => {
         {/* ... All existing form controls and the Add Supplier button ... */}
         <FormControl>
           <FormLabel>Supplier Code</FormLabel>
-          <Input placeholder="Enter supplier code" name="code" value={newSupplier.code} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier code" name="code" value={newSupplier.code} onChange={handleNewSupplierChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Supplier Name</FormLabel>
-          <Input placeholder="Enter supplier name" name="name" value={newSupplier.name} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier name" name="name" value={newSupplier.name} onChange={handleNewSupplierChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Supplier Phone</FormLabel>
-          <Input placeholder="Enter supplier phone" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier phone" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Supplier Address</FormLabel>
-          <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} size="md" />
         </FormControl>
         <FormControl>
           <FormLabel>Supplier E-mail</FormLabel>
-          <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} />
+          <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} size="md" />
         </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
           Add Supplier

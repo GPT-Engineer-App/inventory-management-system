@@ -79,23 +79,23 @@ const Index = () => {
             <HStack>
               <FormControl id="storeCode" isRequired>
                 <FormLabel>Store Code</FormLabel>
-                <Input name="storeCode" value={newItem.storeCode} onChange={handleNewItemChange} />
+                <Input name="storeCode" value={newItem.storeCode} onChange={handleNewItemChange} size="md" />
               </FormControl>
               <FormControl id="storeName" isRequired>
                 <FormLabel>Store Name</FormLabel>
-                <Input name="storeName" value={newItem.storeName} onChange={handleNewItemChange} />
+                <Input name="storeName" value={newItem.storeName} onChange={handleNewItemChange} size="md" />
               </FormControl>
               <FormControl id="storeAddress" isRequired>
                 <FormLabel>Store Address</FormLabel>
-                <Input name="storeAddress" value={newItem.storeAddress} onChange={handleNewItemChange} />
+                <Input name="storeAddress" value={newItem.storeAddress} onChange={handleNewItemChange} size="md" />
               </FormControl>
               <FormControl id="storekeeperName" isRequired>
                 <FormLabel>Storekeeper's Name</FormLabel>
-                <Input name="storekeeperName" value={newItem.storekeeperName} onChange={handleNewItemChange} />
+                <Input name="storekeeperName" value={newItem.storekeeperName} onChange={handleNewItemChange} size="md" />
               </FormControl>
               <FormControl id="storekeeperPhoneNumber" isRequired>
                 <FormLabel>Storekeeper's Phone Number</FormLabel>
-                <Input type="tel" name="storekeeperPhoneNumber" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} />
+                <Input type="tel" name="storekeeperPhoneNumber" value={newItem.storekeeperPhoneNumber} onChange={handleNewItemChange} size="md" />
               </FormControl>
               <Button leftIcon={<FaPlus />} colorScheme="teal" onClick={addNewItem}>
                 Add Item
