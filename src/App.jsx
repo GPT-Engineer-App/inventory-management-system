@@ -20,7 +20,6 @@ export default function App() {
           <Route path="/unit-names" element={<UnitNames />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/users" element={<UserManagement />} />
           {/* Additional routes will go here */}
         </Routes>
       </HStack>
