@@ -15,11 +15,39 @@ const Suppliers = () => {
       address: `Address ${paddedIndex}`,
     };
   });
-  const [suppliers, setSuppliers] = useState(fakeSuppliers);
+  const [suppliers, setSuppliers] = useState(fakeSuppliers.map((supplier) => ({ ...supplier, isEditing: false })));
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
+  const [editingSupplier, setEditingSupplier] = useState({});
 
   const handleNewSupplierChange = (e) => {
-    setNewSupplier({ ...newSupplier, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (editingSupplier.code) {
+      setEditingSupplier({ ...editingSupplier, [name]: value });
+    } else {
+      setNewSupplier({ ...newSupplier, [name]: value });
+    }
+  };
+
+  const handleEditSupplier = (supplierToEdit) => {
+    setEditingSupplier(supplierToEdit);
+    setSuppliers(suppliers.map((supplier) => (supplier.code === supplierToEdit.code ? { ...supplier, isEditing: true } : supplier)));
+  };
+
+  const handleSaveEdit = (codeToSave) => {
+    setSuppliers(suppliers.map((supplier) => (supplier.code === codeToSave ? { ...editingSupplier, isEditing: false } : supplier)));
+    setEditingSupplier({});
+  };
+
+  const handleCancelEdit = (codeToCancel) => {
+    setSuppliers(suppliers.map((supplier) => (supplier.code === codeToCancel ? { ...supplier, isEditing: false } : supplier)));
+    setEditingSupplier({});
+  };
+
+  const handleDeleteSupplier = (codeToDelete) => {
+    setSuppliers(suppliers.filter((supplier) => supplier.code !== codeToDelete));
+    if (editingSupplier.code === codeToDelete) {
+      setEditingSupplier({});
+    }
   };
 
   const addNewSupplier = () => {
@@ -53,19 +81,19 @@ const Suppliers = () => {
         {/* ... All existing form controls and the Add Supplier button ... */}
         <FormControl>
           <FormLabel>Supplier Code</FormLabel>
-          <Input placeholder="Enter supplier code" name="code" value={newSupplier.code} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier code" name="code" value={editingSupplier.code || newSupplier.code} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Name</FormLabel>
-          <Input placeholder="Enter supplier name" name="name" value={newSupplier.name} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier name" name="name" value={editingSupplier.name || newSupplier.name} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Contact</FormLabel>
-          <Input placeholder="Enter supplier contact" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier contact" name="contact" value={editingSupplier.contact || newSupplier.contact} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Address</FormLabel>
-          <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier address" name="address" value={editingSupplier.address || newSupplier.address} onChange={handleNewSupplierChange} />
         </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
           Add Supplier
@@ -89,12 +117,25 @@ const Suppliers = () => {
               <Td>{supplier.contact}</Td>
               <Td>{supplier.address}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
-                  Save Edit
-                </Button>
-                <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
-                  Delete
-                </Button>
+                {supplier.isEditing ? (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveEdit(supplier.code)}>
+                      Save
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleCancelEdit(supplier.code)}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditSupplier(supplier)}>
+                      Edit
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleDeleteSupplier(supplier.code)}>
+                      Delete
+                    </Button>
+                  </>
+                )}
               </Td>
             </Tr>
           ))}
