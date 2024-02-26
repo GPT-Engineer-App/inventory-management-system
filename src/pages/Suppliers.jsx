@@ -32,13 +32,11 @@ const Suppliers = () => {
     setEditingSupplier({ ...editingSupplier, [name]: value });
   };
 
-  useEffect(() => {
-    if (editIndex >= 0) {
-      setEditingSupplier({ ...suppliers[editIndex] });
-    }
-  }, [editIndex, suppliers]);
+  // This useEffect is removed as it is no longer necessary with the change in the handleEditClick function.
 
   const handleEditClick = (index) => {
+    const supplierToEdit = suppliers[(currentPage - 1) * PAGE_SIZE + index];
+    setEditingSupplier({ ...supplierToEdit });
     setEditIndex(index);
   };
 
