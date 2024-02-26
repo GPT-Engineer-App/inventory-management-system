@@ -58,7 +58,6 @@ const Suppliers = () => {
       const updatedSuppliers = suppliers.map((supplier, idx) => (idx === supplierIndex ? { ...editingSupplier, isEditing: false } : supplier));
       setSuppliers(updatedSuppliers);
       setEditingSupplier(null);
-      setEditIndex(-1);
     }
   };
 
