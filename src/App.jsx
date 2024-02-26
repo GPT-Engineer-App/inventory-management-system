@@ -19,12 +19,10 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<Index />} />
           <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/unit-names" element={<UnitNames />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/users" element={<UserManagement />} />
-          <Route path="/warehouses" element={<WarehouseManagement />} />
-          <Route path="/warehouses" element={<WarehouseManagement />} />
+          <Route path="/unit-management" element={<UnitManagement />} />
         </Routes>
       </HStack>
     </Router>
