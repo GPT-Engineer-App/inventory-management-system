@@ -22,7 +22,6 @@ export default function App() {
           {" "}
           {/* Adjust left padding to account for the sidebar width */}
           <Routes>
-            <Route path="/inventory" element={<InventoryDashboard />} />
             <Route path="/products" element={<ProductManagement />} />
             <Route path="/suppliers" element={<Suppliers />} />
             <Route path="/users" element={<UserManagement />} />
