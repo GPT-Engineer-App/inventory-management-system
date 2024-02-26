@@ -23,6 +23,7 @@ export default function App() {
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/users" element={<UserManagement />} />
           <Route path="/warehouses" element={<WarehouseManagement />} />
+          <Route path="/warehouses" element={<WarehouseManagement />} />
         </Routes>
       </HStack>
     </Router>
