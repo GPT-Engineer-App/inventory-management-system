@@ -44,20 +44,27 @@ const Suppliers = () => {
     setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: false } : supplier)));
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const addNewSupplier = () => {
-    const { code, name, contact, address } = editingSupplier;
-    const isEmpty = !code || !name || !contact || !address;
+    const { code, name, phone, email } = newSupplier;
+    const isEmpty = !code || !name || !phone || !email;
+    const isDuplicate = suppliers.some((supplier) => supplier.code === code);
+    const isEmailValid = validateEmail(email);
+
     if (isEmpty) {
       alert("Please fill in all fields.");
-      return;
-    }
-    const isDuplicate = suppliers.some((supplier) => supplier.code === code);
-    if (isDuplicate) {
+    } else if (isDuplicate) {
       alert("Supplier with this code already exists.");
-      return;
+    } else if (!isEmailValid) {
+      alert("Please enter a valid email address.");
+    } else {
+      setSuppliers([...suppliers, newSupplier]);
+      setNewSupplier({ code: "", name: "", phone: "", email: "" });
     }
-    setSuppliers([...suppliers, newSupplier]);
-    setNewSupplier({ code: "", name: "", contact: "", address: "" });
   };
 
   const handlePreviousPage = () => {
