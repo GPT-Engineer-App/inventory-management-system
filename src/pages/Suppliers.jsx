@@ -107,9 +107,9 @@ const Suppliers = () => {
           <Tr>
             <Th>Code</Th>
             <Th>Name</Th>
-            <Th>Phone</Th>
-            <Th>Supplier Address</Th>
-            <Th>Supplier E-mail</Th>
+            <Th>Contact</Th>
+            <Th>Address</Th>
+            <Th>E-mail</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -117,7 +117,8 @@ const Suppliers = () => {
             <Tr key={index}>
               <Td>{supplier.isEditing ? <Input value={supplier.code} onChange={(e) => handleSupplierChange(e, index)} name="code" /> : supplier.code}</Td>
               <Td>{supplier.isEditing ? <Input value={supplier.name} onChange={(e) => handleSupplierChange(e, index)} name="name" /> : supplier.name}</Td>
-              <Td>{supplier.isEditing ? <Input value={supplier.phone} onChange={(e) => handleSupplierChange(e, index)} name="phone" /> : supplier.phone}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.contact} onChange={(e) => handleSupplierChange(e, index)} name="contact" /> : supplier.contact}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.address} onChange={(e) => handleSupplierChange(e, index)} name="address" /> : supplier.address}</Td>
               <Td>{supplier.isEditing ? <Input type="email" value={supplier.email} onChange={(e) => handleSupplierChange(e, index)} name="email" /> : supplier.email}</Td>
               <Td>
                 {supplier.isEditing ? (
@@ -134,7 +135,7 @@ const Suppliers = () => {
                     <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditSupplier(index)}>
                       Edit
                     </Button>
-                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
+                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleDeleteSupplier(index)}>
                       Delete
                     </Button>
                   </>
