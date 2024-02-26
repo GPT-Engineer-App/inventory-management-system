@@ -67,7 +67,7 @@ export default function ProductManagement() {
       <Heading mb={6}>Product Management</Heading>
       <VStack spacing={4}>
         <FormControl>
-          <FormLabel>Code</FormLabel>
+          <FormLabel>Product Code</FormLabel>
           <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} />
         </FormControl>
         <FormControl>
