@@ -3,7 +3,7 @@ import { Box, VStack, Heading, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 const Sidebar = () => (
-  <Box w="20%" p="5" borderWidth="1px" borderColor="gray.200" height="100vh" position="fixed">
+  <Box w={{ base: "100%", md: "20%" }} p="5" borderWidth="1px" borderColor="gray.200" height="100vh" position={{ base: "relative", md: "fixed" }}>
     <Heading size="md" mb="6">
       Menu
     </Heading>
