@@ -7,7 +7,7 @@ const PAGE_SIZE = 5;
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [editingSupplier, setEditingSupplier] = useState(null);
-  const [editIndex, setEditIndex] = useState(-1);
+  // Remove the editIndex state as it's no longer used
   const toast = useToast();
   const fakeSuppliers = Array.from({ length: 30 }, (_, index) => {
     const paddedIndex = (index + 1).toString().padStart(3, "0");
@@ -34,15 +34,16 @@ const Suppliers = () => {
 
   // This useEffect is removed as it is no longer necessary with the change in the handleEditClick function.
 
-  const handleEditClick = (index) => {
-    const supplierToEdit = suppliers[(currentPage - 1) * PAGE_SIZE + index];
+  const handleEditClick = (pageIndex) => {
+    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
+    const supplierToEdit = suppliers[globalIndex];
     setEditingSupplier({ ...supplierToEdit });
-    setEditIndex(index);
   };
 
   const handleSaveClick = (pageIndex) => {
-    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
-    if (globalIndex !== -1) {
+    const supplierToSave = suppliers.find((supplier) => supplier.code === editingSupplier.code);
+    const supplierIndex = suppliers.indexOf(supplierToSave);
+    if (supplierIndex !== -1) {
       if (!editingSupplier.code || !editingSupplier.name || !editingSupplier.contact || !editingSupplier.address || !editingSupplier.email) {
         toast({
           title: "Error",
@@ -53,7 +54,8 @@ const Suppliers = () => {
         });
         return;
       }
-      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === globalIndex ? { ...editingSupplier, isEditing: false } : supplier));
+      const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
+      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === supplierIndex ? { ...editingSupplier, isEditing: false } : supplier));
       setSuppliers(updatedSuppliers);
       setEditingSupplier(null);
       setEditIndex(-1);
@@ -145,13 +147,13 @@ const Suppliers = () => {
         <Tbody>
           {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
             <Tr key={index}>
-              <Td>{editIndex === index ? <Input value={editingSupplier.code} onChange={(e) => setEditingSupplier({ ...editingSupplier, code: e.target.value })} /> : supplier.code}</Td>
-              <Td>{editIndex === index ? <Input value={editingSupplier.name} onChange={(e) => setEditingSupplier({ ...editingSupplier, name: e.target.value })} /> : supplier.name}</Td>
-              <Td>{editIndex === index ? <Input value={editingSupplier.contact} onChange={(e) => setEditingSupplier({ ...editingSupplier, contact: e.target.value })} /> : supplier.contact}</Td>
-              <Td>{editIndex === index ? <Input value={editingSupplier.address} onChange={(e) => setEditingSupplier({ ...editingSupplier, address: e.target.value })} /> : supplier.address}</Td>
-              <Td>{editIndex === index ? <Input type="email" value={editingSupplier.email} onChange={(e) => setEditingSupplier({ ...editingSupplier, email: e.target.value })} /> : supplier.email}</Td>
+              <Td>{editingSupplier && editingSupplier.code === supplier.code ? <Input value={editingSupplier.code} onChange={(e) => setEditingSupplier({ ...editingSupplier, code: e.target.value })} /> : supplier.code}</Td>
+              <Td>{editingSupplier && editingSupplier.code === supplier.code ? <Input value={editingSupplier.name} onChange={(e) => setEditingSupplier({ ...editingSupplier, name: e.target.value })} /> : supplier.name}</Td>
+              <Td>{editingSupplier && editingSupplier.code === supplier.code ? <Input value={editingSupplier.contact} onChange={(e) => setEditingSupplier({ ...editingSupplier, contact: e.target.value })} /> : supplier.contact}</Td>
+              <Td>{editingSupplier && editingSupplier.code === supplier.code ? <Input value={editingSupplier.address} onChange={(e) => setEditingSupplier({ ...editingSupplier, address: e.target.value })} /> : supplier.address}</Td>
+              <Td>{editingSupplier && editingSupplier.code === supplier.code ? <Input type="email" value={editingSupplier.email} onChange={(e) => setEditingSupplier({ ...editingSupplier, email: e.target.value })} /> : supplier.email}</Td>
               <Td>
-                {editIndex === index ? (
+                {editingSupplier && suppliers[(currentPage - 1) * PAGE_SIZE + index].code === editingSupplier.code ? (
                   <>
                     <Button leftIcon={<FaSave />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveClick(index)}>
                       Save
