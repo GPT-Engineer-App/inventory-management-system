@@ -21,9 +21,10 @@ const UserManagement = () => {
   const [users, setUsers] = useState(fakeUsers);
   const [newUser, setNewUser] = useState({ username: "", role: "", isActive: true });
 
-  const handleUserChange = (e, index) => {
+  const handleUserChange = (e, pageUserIndex) => {
     const { name, value, checked, type } = e.target;
-    setUsers(users.map((user, idx) => (idx === index ? { ...user, [name]: type === "checkbox" ? checked : value } : user)));
+    const actualIndex = (currentPage - 1) * PAGE_SIZE + pageUserIndex;
+    setUsers(users.map((user, idx) => (idx === actualIndex ? { ...user, [name]: type === "checkbox" ? checked : value } : user)));
   };
 
   const addNewUser = () => {
@@ -35,14 +36,16 @@ const UserManagement = () => {
     }
   };
 
-  const handleEditUser = (userToEdit) => {
-    setUsers(users.map((user) => (user.username === userToEdit.username ? { ...user, isEditing: true } : user)));
+  const handleEditUser = (pageUserIndex) => {
+    const actualIndex = (currentPage - 1) * PAGE_SIZE + pageUserIndex;
+    setUsers(users.map((user, idx) => (idx === actualIndex ? { ...user, isEditing: true } : user)));
   };
 
-  const handleSaveEdit = (indexToSave) => {
+  const handleSaveEdit = (pageUserIndex) => {
+    const actualIndex = (currentPage - 1) * PAGE_SIZE + pageUserIndex;
     setUsers(
       users.map((user, idx) => {
-        if (idx === indexToSave && user.isEditing) {
+        if (idx === actualIndex) {
           return { ...user, isEditing: false };
         }
         return user;
@@ -102,12 +105,12 @@ const UserManagement = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, index) => (
-            <Tr key={index}>
-              <Td>{user.isEditing ? <Input name="username" value={user.username} onChange={(e) => handleNewUserChange(e, index)} /> : user.username}</Td>
+          {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, pageUserIndex) => (
+            <Tr key={pageUserIndex}>
+              <Td>{user.isEditing ? <Input name="username" value={user.username} onChange={(e) => handleUserChange(e, pageUserIndex)} /> : user.username}</Td>
               <Td>
                 {user.isEditing ? (
-                  <Select name="role" value={user.role} onChange={(e) => handleNewUserChange(e, index)}>
+                  <Select name="role" value={user.role} onChange={(e) => handleUserChange(e, pageUserIndex)}>
                     <option value="Admin">Admin</option>
                     <option value="Editor">Editor</option>
                     <option value="Viewer">Viewer</option>
@@ -116,18 +119,18 @@ const UserManagement = () => {
                   user.role
                 )}
               </Td>
-              <Td>{user.isEditing ? <Switch name="isActive" isChecked={user.isActive} onChange={(e) => handleNewUserChange(e, index)} /> : user.isActive ? "Yes" : "No"}</Td>
+              <Td>{user.isEditing ? <Switch name="isActive" isChecked={user.isActive} onChange={(e) => handleUserChange(e, pageUserIndex)} /> : user.isActive ? "Yes" : "No"}</Td>
               <Td>
                 {user.isEditing ? (
-                  <Button leftIcon={<FaEdit />} colorScheme="green" onClick={() => handleSaveEdit(index)}>
+                  <Button leftIcon={<FaEdit />} colorScheme="green" onClick={() => handleSaveEdit(pageUserIndex)}>
                     Save
                   </Button>
                 ) : (
-                  <Button leftIcon={<FaEdit />} colorScheme="yellow" onClick={() => handleEditUser(user)}>
+                  <Button leftIcon={<FaEdit />} colorScheme="yellow" onClick={() => handleEditUser(pageUserIndex)}>
                     Edit
                   </Button>
                 )}
-                <Button leftIcon={<FaTrash />} colorScheme="red" ml={2} onClick={() => handleDeleteUser(index)}>
+                <Button leftIcon={<FaTrash />} colorScheme="red" ml={2} onClick={() => handleDeleteUser((currentPage - 1) * PAGE_SIZE + pageUserIndex)}>
                   Delete
                 </Button>
               </Td>
