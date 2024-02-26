@@ -89,8 +89,8 @@ const Suppliers = () => {
               <Td>{supplier.contact}</Td>
               <Td>{supplier.address}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm">
-                  Edit
+                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
+                  Save Edit
                 </Button>
                 <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
                   Delete

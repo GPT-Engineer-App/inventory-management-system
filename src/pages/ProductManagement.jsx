@@ -87,8 +87,8 @@ export default function ProductManagement() {
               <Td>{product.productGroup}</Td>
               <Td>{product.unit}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm">
-                  Edit
+                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
+                  Save Edit
                 </Button>
                 <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
                   Delete

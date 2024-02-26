@@ -100,7 +100,7 @@ const UserManagement = () => {
               <Td>{user.isActive ? "Yes" : "No"}</Td>
               <Td>
                 <Button leftIcon={<FaEdit />} colorScheme="yellow" mr={2} onClick={() => handleEditUser(index)}>
-                  Edit
+                  Save Edit
                 </Button>
                 <Button leftIcon={<FaTrash />} colorScheme="red" onClick={() => handleDeleteUser(index)}>
                   Delete
