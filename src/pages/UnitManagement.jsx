@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 
+const PAGE_SIZE = 5;
+
 const UnitManagement = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [units, setUnits] = useState([]);
   const [newUnit, setNewUnit] = useState({ code: "", name: "" });
   const [editMode, setEditMode] = useState(false);
@@ -63,7 +66,20 @@ const UnitManagement = () => {
         <Button colorScheme="blue" onClick={addUnit}>
           {editMode ? "Save Changes" : "Add Unit"}
         </Button>
-        <Table variant="simple">
+        <HStack justifyContent="center" spacing={2} mt="8">
+          <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1}>
+            Previous
+          </Button>
+          {[...Array(Math.ceil(units.length / PAGE_SIZE)).keys()].map((pageNum) => (
+            <Button key={pageNum} onClick={() => setCurrentPage(pageNum + 1)} colorScheme={currentPage === pageNum + 1 ? "blue" : "gray"}>
+              {pageNum + 1}
+            </Button>
+          ))}
+          <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage * PAGE_SIZE >= units.length}>
+            Next
+          </Button>
+        </HStack>
+        <Table variant="simple" mt={4}>
           <Thead>
             <Tr>
               <Th>Code</Th>
@@ -72,7 +88,7 @@ const UnitManagement = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {units.map((unit, index) => (
+            {units.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((unit, index) => (
               <Tr key={index}>
                 <Td>{editMode && editUnitIndex === index ? <Input placeholder="Enter unit code" name="code" value={editedUnit.code} onChange={(e) => setEditedUnit({ ...editedUnit, code: e.target.value })} /> : unit.code}</Td>
                 <Td>{editMode && editUnitIndex === index ? <Input placeholder="Enter unit name" name="name" value={editedUnit.name} onChange={(e) => setEditedUnit({ ...editedUnit, name: e.target.value })} /> : unit.name}</Td>
