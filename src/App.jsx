@@ -16,7 +16,7 @@ import ChatHistory from "./pages/ChatHistory";
 export default function App() {
   return (
     <Router>
-      <HStack spacing={0} align="start" style={{ width: "calc(100% - 250px)", marginLeft: "250px" }}>
+      <HStack spacing={0} align="start">
         <Sidebar />
         <Routes>
           <Route path="/inventory" element={<InventoryDashboard />} />
