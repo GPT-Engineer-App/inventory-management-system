@@ -30,13 +30,53 @@ export default function ProductManagement() {
   ]);
   const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "", productGroup: "" });
 
-  const handleNewProductChange = (e) => {
-    setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
+  const handleProductChange = (e, productCode) => {
+    const { name, value } = e.target;
+    if (productCode) {
+      setEditingProduct({ ...editingProduct, [name]: value });
+    } else {
+      setNewProduct({ ...newProduct, [name]: value });
+    }
+  };
+
+  const [editingProduct, setEditingProduct] = useState({});
+
+  const handleEditProduct = (productToEdit) => {
+    setEditingProduct(productToEdit);
+    setProducts(products.map((product) => (product.code === productToEdit.code ? { ...product, isEditing: true } : product)));
+  };
+
+  const handleSaveEdit = (codeToSave) => {
+    setProducts(products.map((product) => (product.code === codeToSave ? { ...editingProduct, isEditing: false } : product)));
+    setEditingProduct({});
+  };
+
+  const handleCancelEdit = (codeToCancel) => {
+    setProducts(products.map((product) => (product.code === codeToCancel ? { ...product, isEditing: false } : product)));
+    setEditingProduct({});
+  };
+
+  const handleDeleteProduct = (codeToDelete) => {
+    setProducts(products.filter((product) => product.code !== codeToDelete));
+    if (editingProduct.code === codeToDelete) {
+      setEditingProduct({});
+    }
   };
 
   const addNewProduct = () => {
-    setProducts([...products, { ...newProduct }]);
-    setNewProduct({ code: "", name: "", description: "", unit: "", productGroup: "" });
+    if (!editingProduct.code) {
+      setProducts([...products, { ...newProduct }]);
+      setNewProduct({ code: "", name: "", description: "", unit: "", productGroup: "" });
+    }
+  };
+
+  const handleNewProductChange = (e, productCode) => {
+    const { name, value } = e.target;
+    if (productCode) {
+      setEditingProduct({ ...editingProduct, [name]: value });
+    } else {
+      setNewProduct({ ...newProduct, [name]: value });
+    }
   };
 
   return (
@@ -81,18 +121,31 @@ export default function ProductManagement() {
         <Tbody>
           {products.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((product, index) => (
             <Tr key={index}>
-              <Td>{product.code}</Td>
-              <Td>{product.name}</Td>
-              <Td>{product.description}</Td>
-              <Td>{product.productGroup}</Td>
-              <Td>{product.unit}</Td>
+              <Td>{product.isEditing ? <Input name="code" value={editingProduct.code} onChange={(e) => handleNewProductChange(e, product.code)} /> : product.code}</Td>
+              <Td>{product.isEditing ? <Input name="name" value={editingProduct.name} onChange={(e) => handleNewProductChange(e, product.code)} /> : product.name}</Td>
+              <Td>{product.isEditing ? <Input name="description" value={editingProduct.description} onChange={(e) => handleNewProductChange(e, product.code)} /> : product.description}</Td>
+              <Td>{product.isEditing ? <Input name="productGroup" value={editingProduct.productGroup} onChange={(e) => handleNewProductChange(e, product.code)} /> : product.productGroup}</Td>
+              <Td>{product.isEditing ? <Input name="unit" value={editingProduct.unit} onChange={(e) => handleNewProductChange(e, product.code)} /> : product.unit}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
-                  Save Edit
-                </Button>
-                <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
-                  Delete
-                </Button>
+                {product.isEditing ? (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveEdit(product.code)}>
+                      Save
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleCancelEdit(product.code)}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditProduct(product)}>
+                      Edit
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleDeleteProduct(product.code)}>
+                      Delete
+                    </Button>
+                  </>
+                )}
               </Td>
             </Tr>
           ))}
