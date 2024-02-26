@@ -25,28 +25,25 @@ const Suppliers = () => {
     setNewSupplier({ ...newSupplier, [name]: value });
   };
 
-  const handleSupplierChange = (e, index) => {
+  const handleSupplierChange = (e) => {
     const { name, value } = e.target;
-    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, [name]: value } : supplier)));
+    setEditingSupplier({ ...editingSupplier, [name]: value });
   };
 
-  const handleEditSupplier = (pageIndex) => {
-    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
-    const supplierToEdit = suppliers[globalIndex];
+  const handleEditSupplier = (supplierToEdit) => {
     setEditingSupplier({ ...supplierToEdit, isEditing: true });
-    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndex ? { ...supplier, isEditing: true } : supplier)));
   };
-  const handleSaveEditSupplier = (pageIndexToSave) => {
-    const globalIndexToSave = (currentPage - 1) * PAGE_SIZE + pageIndexToSave;
-    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndexToSave ? { ...supplier, isEditing: false } : supplier)));
+  const handleSaveEditSupplier = () => {
+    const updatedSuppliers = suppliers.map((supplier) => (supplier.code === editingSupplier.code ? { ...editingSupplier, isEditing: false } : supplier));
+    setSuppliers(updatedSuppliers);
+    setEditingSupplier({ code: "", name: "", contact: "", address: "", email: "" });
   };
   const handleDeleteSupplier = (pageIndexToDelete) => {
     const globalIndexToDelete = (currentPage - 1) * PAGE_SIZE + pageIndexToDelete;
     setSuppliers(suppliers.filter((_, idx) => idx !== globalIndexToDelete));
   };
-  const handleCancelEditSupplier = (pageIndexToCancel) => {
-    const globalIndexToCancel = (currentPage - 1) * PAGE_SIZE + pageIndexToCancel;
-    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndexToCancel ? { ...supplier, isEditing: false } : supplier)));
+  const handleCancelEditSupplier = () => {
+    setEditingSupplier({ code: "", name: "", contact: "", address: "", email: "" });
   };
 
   const validateEmail = (email) => {
@@ -122,11 +119,11 @@ const Suppliers = () => {
         <Tbody>
           {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
             <Tr key={index}>
-              <Td>{supplier.isEditing ? <Input value={editingSupplier.code} onChange={(e) => handleSupplierChange(e, index)} name="code" /> : supplier.code}</Td>
-              <Td>{supplier.isEditing ? <Input value={editingSupplier.name} onChange={(e) => handleSupplierChange(e, index)} name="name" /> : supplier.name}</Td>
-              <Td>{supplier.isEditing ? <Input value={editingSupplier.contact} onChange={(e) => handleSupplierChange(e, index)} name="contact" /> : supplier.contact}</Td>
-              <Td>{supplier.isEditing ? <Input value={editingSupplier.address} onChange={(e) => handleSupplierChange(e, index)} name="address" /> : supplier.address}</Td>
-              <Td>{supplier.isEditing ? <Input type="email" value={editingSupplier.email} onChange={(e) => handleSupplierChange(e, index)} name="email" /> : supplier.email}</Td>
+              <Td>{supplier.isEditing ? <Input value={editingSupplier.code} onChange={handleSupplierChange} name="code" /> : supplier.code}</Td>
+              <Td>{supplier.isEditing ? <Input value={editingSupplier.name} onChange={handleSupplierChange} name="name" /> : supplier.name}</Td>
+              <Td>{supplier.isEditing ? <Input value={editingSupplier.contact} onChange={handleSupplierChange} name="contact" /> : supplier.contact}</Td>
+              <Td>{supplier.isEditing ? <Input value={editingSupplier.address} onChange={handleSupplierChange} name="address" /> : supplier.address}</Td>
+              <Td>{supplier.isEditing ? <Input type="email" value={editingSupplier.email} onChange={handleSupplierChange} name="email" /> : supplier.email}</Td>
               <Td>
                 {supplier.isEditing ? (
                   <>
