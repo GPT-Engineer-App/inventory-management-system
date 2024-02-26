@@ -174,7 +174,7 @@ const WarehouseManagement = () => {
           </Tbody>
         </Table>
       </VStack>
-      <HStack justifyContent="center" spacing={2} mt="8">
+      <HStack position="fixed" bottom="0" left="0" right="0" p="5" bg="white" justifyContent="center" spacing={2} boxShadow="lg">
         <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1}>
           Back
         </Button>
