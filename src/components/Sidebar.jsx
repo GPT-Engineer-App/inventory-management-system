@@ -28,7 +28,9 @@ const Sidebar = () => {
             <MenuItem as={RouterLink} to="/suppliers">
               Suppliers
             </MenuItem>
-            {/* Other Basic Definitions items will go here */}
+            <MenuItem as={RouterLink} to="/users">
+              User Management
+            </MenuItem>
           </MenuList>
         </Menu>
       </VStack>

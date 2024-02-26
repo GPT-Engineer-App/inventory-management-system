@@ -21,7 +21,7 @@ export default function App() {
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
           {/* Route for "items" has been removed */}
-          {/* Additional routes will go here */}
+          <Route path="/users" element={<UserManagement />} />
         </Routes>
       </HStack>
     </Router>
