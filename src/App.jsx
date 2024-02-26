@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import Sidebar from "./components/Sidebar";
 import About from "./pages/About";
-import { HStack } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import InventoryDashboard from "./pages/InventoryDashboard";
 import UnitNames from "./pages/UnitNames.jsx";
 import ProductManagement from "./pages/ProductManagement.jsx";
@@ -16,19 +16,21 @@ import ChatHistory from "./pages/ChatHistory";
 export default function App() {
   return (
     <Router>
-      <HStack spacing={0} align="start" w="calc(100% - 250px)" ml={{ base: "0", md: "250px" }}>
-        <Sidebar />
-        <Routes>
-          <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/products" element={<ProductManagement />} />
-          <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/users" element={<UserManagement />} />
-          <Route path="/warehouse-management" element={<WarehouseManagement />} />
-          <Route path="/unit-management" element={<UnitManagement />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/chat-history" element={<ChatHistory />} />
-        </Routes>
-      </HStack>
+      <Flex>
+        <Sidebar w="250px" />
+        <Box flex="1">
+          <Routes>
+            <Route path="/inventory" element={<InventoryDashboard />} />
+            <Route path="/products" element={<ProductManagement />} />
+            <Route path="/suppliers" element={<Suppliers />} />
+            <Route path="/users" element={<UserManagement />} />
+            <Route path="/warehouse-management" element={<WarehouseManagement />} />
+            <Route path="/unit-management" element={<UnitManagement />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/chat-history" element={<ChatHistory />} />
+          </Routes>
+        </Box>
+      </Flex>
     </Router>
   );
 }
