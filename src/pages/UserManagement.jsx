@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Switch, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
+import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Switch, Table, Thead, Tbody, Tr, Th, Td, HStack, Select } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const PAGE_SIZE = 5;
@@ -69,7 +69,11 @@ const UserManagement = () => {
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Role</FormLabel>
-          <Input name="role" value={newUser.role} onChange={handleNewUserChange} />
+          <Select name="role" value={newUser.role} onChange={handleNewUserChange} placeholder="Select role">
+            <option value="Admin">Admin</option>
+            <option value="Editor">Editor</option>
+            <option value="Viewer">Viewer</option>
+          </Select>
         </FormControl>
         <FormControl display="flex" alignItems="center">
           <FormLabel mb="0">Active</FormLabel>
