@@ -35,13 +35,15 @@ const Suppliers = () => {
     setEditingSupplier({ ...supplierToEdit, isEditing: true });
     setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: true } : supplier)));
   };
-
   const handleSaveEditSupplier = (indexToSave) => {
     setSuppliers(suppliers.map((supplier, idx) => (idx === indexToSave ? { ...supplier, isEditing: false } : supplier)));
   };
-
-  const handleCancelEditSupplier = (index) => {
-    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: false } : supplier)));
+  const handleDeleteSupplier = (indexToDelete) => {
+    const { code } = suppliers[indexToDelete];
+    setSuppliers(suppliers.filter((supplier) => supplier.code !== code));
+  };
+  const handleCancelEditSupplier = (indexToCancel) => {
+    setSuppliers(suppliers.map((supplier, idx) => (idx === indexToCancel ? { ...supplier, isEditing: false } : supplier)));
   };
 
   const validateEmail = (email) => {
