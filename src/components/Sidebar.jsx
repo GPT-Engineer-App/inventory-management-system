@@ -13,7 +13,7 @@ const Sidebar = () => (
     </Heading>
     <Menu>
       <MenuButton as={IconButton} aria-label="Options" icon={<FaChevronDown />} variant="outline" w="full" />
-      <MenuList>
+      <MenuList placement="right-start">
         <MenuItem as={RouterLink} to="/products">
           Products
         </MenuItem>
