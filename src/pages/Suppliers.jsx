@@ -19,9 +19,9 @@ const Suppliers = () => {
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
   const [editingSupplier, setEditingSupplier] = useState({});
 
-  const handleNewSupplierChange = (e) => {
+  const handleSupplierChange = (e, supplierCode) => {
     const { name, value } = e.target;
-    if (editingSupplier.code) {
+    if (supplierCode) {
       setEditingSupplier({ ...editingSupplier, [name]: value });
     } else {
       setNewSupplier({ ...newSupplier, [name]: value });
@@ -78,24 +78,88 @@ const Suppliers = () => {
     <Box p={4}>
       <Heading mb={6}>Suppliers Management</Heading>
       <VStack spacing={4}>
-        {/* ... All existing form controls and the Add Supplier button ... */}
+        {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
+          <Tr key={supplier.code}>
+            <Td>{supplier.isEditing ? <Input name="code" value={editingSupplier.code} onChange={(e) => handleSupplierChange(e, supplier.code)} /> : supplier.code}</Td>
+            <Td>{supplier.isEditing ? <Input name="name" value={editingSupplier.name} onChange={(e) => handleSupplierChange(e, supplier.code)} /> : supplier.name}</Td>
+            <Td>{supplier.isEditing ? <Input name="contact" value={editingSupplier.contact} onChange={(e) => handleSupplierChange(e, supplier.code)} /> : supplier.contact}</Td>
+            <Td>{supplier.isEditing ? <Input name="address" value={editingSupplier.address} onChange={(e) => handleSupplierChange(e, supplier.code)} /> : supplier.address}</Td>
+            <Td>
+              {supplier.isEditing ? (
+                <>
+                  <Button
+                    leftIcon={<FaEdit />}
+                    colorScheme="green"
+                    size="sm"
+                    mr={2}
+                    onClick={() => {
+                      setSuppliers(suppliers.map((s) => (s.code === supplier.code ? { ...editingSupplier, isEditing: false } : s)));
+                      setEditingSupplier({});
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    leftIcon={<FaTrash />}
+                    colorScheme="yellow"
+                    size="sm"
+                    mr={2}
+                    onClick={() => {
+                      setSuppliers(suppliers.map((s) => (s.code === supplier.code ? { ...s, isEditing: false } : s)));
+                      setEditingSupplier({});
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => setEditingSupplier({ ...supplier, isEditing: true })}>
+                    Edit
+                  </Button>
+                  <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => setSuppliers(suppliers.filter((s) => s.code !== supplier.code))}>
+                    Delete
+                  </Button>
+                </>
+              )}
+            </Td>
+          </Tr>
+        ))}
         <FormControl>
           <FormLabel>Supplier Code</FormLabel>
-          <Input placeholder="Enter supplier code" name="code" value={editingSupplier.code || newSupplier.code} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier code" name="code" value={editingSupplier.code || newSupplier.code} onChange={(e) => handleSupplierChange(e)} />
         </FormControl>
         <FormControl>
           <FormLabel>Name</FormLabel>
-          <Input placeholder="Enter supplier name" name="name" value={editingSupplier.name || newSupplier.name} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier name" name="name" value={editingSupplier.name || newSupplier.name} onChange={(e) => handleSupplierChange(e)} />
         </FormControl>
         <FormControl>
           <FormLabel>Contact</FormLabel>
-          <Input placeholder="Enter supplier contact" name="contact" value={editingSupplier.contact || newSupplier.contact} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier contact" name="contact" value={editingSupplier.contact || newSupplier.contact} onChange={(e) => handleSupplierChange(e)} />
         </FormControl>
         <FormControl>
           <FormLabel>Address</FormLabel>
-          <Input placeholder="Enter supplier address" name="address" value={editingSupplier.address || newSupplier.address} onChange={handleNewSupplierChange} />
+          <Input placeholder="Enter supplier address" name="address" value={editingSupplier.address || newSupplier.address} onChange={(e) => handleSupplierChange(e)} />
         </FormControl>
-        <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
+        <Button
+          leftIcon={<FaPlus />}
+          colorScheme="blue"
+          onClick={() => {
+            const { code, name, contact, address } = newSupplier;
+            const isEmpty = !code || !name || !contact || !address;
+            if (isEmpty) {
+              alert("Please fill in all fields.");
+              return;
+            }
+            const isDuplicate = suppliers.some((supplier) => supplier.code === code);
+            if (isDuplicate) {
+              alert("Supplier with this code already exists.");
+              return;
+            }
+            setSuppliers([...suppliers, { ...newSupplier, isEditing: false }]);
+            setNewSupplier({ code: "", name: "", contact: "", address: "" });
+          }}
+        >
           Add Supplier
         </Button>
       </VStack>
