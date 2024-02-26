@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 const PAGE_SIZE = 5;
-import { Box, VStack, Heading, Text, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Box, VStack, Heading, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const WarehouseManagement = () => {
@@ -98,7 +98,7 @@ const WarehouseManagement = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {warehouses.map((warehouse, index) => (
+            {warehouses.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((warehouse, index) => (
               <Tr key={index}>
                 <Td>{warehouse.warehouseCode}</Td>
                 <Td>{warehouse.warehouseName}</Td>
@@ -119,7 +119,7 @@ const WarehouseManagement = () => {
         </Table>
       </VStack>
       <HStack justifyContent="center" spacing={2} mt="8">
-        <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage <= 1}>
+        <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1}>
           Back
         </Button>
         {[...Array(Math.ceil(warehouses.length / PAGE_SIZE)).keys()].map((pageNum) => (
@@ -127,7 +127,7 @@ const WarehouseManagement = () => {
             {pageNum + 1}
           </Button>
         ))}
-        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={warehouses.length <= currentPage * PAGE_SIZE}>
+        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage >= Math.ceil(warehouses.length / PAGE_SIZE)}>
           Next
         </Button>
       </HStack>
