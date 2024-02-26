@@ -6,6 +6,7 @@ const PAGE_SIZE = 5;
 
 export default function ProductManagement() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [editingProduct, setEditingProduct] = useState({ code: "", name: "", description: "", unit: "", productGroup: "", isEditing: false });
 
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);
@@ -32,6 +33,25 @@ export default function ProductManagement() {
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
+  };
+
+  const handleEditProduct = (index) => {
+    const productToEdit = products[index];
+    setEditingProduct({ ...productToEdit, isEditing: true });
+  };
+
+  const handleSaveEditProduct = (indexToSave) => {
+    setProducts(products.map((product, idx) => (idx === indexToSave ? { ...editingProduct, isEditing: false } : product)));
+    setEditingProduct({ code: "", name: "", description: "", unit: "", productGroup: "", isEditing: false });
+  };
+
+  const handleCancelEditProduct = () => {
+    setEditingProduct({ code: "", name: "", description: "", unit: "", productGroup: "", isEditing: false });
+  };
+
+  const handleProductChange = (e) => {
+    const { name, value } = e.target;
+    setEditingProduct({ ...editingProduct, [name]: value });
   };
 
   const addNewProduct = () => {
