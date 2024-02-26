@@ -5,7 +5,16 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 const WarehouseManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [warehouses, setWarehouses] = useState([]);
+  const [warehouses, setWarehouses] = useState(
+    Array.from({ length: 20 }, (_, index) => ({
+      warehouseCode: `WH${(index + 1).toString().padStart(3, "0")}`,
+      warehouseName: `Warehouse ${index + 1}`,
+      warehouseAddress: `Address for WH${(index + 1).toString().padStart(3, "0")}`,
+      managerName: `Manager ${index + 1}`,
+      managerPhone: `+123456789${index}`,
+      managerEmail: `manager${index + 1}@warehouse.com`,
+    })),
+  );
   const [newWarehouse, setNewWarehouse] = useState({
     warehouseCode: "",
     warehouseName: "",
