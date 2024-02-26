@@ -68,11 +68,11 @@ const UserManagement = () => {
       <VStack spacing={4}>
         <FormControl isRequired>
           <FormLabel>Username</FormLabel>
-          <Input name="username" value={newUser.username} onChange={handleNewUserChange} />
+          <Input name="username" value={newUser.username} onChange={(e) => setNewUser({ ...newUser, [e.target.name]: e.target.value })} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Role</FormLabel>
-          <Select name="role" value={newUser.role} onChange={handleNewUserChange} placeholder="Select role">
+          <Select name="role" value={newUser.role} onChange={(e) => setNewUser({ ...newUser, [e.target.name]: e.target.value })} placeholder="Select role">
             <option value="Admin">Admin</option>
             <option value="Editor">Editor</option>
             <option value="Viewer">Viewer</option>
@@ -80,7 +80,7 @@ const UserManagement = () => {
         </FormControl>
         <FormControl display="flex" alignItems="center">
           <FormLabel mb="0">Active</FormLabel>
-          <Switch name="isActive" isChecked={newUser.isActive} onChange={handleNewUserChange} />
+          <Switch name="isActive" isChecked={newUser.isActive} onChange={(e) => setNewUser({ ...newUser, [e.target.name]: e.target.checked })} />
         </FormControl>
         <Button colorScheme="blue" onClick={addNewUser}>
           Add User
