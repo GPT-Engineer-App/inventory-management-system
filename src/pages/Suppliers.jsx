@@ -22,7 +22,26 @@ const Suppliers = () => {
 
   const handleNewSupplierChange = (e) => {
     const { name, value } = e.target;
-    setEditingSupplier({ ...editingSupplier, [name]: value });
+    setNewSupplier({ ...newSupplier, [name]: value });
+  };
+
+  const handleSupplierChange = (e, index) => {
+    const { name, value } = e.target;
+    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, [name]: value } : supplier)));
+  };
+
+  const handleEditSupplier = (index) => {
+    const supplierToEdit = suppliers[index];
+    setEditingSupplier({ ...supplierToEdit, isEditing: true });
+    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: true } : supplier)));
+  };
+
+  const handleSaveEditSupplier = (indexToSave) => {
+    setSuppliers(suppliers.map((supplier, idx) => (idx === indexToSave ? { ...supplier, isEditing: false } : supplier)));
+  };
+
+  const handleCancelEditSupplier = (index) => {
+    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: false } : supplier)));
   };
 
   const addNewSupplier = () => {
@@ -87,17 +106,30 @@ const Suppliers = () => {
         <Tbody>
           {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
             <Tr key={index}>
-              <Td>{supplier.code}</Td>
-              <Td>{supplier.name}</Td>
-              <Td>{supplier.contact}</Td>
-              <Td>{supplier.address}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.code} onChange={(e) => handleSupplierChange(e, index)} name="code" /> : supplier.code}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.name} onChange={(e) => handleSupplierChange(e, index)} name="name" /> : supplier.name}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.contact} onChange={(e) => handleSupplierChange(e, index)} name="contact" /> : supplier.contact}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.address} onChange={(e) => handleSupplierChange(e, index)} name="address" /> : supplier.address}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
-                  Save Edit
-                </Button>
-                <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
-                  Delete
-                </Button>
+                {supplier.isEditing ? (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleSaveEditSupplier(index)}>
+                      Save
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleCancelEditSupplier(index)}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditSupplier(index)}>
+                      Edit
+                    </Button>
+                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2}>
+                      Delete
+                    </Button>
+                  </>
+                )}
               </Td>
             </Tr>
           ))}
