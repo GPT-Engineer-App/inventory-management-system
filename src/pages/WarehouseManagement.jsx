@@ -26,7 +26,7 @@ const WarehouseManagement = () => {
   return (
     <Box p={5}>
       <VStack spacing={4}>
-        <Heading>Warehouse Management</Heading>
+        <Heading>Warehouse Manager</Heading>
 
         <FormControl>
           <FormLabel>Warehouse Code</FormLabel>
