@@ -26,6 +26,9 @@ const Sidebar = () => (
       <Link as={RouterLink} to="/unit-management" p={2} w="full">
         Unit Management
       </Link>
+      <Link as={RouterLink} to="/about" p={2} w="full">
+        About
+      </Link>
     </VStack>
   </Box>
 );
