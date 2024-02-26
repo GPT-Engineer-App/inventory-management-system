@@ -64,7 +64,7 @@ const Suppliers = () => {
 
   const handleCancelClick = () => {
     setEditingSupplier(null);
-    setEditIndex(-1);
+    // setEditIndex(-1); (This line has been removed as `setEditIndex` is not defined)
   };
   const handleDeleteSupplier = (indexToDelete) => {
     const globalIndexToDelete = (currentPage - 1) * PAGE_SIZE + indexToDelete;
