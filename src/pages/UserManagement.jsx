@@ -67,8 +67,8 @@ const UserManagement = () => {
       <Heading mb={6}>User Management</Heading>
       <VStack spacing={4}>
         <FormControl isRequired>
-          <FormLabel>Username</FormLabel>
-          <Input name="code" value={newUser.code} placeholder="User Code" onChange={handleNewUserChange} />
+          <FormLabel>User Code</FormLabel>
+          <Input name="userCode" value={newUser.userCode} placeholder="User Code" onChange={handleNewUserChange} />
           <FormLabel>Username</FormLabel>
           <Input name="username" value={newUser.username} placeholder="Username" onChange={handleNewUserChange} />
         </FormControl>
@@ -101,7 +101,7 @@ const UserManagement = () => {
         <Tbody>
           {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, index) => (
             <Tr key={index}>
-              <Td>{user.isEditing ? <Input name="code" value={user.code} onChange={(e) => handleNewUserChange(e, index)} /> : user.code}</Td>
+              <Td>{user.isEditing ? <Input name="userCode" value={user.userCode} onChange={(e) => handleNewUserChange(e, index)} /> : user.userCode}</Td>
               <Td>{user.isEditing ? <Input name="username" value={user.username} placeholder="Username" onChange={(e) => handleNewUserChange(e, index)} /> : user.username}</Td>
               <Td>
                 {user.isEditing ? (
