@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 
 const UnitManagement = () => {
   const [units, setUnits] = useState([]);
   const [newUnit, setNewUnit] = useState({ code: "", name: "" });
-  const [isEditing, setIsEditing] = useState(false);
-  const [editIndex, setEditIndex] = useState(-1);
+  const [editMode, setEditMode] = useState(false);
+  const [editUnitIndex, setEditUnitIndex] = useState(-1);
+  const [editedUnit, setEditedUnit] = useState({});
 
   const handleUnitChange = (e) => {
     const { name, value } = e.target;
@@ -14,20 +15,33 @@ const UnitManagement = () => {
   };
 
   const addUnit = () => {
-    if (isEditing) {
-      setUnits(units.map((unit, index) => (index === editIndex ? newUnit : unit)));
-      setIsEditing(false);
-      setEditIndex(-1);
+    if (editMode) {
+      setUnits(units.map((unit, index) => (index === editUnitIndex ? editedUnit : unit)));
+      setEditMode(false);
     } else {
       setUnits([...units, newUnit]);
     }
     setNewUnit({ code: "", name: "" });
+    setEditedUnit({});
   };
 
-  const handleEditUnit = (index) => {
-    setIsEditing(true);
-    setEditIndex(index);
-    setNewUnit(units[index]);
+  const handleEditUnitClick = (index) => {
+    setEditMode(true);
+    setEditUnitIndex(index);
+    setEditedUnit(units[index]);
+  };
+
+  const handleSaveEdit = () => {
+    setUnits(units.map((unit, index) => (index === editUnitIndex ? editedUnit : unit)));
+    setEditMode(false);
+    setEditUnitIndex(-1);
+    setEditedUnit({});
+  };
+
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    setEditUnitIndex(-1);
+    setEditedUnit({});
   };
 
   const handleDeleteUnit = (index) => {
@@ -47,7 +61,7 @@ const UnitManagement = () => {
           <Input placeholder="Enter unit name" name="name" value={newUnit.name} onChange={handleUnitChange} />
         </FormControl>
         <Button colorScheme="blue" onClick={addUnit}>
-          {isEditing ? "Save Changes" : "Add Unit"}
+          {editMode ? "Save Changes" : "Add Unit"}
         </Button>
         <Table variant="simple">
           <Thead>
@@ -60,12 +74,23 @@ const UnitManagement = () => {
           <Tbody>
             {units.map((unit, index) => (
               <Tr key={index}>
-                <Td>{unit.code}</Td>
-                <Td>{unit.name}</Td>
+                <Td>{editMode && editUnitIndex === index ? <Input placeholder="Enter unit code" name="code" value={editedUnit.code} onChange={(e) => setEditedUnit({ ...editedUnit, code: e.target.value })} /> : unit.code}</Td>
+                <Td>{editMode && editUnitIndex === index ? <Input placeholder="Enter unit name" name="name" value={editedUnit.name} onChange={(e) => setEditedUnit({ ...editedUnit, name: e.target.value })} /> : unit.name}</Td>
                 <Td>
-                  <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditUnit(index)}>
-                    Edit
-                  </Button>
+                  {editMode && editUnitIndex === index ? (
+                    <>
+                      <Button leftIcon={<FaCheck />} colorScheme="green" size="sm" mr={2} onClick={handleSaveEdit}>
+                        Save
+                      </Button>
+                      <Button leftIcon={<FaTimes />} colorScheme="gray" size="sm" onClick={handleCancelEdit}>
+                        Cancel
+                      </Button>
+                    </>
+                  ) : (
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditUnitClick(index)}>
+                      Edit
+                    </Button>
+                  )}
                   <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" onClick={() => handleDeleteUnit(index)}>
                     Delete
                   </Button>
