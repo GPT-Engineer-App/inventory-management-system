@@ -7,24 +7,24 @@ const Sidebar = () => (
     <Heading size="md" mb="6">
       Menu
     </Heading>
+    <Heading size="sm" mb="4">
+      Management
+    </Heading>
     <VStack align="stretch" spacing="3">
-      <Link as={RouterLink} to="/products" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/products" p={2} w="full">
         Products
       </Link>
-      <Link as={RouterLink} to="/suppliers" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/suppliers" p={2} w="full">
         Suppliers
       </Link>
-      <Link as={RouterLink} to="/users" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/users" p={2} w="full">
         Users
       </Link>
-      <Link as={RouterLink} to="/warehouse-management" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/warehouse-management" p={2} w="full">
         Warehouse Management
       </Link>
       <Link as={RouterLink} to="/unit-management" p={2} w="full">
         Unit Management
-      </Link>
-      <Link as={RouterLink} to="/chat-history" p={2} w="full">
-        Chat History
       </Link>
     </VStack>
   </Box>
