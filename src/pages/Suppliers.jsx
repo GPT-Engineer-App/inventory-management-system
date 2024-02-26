@@ -86,7 +86,7 @@ const Suppliers = () => {
           <Input placeholder="Enter supplier contact" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Address</FormLabel>
+          <FormLabel>Supplier Address</FormLabel>
           <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} />
         </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
@@ -99,7 +99,7 @@ const Suppliers = () => {
             <Th>Code</Th>
             <Th>Name</Th>
             <Th>Contact</Th>
-            <Th>Address</Th>
+            <Th>Supplier Address</Th>
             <Th>Actions</Th>
           </Tr>
         </Thead>
