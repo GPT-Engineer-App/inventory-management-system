@@ -12,6 +12,9 @@ const Sidebar = () => {
         <Menu>
           <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
+            <MenuItem as={RouterLink} to="/unit-names">
+              Unit Names
+            </MenuItem>
             <MenuItem as={RouterLink} to="/">
               Stores
             </MenuItem>
