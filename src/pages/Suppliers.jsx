@@ -78,7 +78,7 @@ const Suppliers = () => {
           <Input placeholder="Enter supplier code" name="code" value={newSupplier.code} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Name</FormLabel>
+          <FormLabel>Supplier Name</FormLabel>
           <Input placeholder="Enter supplier name" name="name" value={newSupplier.name} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
