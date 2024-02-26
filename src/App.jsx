@@ -20,7 +20,7 @@ export default function App() {
           <Route path="/unit-names" element={<UnitNames />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/users" element={<UserManagement />} />
+          {/* Route for "items" has been removed */}
           {/* Additional routes will go here */}
         </Routes>
       </HStack>
