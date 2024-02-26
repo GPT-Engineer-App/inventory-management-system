@@ -65,7 +65,10 @@ export default function ProductManagement() {
   return (
     <Box p={4}>
       <Heading mb={6}>Product Management</Heading>
-      <VStack spacing={4}>
+      <VStack spacing={4} align="stretch">
+        <Box borderWidth="1px" borderRadius="lg" p={4} mb={4}>
+          <Text fontSize="lg">Total Products: {products.length}</Text>
+        </Box>
         <FormControl>
           <FormLabel>Product Code</FormLabel>
           <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} />
