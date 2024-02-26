@@ -14,14 +14,52 @@ const WarehouseManagement = () => {
     managerPhone: "",
     managerEmail: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editWarehouse, setEditWarehouse] = useState({});
 
-  const handleNewWarehouseChange = (e) => {
-    setNewWarehouse({ ...newWarehouse, [e.target.name]: e.target.value });
+  const handleEditWarehouse = (warehouse) => {
+    setEditWarehouse(warehouse);
+    setIsEditing(true);
+  };
+
+  const handleSaveEditedWarehouse = () => {
+    setWarehouses(warehouses.map((wh) => (wh.warehouseCode === editWarehouse.warehouseCode ? editWarehouse : wh)));
+    setEditWarehouse({});
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditWarehouse({});
+    setIsEditing(false);
+  };
+
+  const handleWarehouseChange = (e) => {
+    const { name, value } = e.target;
+    if (isEditing) {
+      setEditWarehouse({ ...editWarehouse, [name]: value });
+    } else {
+      setNewWarehouse({ ...newWarehouse, [name]: value });
+    }
   };
 
   const addWarehouse = () => {
-    setWarehouses([...warehouses, newWarehouse]);
-    setNewWarehouse({ warehouseCode: "", warehouseName: "", warehouseAddress: "" });
+    if (isEditing) {
+      handleSaveEditedWarehouse();
+    } else {
+      if (!newWarehouse.managerName || !newWarehouse.managerPhone || !newWarehouse.managerEmail) {
+        alert("Please fill in all the manager fields.");
+        return;
+      }
+      setWarehouses([...warehouses, newWarehouse]);
+      setNewWarehouse({
+        warehouseCode: "",
+        warehouseName: "",
+        warehouseAddress: "",
+        managerName: "",
+        managerPhone: "",
+        managerEmail: "",
+      });
+    }
   };
 
   const handleDeleteWarehouse = (warehouseCode) => {
@@ -79,19 +117,49 @@ const WarehouseManagement = () => {
           <Tbody>
             {warehouses.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((warehouse, index) => (
               <Tr key={index}>
-                <Td>{warehouse.warehouseCode}</Td>
-                <Td>{warehouse.warehouseName}</Td>
-                <Td>{warehouse.managerName}</Td>
-                <Td>{warehouse.managerPhone}</Td>
-                <Td>{warehouse.managerEmail}</Td>
-                <Td>
-                  <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
-                    Edit
-                  </Button>
-                  <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" onClick={() => handleDeleteWarehouse(warehouse.warehouseCode)}>
-                    Delete
-                  </Button>
-                </Td>
+                {isEditing && editWarehouse.warehouseCode === warehouse.warehouseCode ? (
+                  <>
+                    <Td>
+                      <Input value={editWarehouse.warehouseCode} onChange={handleWarehouseChange} name="warehouseCode" />
+                    </Td>
+                    <Td>
+                      <Input value={editWarehouse.warehouseName} onChange={handleWarehouseChange} name="warehouseName" />
+                    </Td>
+                    <Td>
+                      <Input value={editWarehouse.managerName} onChange={handleWarehouseChange} name="managerName" />
+                    </Td>
+                    <Td>
+                      <Input value={editWarehouse.managerPhone} onChange={handleWarehouseChange} name="managerPhone" />
+                    </Td>
+                    <Td>
+                      <Input value={editWarehouse.managerEmail} onChange={handleWarehouseChange} name="managerEmail" />
+                    </Td>
+                    <Td>
+                      <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={handleSaveEditedWarehouse}>
+                        Save
+                      </Button>
+                      <Button leftIcon={<FaTrash />} colorScheme="gray" size="sm" onClick={handleCancelEdit}>
+                        Cancel
+                      </Button>
+                    </Td>
+                  </>
+                ) : (
+                  <>
+                    <Td>{warehouse.warehouseCode}</Td>
+                    <Td>{warehouse.warehouseName}</Td>
+                    <Td>{warehouse.managerName}</Td>
+                    <Td>{warehouse.managerPhone}</Td>
+                    <Td>{warehouse.managerEmail}</Td>
+                    <Td>
+                      <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditWarehouse(warehouse)}>
+                        Edit
+                      </Button>
+                      <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" onClick={() => handleDeleteWarehouse(warehouse.warehouseCode)}>
+                        Delete
+                      </Button>
+                    </Td>
+                  </>
+                )}
               </Tr>
             ))}
           </Tbody>
