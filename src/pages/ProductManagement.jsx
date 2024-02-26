@@ -71,7 +71,7 @@ export default function ProductManagement() {
           <Input placeholder="Product code" name="code" value={newProduct.code} onChange={handleNewProductChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Name</FormLabel>
+          <FormLabel>Product Name</FormLabel>
           <Input placeholder="Product name" name="name" value={newProduct.name} onChange={handleNewProductChange} />
         </FormControl>
         <FormControl>
