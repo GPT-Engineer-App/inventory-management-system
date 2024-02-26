@@ -18,7 +18,9 @@ export default function App() {
     <Router>
       <Flex>
         <Sidebar w="250px" />
-        <Box flex="1">
+        <Box flex="1" pl="250px">
+          {" "}
+          {/* Adjust left padding to account for the sidebar width */}
           <Routes>
             <Route path="/inventory" element={<InventoryDashboard />} />
             <Route path="/products" element={<ProductManagement />} />
