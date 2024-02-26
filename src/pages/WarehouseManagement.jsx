@@ -3,7 +3,28 @@ import { Box, VStack, Heading, Text, FormControl, FormLabel, Input, Button, Tabl
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const WarehouseManagement = () => {
-  const [warehouses, setWarehouses] = useState([]);
+  const [warehouses, setWarehouses] = useState([
+    { warehouseCode: "WH001", warehouseName: "Central Warehouse", warehouseAddress: "1234 Central St", managerName: "John Doe", managerPhone: "555-1234", managerEmail: "johndoe@example.com" },
+    { warehouseCode: "WH002", warehouseName: "East Warehouse", warehouseAddress: "5678 East Ave", managerName: "Jane Smith", managerPhone: "555-5678", managerEmail: "janesmith@example.com" },
+    { warehouseCode: "WH003", warehouseName: "West Warehouse", warehouseAddress: "9101 West Blvd", managerName: "Jim Bean", managerPhone: "555-9101", managerEmail: "jimbean@example.com" },
+    { warehouseCode: "WH004", warehouseName: "North Warehouse", warehouseAddress: "1121 North Rd", managerName: "Julia Jones", managerPhone: "555-1121", managerEmail: "juliajones@example.com" },
+    { warehouseCode: "WH005", warehouseName: "South Warehouse", warehouseAddress: "3141 South St", managerName: "David Brown", managerPhone: "555-3141", managerEmail: "davidbrown@example.com" },
+    { warehouseCode: "WH006", warehouseName: "Warehouse 6", warehouseAddress: "1415 Six St", managerName: "Maria Garcia", managerPhone: "555-1415", managerEmail: "mariagarcia@example.com" },
+    { warehouseCode: "WH007", warehouseName: "Warehouse 7", warehouseAddress: "1617 Seven Ave", managerName: "James Wilson", managerPhone: "555-1617", managerEmail: "jameswilson@example.com" },
+    { warehouseCode: "WH008", warehouseName: "Warehouse 8", warehouseAddress: "1819 Eight Blvd", managerName: "Linda Martinez", managerPhone: "555-1819", managerEmail: "lindamartinez@example.com" },
+    { warehouseCode: "WH009", warehouseName: "Warehouse 9", warehouseAddress: "2021 Nine Rd", managerName: "Robert Anderson", managerPhone: "555-2021", managerEmail: "robertanderson@example.com" },
+    { warehouseCode: "WH010", warehouseName: "Warehouse 10", warehouseAddress: "2223 Ten St", managerName: "Patricia Thomas", managerPhone: "555-2223", managerEmail: "patriciathomas@example.com" },
+    { warehouseCode: "WH011", warehouseName: "Warehouse 11", warehouseAddress: "2425 Eleven Ave", managerName: "Michael Jackson", managerPhone: "555-2425", managerEmail: "michaeljackson@example.com" },
+    { warehouseCode: "WH012", warehouseName: "Warehouse 12", warehouseAddress: "2627 Twelve Blvd", managerName: "Sarah Moore", managerPhone: "555-2627", managerEmail: "sarahmoore@example.com" },
+    { warehouseCode: "WH013", warehouseName: "Warehouse 13", warehouseAddress: "2829 Thirteen Rd", managerName: "William Taylor", managerPhone: "555-2829", managerEmail: "williamtaylor@example.com" },
+    { warehouseCode: "WH014", warehouseName: "Warehouse 14", warehouseAddress: "3031 Fourteen St", managerName: "Jessica White", managerPhone: "555-3031", managerEmail: "jessicawhite@example.com" },
+    { warehouseCode: "WH015", warehouseName: "Warehouse 15", warehouseAddress: "3233 Fifteen Ave", managerName: "Charles Harris", managerPhone: "555-3233", managerEmail: "charlesharris@example.com" },
+    { warehouseCode: "WH016", warehouseName: "Warehouse 16", warehouseAddress: "3435 Sixteen Blvd", managerName: "Barbara Martin", managerPhone: "555-3435", managerEmail: "barbaramartin@example.com" },
+    { warehouseCode: "WH017", warehouseName: "Warehouse 17", warehouseAddress: "3637 Seventeen Rd", managerName: "Richard Clark", managerPhone: "555-3637", managerEmail: "richardclark@example.com" },
+    { warehouseCode: "WH018", warehouseName: "Warehouse 18", warehouseAddress: "3839 Eighteen St", managerName: "Susan Rodriguez", managerPhone: "555-3839", managerEmail: "susanrodriguez@example.com" },
+    { warehouseCode: "WH019", warehouseName: "Warehouse 19", warehouseAddress: "4041 Nineteen Ave", managerName: "Joseph Lewis", managerPhone: "555-4041", managerEmail: "josephlewis@example.com" },
+    { warehouseCode: "WH020", warehouseName: "Warehouse 20", warehouseAddress: "4243 Twenty Blvd", managerName: "Margaret Lee", managerPhone: "555-4243", managerEmail: "margaretlee@example.com" },
+  ]);
   const [newWarehouse, setNewWarehouse] = useState({
     warehouseCode: "",
     warehouseName: "",
