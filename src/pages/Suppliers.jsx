@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { Box, FormControl, FormLabel, Input, Button, VStack, HStack, Table, Thead, Tbody, Tr, Th, Td, Heading } from "@chakra-ui/react";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { Box, FormControl, FormLabel, Input, Button, VStack, HStack, Table, Thead, Tbody, Tr, Th, Td, Heading, useToast } from "@chakra-ui/react";
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
 
 const PAGE_SIZE = 5;
 
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [editingSupplier, setEditingSupplier] = useState({ code: "", name: "", contact: "", address: "", isEditing: false });
+  const [editingSupplier, setEditingSupplier] = useState(null);
+  const [editIndex, setEditIndex] = useState(-1);
+  const toast = useToast();
   const fakeSuppliers = Array.from({ length: 30 }, (_, index) => {
     const paddedIndex = (index + 1).toString().padStart(3, "0");
     return {
@@ -30,14 +32,38 @@ const Suppliers = () => {
     setEditingSupplier({ ...editingSupplier, [name]: value });
   };
 
-  const handleEditSupplier = (index) => {
-    const supplierToEdit = suppliers[(currentPage - 1) * PAGE_SIZE + index];
-    setEditingSupplier({ ...supplierToEdit });
+  useEffect(() => {
+    if (editIndex >= 0) {
+      setEditingSupplier({ ...suppliers[editIndex] });
+    }
+  }, [editIndex, suppliers]);
+
+  const handleEditClick = (index) => {
+    setEditIndex(index);
   };
-  const handleSaveEditSupplier = (index) => {
-    const globalIndex = (currentPage - 1) * PAGE_SIZE + index;
-    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndex ? { ...editingSupplier } : supplier)));
+
+  const handleSaveClick = () => {
+    if (editIndex !== -1) {
+      if (!editingSupplier.code || !editingSupplier.name || !editingSupplier.contact || !editingSupplier.address || !editingSupplier.email) {
+        toast({
+          title: "Error",
+          description: "All fields are required.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === editIndex ? { ...editingSupplier } : supplier));
+      setSuppliers(updatedSuppliers);
+      setEditingSupplier(null);
+      setEditIndex(-1);
+    }
+  };
+
+  const handleCancelClick = () => {
     setEditingSupplier(null);
+    setEditIndex(-1);
   };
   const handleDeleteSupplier = (indexToDelete) => {
     const globalIndexToDelete = (currentPage - 1) * PAGE_SIZE + indexToDelete;
@@ -120,24 +146,24 @@ const Suppliers = () => {
         <Tbody>
           {suppliers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((supplier, index) => (
             <Tr key={index}>
-              <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input value={editingSupplier.code} onChange={(e) => setEditingSupplier({ ...editingSupplier, code: e.target.value })} name="code" /> : supplier.code}</Td>
-              <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input value={editingSupplier.name} onChange={(e) => setEditingSupplier({ ...editingSupplier, name: e.target.value })} name="name" /> : supplier.name}</Td>
-              <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input value={editingSupplier.contact} onChange={(e) => setEditingSupplier({ ...editingSupplier, contact: e.target.value })} name="contact" /> : supplier.contact}</Td>
-              <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input value={editingSupplier.address} onChange={(e) => setEditingSupplier({ ...editingSupplier, address: e.target.value })} name="address" /> : supplier.address}</Td>
-              <Td>{editingSupplier && supplier.code === editingSupplier.code ? <Input type="email" value={editingSupplier.email} onChange={(e) => setEditingSupplier({ ...editingSupplier, email: e.target.value })} name="email" /> : supplier.email}</Td>
+              <Td>{editIndex === index ? <Input value={editingSupplier.code} onChange={(e) => setEditingSupplier({ ...editingSupplier, code: e.target.value })} /> : supplier.code}</Td>
+              <Td>{editIndex === index ? <Input value={editingSupplier.name} onChange={(e) => setEditingSupplier({ ...editingSupplier, name: e.target.value })} /> : supplier.name}</Td>
+              <Td>{editIndex === index ? <Input value={editingSupplier.contact} onChange={(e) => setEditingSupplier({ ...editingSupplier, contact: e.target.value })} /> : supplier.contact}</Td>
+              <Td>{editIndex === index ? <Input value={editingSupplier.address} onChange={(e) => setEditingSupplier({ ...editingSupplier, address: e.target.value })} /> : supplier.address}</Td>
+              <Td>{editIndex === index ? <Input type="email" value={editingSupplier.email} onChange={(e) => setEditingSupplier({ ...editingSupplier, email: e.target.value })} /> : supplier.email}</Td>
               <Td>
-                {editingSupplier && supplier.code === editingSupplier.code ? (
+                {editIndex === index ? (
                   <>
-                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleSaveEditSupplier(index)}>
+                    <Button leftIcon={<FaSave />} colorScheme="green" size="sm" mr={2} onClick={handleSaveClick}>
                       Save
                     </Button>
-                    <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={handleCancelEditSupplier}>
+                    <Button leftIcon={<FaTimes />} colorScheme="gray" size="sm" ml={2} onClick={handleCancelClick}>
                       Cancel
                     </Button>
                   </>
                 ) : (
                   <>
-                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditSupplier(index)}>
+                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditClick(index)}>
                       Edit
                     </Button>
                     <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleDeleteSupplier(index)}>
