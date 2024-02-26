@@ -5,7 +5,7 @@ const ChatHistory = () => {
   return (
     <Box p={4}>
       <Text fontSize="2xl">Chat History</Text>
-      {/* Content for Chat History will go here */}
+      <Text>This section is under construction. Chat history functionality will be available soon.</Text>
     </Box>
   );
 };
