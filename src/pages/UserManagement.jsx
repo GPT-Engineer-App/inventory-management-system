@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Switch, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Switch, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
+const PAGE_SIZE = 5;
+
 const UserManagement = () => {
-  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const fakeUsers = [
+    { username: "user1", role: "Admin", isActive: true },
+    { username: "user2", role: "Editor", isActive: false },
+    { username: "user3", role: "Viewer", isActive: true },
+    { username: "user4", role: "Admin", isActive: false },
+    { username: "user5", role: "Editor", isActive: true },
+    { username: "user6", role: "Viewer", isActive: false },
+    { username: "user7", role: "Admin", isActive: true },
+    { username: "user8", role: "Editor", isActive: true },
+    { username: "user9", role: "Viewer", isActive: false },
+    { username: "user10", role: "Admin", isActive: true },
+  ];
+  const [users, setUsers] = useState(fakeUsers);
   const [newUser, setNewUser] = useState({ username: "", role: "", isActive: true });
 
   const handleNewUserChange = (e) => {
@@ -74,7 +89,7 @@ const UserManagement = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {users.map((user, index) => (
+          {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, index) => (
             <Tr key={index}>
               <Td>{user.username}</Td>
               <Td>{user.role}</Td>
@@ -91,6 +106,19 @@ const UserManagement = () => {
           ))}
         </Tbody>
       </Table>
+      <HStack justifyContent="center" spacing={2} mt="8">
+        <Button onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage <= 1}>
+          Back
+        </Button>
+        {[...Array(Math.ceil(users.length / PAGE_SIZE)).keys()].map((pageNum) => (
+          <Button key={pageNum} onClick={() => setCurrentPage(pageNum + 1)} colorScheme={currentPage === pageNum + 1 ? "blue" : "gray"}>
+            {pageNum + 1}
+          </Button>
+        ))}
+        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={users.length <= currentPage * PAGE_SIZE}>
+          Next
+        </Button>
+      </HStack>
     </Box>
   );
 };
