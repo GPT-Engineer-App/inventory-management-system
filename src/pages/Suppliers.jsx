@@ -89,10 +89,6 @@ const Suppliers = () => {
           <FormLabel>Supplier E-mail</FormLabel>
           <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} />
         </FormControl>
-        <FormControl>
-          <FormLabel>Supplier E-mail</FormLabel>
-          <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} />
-        </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
           Add Supplier
         </Button>
