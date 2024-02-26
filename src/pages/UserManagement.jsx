@@ -19,7 +19,7 @@ const UserManagement = () => {
     { username: "user10", role: "Admin", isActive: true },
   ];
   const [users, setUsers] = useState(fakeUsers);
-  const [newUser, setNewUser] = useState({ username: "", role: "", isActive: true });
+  const [newUser, setNewUser] = useState({ code: "", username: "", role: "", isActive: true });
 
   const handleUserChange = (e, index) => {
     const { name, value, checked, type } = e.target;
@@ -27,8 +27,8 @@ const UserManagement = () => {
   };
 
   const addNewUser = () => {
-    if (newUser.username && newUser.role) {
-      setUsers([...users, newUser]);
+    if (newUser.code && newUser.username && newUser.role) {
+      setUsers([...users, { ...newUser, code: newUser.code }]);
       setNewUser({ username: "", role: "", isActive: true });
     } else {
       alert("Please fill in all fields.");
@@ -40,7 +40,7 @@ const UserManagement = () => {
   };
 
   const handleSaveEdit = (indexToSave) => {
-    setUsers(users.map((user, idx) => (idx === indexToSave ? { ...user, username: newUser.username, role: newUser.role, isActive: newUser.isActive, isEditing: false } : user)));
+    setUsers(users.map((user, idx) => (idx === indexToSave ? { ...user, code: newUser.code, username: newUser.username, role: newUser.role, isActive: newUser.isActive, isEditing: false } : user)));
     setNewUser({ username: "", role: "", isActive: true });
   };
 
@@ -68,7 +68,9 @@ const UserManagement = () => {
       <VStack spacing={4}>
         <FormControl isRequired>
           <FormLabel>Username</FormLabel>
-          <Input name="username" value={newUser.username} onChange={handleNewUserChange} />
+          <Input name="code" value={newUser.code} placeholder="User Code" onChange={handleNewUserChange} />
+          <FormLabel>Username</FormLabel>
+          <Input name="username" value={newUser.username} placeholder="Username" onChange={handleNewUserChange} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Role</FormLabel>
@@ -89,6 +91,7 @@ const UserManagement = () => {
       <Table variant="simple" mt={10}>
         <Thead>
           <Tr>
+            <Th>Code</Th>
             <Th>Username</Th>
             <Th>Role</Th>
             <Th>Active</Th>
@@ -98,7 +101,8 @@ const UserManagement = () => {
         <Tbody>
           {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, index) => (
             <Tr key={index}>
-              <Td>{user.isEditing ? <Input name="username" value={user.username} onChange={(e) => handleNewUserChange(e, index)} /> : user.username}</Td>
+              <Td>{user.isEditing ? <Input name="code" value={user.code} onChange={(e) => handleNewUserChange(e, index)} /> : user.code}</Td>
+              <Td>{user.isEditing ? <Input name="username" value={user.username} placeholder="Username" onChange={(e) => handleNewUserChange(e, index)} /> : user.username}</Td>
               <Td>
                 {user.isEditing ? (
                   <Select name="role" value={user.role} onChange={(e) => handleNewUserChange(e, index)}>
