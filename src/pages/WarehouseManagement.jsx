@@ -51,7 +51,7 @@ const WarehouseManagement = () => {
     <Box p={5}>
       <VStack spacing={4}>
         <Heading>Warehouse Management</Heading>
-        <Text>Welcome to the Warehouse Management page. Here you can manage all warehouse-related activities.</Text>
+
         <FormControl>
           <FormLabel>Warehouse Code</FormLabel>
           <Input placeholder="Enter warehouse code" name="warehouseCode" value={newWarehouse.warehouseCode} onChange={handleNewWarehouseChange} />
