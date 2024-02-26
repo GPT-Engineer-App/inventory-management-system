@@ -6,6 +6,7 @@ const PAGE_SIZE = 5;
 
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [editingSupplier, setEditingSupplier] = useState({ code: "", name: "", contact: "", address: "", isEditing: false });
   const fakeSuppliers = Array.from({ length: 20 }, (_, index) => {
     const paddedIndex = (index + 1).toString().padStart(3, "0");
     return {
@@ -13,17 +14,19 @@ const Suppliers = () => {
       name: `Supplier ${paddedIndex}`,
       contact: `Contact ${paddedIndex}`,
       address: `Address ${paddedIndex}`,
+      isEditing: false,
     };
   });
   const [suppliers, setSuppliers] = useState(fakeSuppliers);
   const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
 
   const handleNewSupplierChange = (e) => {
-    setNewSupplier({ ...newSupplier, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEditingSupplier({ ...editingSupplier, [name]: value });
   };
 
   const addNewSupplier = () => {
-    const { code, name, contact, address } = newSupplier;
+    const { code, name, contact, address } = editingSupplier;
     const isEmpty = !code || !name || !contact || !address;
     if (isEmpty) {
       alert("Please fill in all fields.");
