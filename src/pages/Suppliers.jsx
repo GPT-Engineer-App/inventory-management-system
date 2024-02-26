@@ -82,8 +82,8 @@ const Suppliers = () => {
           <Input placeholder="Enter supplier name" name="name" value={newSupplier.name} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Supplier Contact</FormLabel>
-          <Input placeholder="Enter supplier contact" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
+          <FormLabel>Supplier Phone</FormLabel>
+          <Input placeholder="Enter supplier phone" name="phone" value={newSupplier.phone} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Supplier E-mail</FormLabel>
@@ -98,7 +98,7 @@ const Suppliers = () => {
           <Tr>
             <Th>Code</Th>
             <Th>Name</Th>
-            <Th>Contact</Th>
+            <Th>Phone</Th>
             <Th>Supplier Address</Th>
             <Th>Supplier E-mail</Th>
           </Tr>
@@ -108,7 +108,7 @@ const Suppliers = () => {
             <Tr key={index}>
               <Td>{supplier.isEditing ? <Input value={supplier.code} onChange={(e) => handleSupplierChange(e, index)} name="code" /> : supplier.code}</Td>
               <Td>{supplier.isEditing ? <Input value={supplier.name} onChange={(e) => handleSupplierChange(e, index)} name="name" /> : supplier.name}</Td>
-              <Td>{supplier.isEditing ? <Input value={supplier.contact} onChange={(e) => handleSupplierChange(e, index)} name="contact" /> : supplier.contact}</Td>
+              <Td>{supplier.isEditing ? <Input value={supplier.phone} onChange={(e) => handleSupplierChange(e, index)} name="phone" /> : supplier.phone}</Td>
               <Td>{supplier.isEditing ? <Input type="email" value={supplier.email} onChange={(e) => handleSupplierChange(e, index)} name="email" /> : supplier.email}</Td>
               <Td>
                 {supplier.isEditing ? (
