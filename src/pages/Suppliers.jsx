@@ -40,8 +40,9 @@ const Suppliers = () => {
     setEditIndex(index);
   };
 
-  const handleSaveClick = () => {
-    if (editIndex !== -1) {
+  const handleSaveClick = (pageIndex) => {
+    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
+    if (globalIndex !== -1) {
       if (!editingSupplier.code || !editingSupplier.name || !editingSupplier.contact || !editingSupplier.address || !editingSupplier.email) {
         toast({
           title: "Error",
@@ -52,7 +53,7 @@ const Suppliers = () => {
         });
         return;
       }
-      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === editIndex ? { ...editingSupplier } : supplier));
+      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === globalIndex ? { ...editingSupplier, isEditing: false } : supplier));
       setSuppliers(updatedSuppliers);
       setEditingSupplier(null);
       setEditIndex(-1);
@@ -152,7 +153,7 @@ const Suppliers = () => {
               <Td>
                 {editIndex === index ? (
                   <>
-                    <Button leftIcon={<FaSave />} colorScheme="green" size="sm" mr={2} onClick={handleSaveClick}>
+                    <Button leftIcon={<FaSave />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveClick(index)}>
                       Save
                     </Button>
                     <Button leftIcon={<FaTimes />} colorScheme="gray" size="sm" ml={2} onClick={handleCancelClick}>
