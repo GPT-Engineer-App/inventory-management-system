@@ -22,6 +22,9 @@ const Sidebar = () => {
             <MenuItem as={RouterLink} to="/products">
               Products
             </MenuItem>
+            <MenuItem as={RouterLink} to="/unit-management">
+              Unit Management
+            </MenuItem>
             <MenuItem as={RouterLink} to="/suppliers">
               Suppliers
             </MenuItem>
