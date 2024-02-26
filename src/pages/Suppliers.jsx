@@ -30,20 +30,23 @@ const Suppliers = () => {
     setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, [name]: value } : supplier)));
   };
 
-  const handleEditSupplier = (index) => {
-    const supplierToEdit = suppliers[index];
+  const handleEditSupplier = (pageIndex) => {
+    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
+    const supplierToEdit = suppliers[globalIndex];
     setEditingSupplier({ ...supplierToEdit, isEditing: true });
-    setSuppliers(suppliers.map((supplier, idx) => (idx === index ? { ...supplier, isEditing: true } : supplier)));
+    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndex ? { ...supplier, isEditing: true } : supplier)));
   };
-  const handleSaveEditSupplier = (indexToSave) => {
-    setSuppliers(suppliers.map((supplier, idx) => (idx === indexToSave ? { ...supplier, isEditing: false } : supplier)));
+  const handleSaveEditSupplier = (pageIndexToSave) => {
+    const globalIndexToSave = (currentPage - 1) * PAGE_SIZE + pageIndexToSave;
+    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndexToSave ? { ...supplier, isEditing: false } : supplier)));
   };
-  const handleDeleteSupplier = (indexToDelete) => {
-    const { code } = suppliers[indexToDelete];
-    setSuppliers(suppliers.filter((supplier) => supplier.code !== code));
+  const handleDeleteSupplier = (pageIndexToDelete) => {
+    const globalIndexToDelete = (currentPage - 1) * PAGE_SIZE + pageIndexToDelete;
+    setSuppliers(suppliers.filter((_, idx) => idx !== globalIndexToDelete));
   };
-  const handleCancelEditSupplier = (indexToCancel) => {
-    setSuppliers(suppliers.map((supplier, idx) => (idx === indexToCancel ? { ...supplier, isEditing: false } : supplier)));
+  const handleCancelEditSupplier = (pageIndexToCancel) => {
+    const globalIndexToCancel = (currentPage - 1) * PAGE_SIZE + pageIndexToCancel;
+    setSuppliers(suppliers.map((supplier, idx) => (idx === globalIndexToCancel ? { ...supplier, isEditing: false } : supplier)));
   };
 
   const validateEmail = (email) => {
