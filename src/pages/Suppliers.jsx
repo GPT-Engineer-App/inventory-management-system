@@ -95,7 +95,7 @@ const Suppliers = () => {
           <Input placeholder="Enter supplier phone" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Supplier E-mail</FormLabel>
+          <FormLabel>Supplier Address</FormLabel>
           <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
