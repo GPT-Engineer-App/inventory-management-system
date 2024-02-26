@@ -7,7 +7,7 @@ const PAGE_SIZE = 5;
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [editingSupplier, setEditingSupplier] = useState({ code: "", name: "", contact: "", address: "", isEditing: false });
-  const fakeSuppliers = Array.from({ length: 20 }, (_, index) => {
+  const fakeSuppliers = Array.from({ length: 30 }, (_, index) => {
     const paddedIndex = (index + 1).toString().padStart(3, "0");
     return {
       code: `S${paddedIndex}`,
