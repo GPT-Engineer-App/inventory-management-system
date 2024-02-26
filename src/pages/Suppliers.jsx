@@ -18,7 +18,7 @@ const Suppliers = () => {
     };
   });
   const [suppliers, setSuppliers] = useState(fakeSuppliers);
-  const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "" });
+  const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "", email: "" });
 
   const handleNewSupplierChange = (e) => {
     const { name, value } = e.target;
@@ -86,8 +86,12 @@ const Suppliers = () => {
           <Input placeholder="Enter supplier contact" name="contact" value={newSupplier.contact} onChange={handleNewSupplierChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Supplier Address</FormLabel>
-          <Input placeholder="Enter supplier address" name="address" value={newSupplier.address} onChange={handleNewSupplierChange} />
+          <FormLabel>Supplier E-mail</FormLabel>
+          <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Supplier E-mail</FormLabel>
+          <Input type="email" placeholder="Enter supplier email" name="email" value={newSupplier.email} onChange={handleNewSupplierChange} />
         </FormControl>
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={addNewSupplier}>
           Add Supplier
@@ -100,7 +104,7 @@ const Suppliers = () => {
             <Th>Name</Th>
             <Th>Contact</Th>
             <Th>Supplier Address</Th>
-            <Th>Actions</Th>
+            <Th>Supplier E-mail</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -109,7 +113,7 @@ const Suppliers = () => {
               <Td>{supplier.isEditing ? <Input value={supplier.code} onChange={(e) => handleSupplierChange(e, index)} name="code" /> : supplier.code}</Td>
               <Td>{supplier.isEditing ? <Input value={supplier.name} onChange={(e) => handleSupplierChange(e, index)} name="name" /> : supplier.name}</Td>
               <Td>{supplier.isEditing ? <Input value={supplier.contact} onChange={(e) => handleSupplierChange(e, index)} name="contact" /> : supplier.contact}</Td>
-              <Td>{supplier.isEditing ? <Input value={supplier.address} onChange={(e) => handleSupplierChange(e, index)} name="address" /> : supplier.address}</Td>
+              <Td>{supplier.isEditing ? <Input type="email" value={supplier.email} onChange={(e) => handleSupplierChange(e, index)} name="email" /> : supplier.email}</Td>
               <Td>
                 {supplier.isEditing ? (
                   <>
