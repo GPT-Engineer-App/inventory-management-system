@@ -23,13 +23,10 @@ const Sidebar = () => (
       <Link as={RouterLink} to="/warehouse-management" p={2} w="full" display="block">
         Warehouse Management
       </Link>
-      <Link as={RouterLink} to="/unit-management" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/unit-management" p={2} w="full">
         Unit Management
       </Link>
-      <Link as={RouterLink} to="/about" p={2} w="full" display="block">
-        About
-      </Link>
-      <Link as={RouterLink} to="/chat-history" p={2} w="full" display="block">
+      <Link as={RouterLink} to="/chat-history" p={2} w="full">
         Chat History
       </Link>
     </VStack>
