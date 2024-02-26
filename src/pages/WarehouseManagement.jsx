@@ -183,7 +183,7 @@ const WarehouseManagement = () => {
             {pageNum + 1}
           </Button>
         ))}
-        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage >= Math.ceil(warehouses.length / PAGE_SIZE)}>
+        <Button onClick={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage * PAGE_SIZE >= warehouses.length}>
           Next
         </Button>
       </HStack>
