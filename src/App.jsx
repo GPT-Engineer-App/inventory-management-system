@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import Sidebar from "./components/Sidebar";
+import About from "./pages/About";
 import { HStack } from "@chakra-ui/react";
 import InventoryDashboard from "./pages/InventoryDashboard";
 import UnitNames from "./pages/UnitNames.jsx";
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/users" element={<UserManagement />} />
           <Route path="/warehouse-management" element={<WarehouseManagement />} />
           <Route path="/unit-management" element={<UnitManagement />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </HStack>
     </Router>
