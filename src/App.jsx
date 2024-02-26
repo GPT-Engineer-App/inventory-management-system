@@ -18,7 +18,7 @@ export default function App() {
     <Router>
       <Flex>
         <Sidebar w="250px" />
-        <Box flex="1" pl="250px">
+        <Box flex="1" pl="16%">
           {" "}
           {/* Adjust left padding to account for the sidebar width */}
           <Routes>
