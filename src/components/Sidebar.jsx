@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Flex, Text, VStack, Link } from "@chakra-ui/react";
+import { Box, Flex, Text, Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import { FaBars } from "react-icons/fa";
 
 const Sidebar = () => (
   <Box w={{ base: "100%", md: "250px" }} p={5} borderRightWidth="1px" borderColor="gray.200" height="100vh" position="fixed">
@@ -9,26 +10,29 @@ const Sidebar = () => (
         Management
       </Text>
     </Flex>
-    <VStack align="stretch" spacing={4}>
-      <Link as={RouterLink} to="/products" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        Products
-      </Link>
-      <Link as={RouterLink} to="/suppliers" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        Suppliers
-      </Link>
-      <Link as={RouterLink} to="/users" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        Users
-      </Link>
-      <Link as={RouterLink} to="/warehouse-management" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        Warehouse Management
-      </Link>
-      <Link as={RouterLink} to="/unit-management" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        Unit Management
-      </Link>
-      <Link as={RouterLink} to="/about" fontWeight="medium" _hover={{ textDecoration: "none", bg: "gray.100" }} _activeLink={{ fontWeight: "bold", bg: "teal.500", color: "white" }}>
-        About
-      </Link>
-    </VStack>
+    <Menu>
+      <MenuButton as={IconButton} icon={<FaBars />} variant="outline" aria-label="Options" />
+      <MenuList>
+        <MenuItem as={RouterLink} to="/products">
+          Products
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/suppliers">
+          Suppliers
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/users">
+          Users
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/warehouse-management">
+          Warehouse Management
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/unit-management">
+          Unit Management
+        </MenuItem>
+        <MenuItem as={RouterLink} to="/about">
+          About
+        </MenuItem>
+      </MenuList>
+    </Menu>
   </Box>
 );
 
