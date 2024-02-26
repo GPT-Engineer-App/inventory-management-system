@@ -87,25 +87,30 @@ const Suppliers = () => {
             <Td>
               {supplier.isEditing ? (
                 <>
-                  {supplier.isEditing ? (
-                    <>
-                      <Button leftIcon={<FaEdit />} colorScheme="green" size="sm" mr={2} onClick={() => handleSaveEdit(supplier.code)}>
-                        Save
-                      </Button>
-                      <Button leftIcon={<FaTrash />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleCancelEdit(supplier.code)}>
-                        Cancel
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditSupplier(supplier)}>
-                        Edit
-                      </Button>
-                      <Button leftIcon={<FaTrash />} colorScheme="red" size="sm" ml={2} onClick={() => handleDeleteSupplier(supplier.code)}>
-                        Delete
-                      </Button>
-                    </>
-                  )}
+                  <Button
+                    leftIcon={<FaEdit />}
+                    colorScheme="green"
+                    size="sm"
+                    mr={2}
+                    onClick={() => {
+                      setSuppliers(suppliers.map((s) => (s.code === supplier.code ? { ...editingSupplier, isEditing: false } : s)));
+                      setEditingSupplier({});
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    leftIcon={<FaTrash />}
+                    colorScheme="yellow"
+                    size="sm"
+                    mr={2}
+                    onClick={() => {
+                      setSuppliers(suppliers.map((s) => (s.code === supplier.code ? { ...s, isEditing: false } : s)));
+                      setEditingSupplier({});
+                    }}
+                  >
+                    Cancel
+                  </Button>
                 </>
               ) : (
                 <>
