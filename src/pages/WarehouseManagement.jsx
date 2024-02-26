@@ -8,6 +8,9 @@ const WarehouseManagement = () => {
     warehouseCode: "",
     warehouseName: "",
     warehouseAddress: "",
+    managerName: "",
+    managerPhone: "",
+    managerEmail: "",
   });
 
   const handleNewWarehouseChange = (e) => {
@@ -37,10 +40,27 @@ const WarehouseManagement = () => {
           <Input placeholder="Enter warehouse name" name="warehouseName" value={newWarehouse.warehouseName} onChange={handleNewWarehouseChange} />
         </FormControl>
         <FormControl>
-          <FormLabel>Warehouse Address</FormLabel>
-          <Input placeholder="Enter warehouse address" name="warehouseAddress" value={newWarehouse.warehouseAddress} onChange={handleNewWarehouseChange} />
+          <FormLabel>Warehouse Manager Name</FormLabel>
+          <Input placeholder="Enter warehouse manager's name" name="managerName" value={newWarehouse.managerName} onChange={handleNewWarehouseChange} />
         </FormControl>
-        <Button colorScheme="blue" onClick={addWarehouse}>
+        <FormControl>
+          <FormLabel>Warehouse Manager Phone</FormLabel>
+          <Input placeholder="Enter warehouse manager's phone" name="managerPhone" value={newWarehouse.managerPhone} onChange={handleNewWarehouseChange} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Warehouse Manager Email</FormLabel>
+          <Input placeholder="Enter warehouse manager's email" type="email" name="managerEmail" value={newWarehouse.managerEmail} onChange={handleNewWarehouseChange} />
+        </FormControl>
+        <Button
+          colorScheme="blue"
+          onClick={() => {
+            if (!newWarehouse.managerName || !newWarehouse.managerPhone || !newWarehouse.managerEmail) {
+              alert("Please fill in all the manager fields.");
+              return;
+            }
+            addWarehouse();
+          }}
+        >
           Add Warehouse
         </Button>
         <Table variant="simple">
@@ -48,7 +68,9 @@ const WarehouseManagement = () => {
             <Tr>
               <Th>Code</Th>
               <Th>Name</Th>
-              <Th>Address</Th>
+              <Th>Manager Name</Th>
+              <Th>Manager Phone</Th>
+              <Th>Manager Email</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -57,7 +79,9 @@ const WarehouseManagement = () => {
               <Tr key={index}>
                 <Td>{warehouse.warehouseCode}</Td>
                 <Td>{warehouse.warehouseName}</Td>
-                <Td>{warehouse.warehouseAddress}</Td>
+                <Td>{warehouse.managerName}</Td>
+                <Td>{warehouse.managerPhone}</Td>
+                <Td>{warehouse.managerEmail}</Td>
                 <Td>
                   <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2}>
                     Edit
