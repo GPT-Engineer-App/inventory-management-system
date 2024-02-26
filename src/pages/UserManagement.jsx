@@ -40,8 +40,14 @@ const UserManagement = () => {
   };
 
   const handleSaveEdit = (indexToSave) => {
-    setUsers(users.map((user, idx) => (idx === indexToSave ? { ...user, username: newUser.username, role: newUser.role, isActive: newUser.isActive, isEditing: false } : user)));
-    setNewUser({ username: "", role: "", isActive: true });
+    setUsers(
+      users.map((user, idx) => {
+        if (idx === indexToSave && user.isEditing) {
+          return { ...user, isEditing: false };
+        }
+        return user;
+      }),
+    );
   };
 
   const handleNewUserChange = (e, index) => {
