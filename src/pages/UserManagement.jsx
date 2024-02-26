@@ -21,12 +21,9 @@ const UserManagement = () => {
   const [users, setUsers] = useState(fakeUsers);
   const [newUser, setNewUser] = useState({ username: "", role: "", isActive: true });
 
-  const handleNewUserChange = (e) => {
+  const handleUserChange = (e, index) => {
     const { name, value, checked, type } = e.target;
-    setNewUser({
-      ...newUser,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    setUsers(users.map((user, idx) => (idx === index ? { ...user, [name]: type === "checkbox" ? checked : value } : user)));
   };
 
   const addNewUser = () => {
@@ -38,20 +35,26 @@ const UserManagement = () => {
     }
   };
 
-  const handleEditUser = (index) => {
-    const userToEdit = users[index];
-    setNewUser({ ...userToEdit, isEditing: true });
+  const handleEditUser = (userToEdit) => {
+    setUsers(users.map((user) => (user.username === userToEdit.username ? { ...user, isEditing: true } : user)));
   };
 
-  const handleSaveEdit = (index) => {
-    const updatedUsers = users.map((user, idx) => {
-      if (idx === index) {
-        return { ...newUser, isEditing: false };
-      }
-      return user;
-    });
-    setUsers(updatedUsers);
+  const handleSaveEdit = (indexToSave) => {
+    setUsers(users.map((user, idx) => (idx === indexToSave ? { ...user, username: newUser.username, role: newUser.role, isActive: newUser.isActive, isEditing: false } : user)));
     setNewUser({ username: "", role: "", isActive: true });
+  };
+
+  const handleNewUserChange = (e, index) => {
+    const { name, value, checked, type } = e.target;
+    const updatedUsers = users.map((user, idx) =>
+      idx === index
+        ? {
+            ...user,
+            [name]: type === "checkbox" ? checked : value,
+          }
+        : user,
+    );
+    setUsers(updatedUsers);
   };
 
   const handleDeleteUser = (index) => {
@@ -95,14 +98,30 @@ const UserManagement = () => {
         <Tbody>
           {users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((user, index) => (
             <Tr key={index}>
-              <Td>{user.username}</Td>
-              <Td>{user.role}</Td>
-              <Td>{user.isActive ? "Yes" : "No"}</Td>
+              <Td>{user.isEditing ? <Input name="username" value={user.username} onChange={(e) => handleNewUserChange(e, index)} /> : user.username}</Td>
               <Td>
-                <Button leftIcon={<FaEdit />} colorScheme="yellow" mr={2} onClick={() => handleEditUser(index)}>
-                  Save Edit
-                </Button>
-                <Button leftIcon={<FaTrash />} colorScheme="red" onClick={() => handleDeleteUser(index)}>
+                {user.isEditing ? (
+                  <Select name="role" value={user.role} onChange={(e) => handleNewUserChange(e, index)}>
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Viewer">Viewer</option>
+                  </Select>
+                ) : (
+                  user.role
+                )}
+              </Td>
+              <Td>{user.isEditing ? <Switch name="isActive" isChecked={user.isActive} onChange={(e) => handleNewUserChange(e, index)} /> : user.isActive ? "Yes" : "No"}</Td>
+              <Td>
+                {user.isEditing ? (
+                  <Button leftIcon={<FaEdit />} colorScheme="green" onClick={() => handleSaveEdit(index)}>
+                    Save
+                  </Button>
+                ) : (
+                  <Button leftIcon={<FaEdit />} colorScheme="yellow" onClick={() => handleEditUser(user)}>
+                    Edit
+                  </Button>
+                )}
+                <Button leftIcon={<FaTrash />} colorScheme="red" ml={2} onClick={() => handleDeleteUser(index)}>
                   Delete
                 </Button>
               </Td>
