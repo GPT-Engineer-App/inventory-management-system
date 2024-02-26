@@ -8,9 +8,6 @@ const Sidebar = () => (
       Menu
     </Heading>
     <VStack align="stretch" spacing="3">
-      <Link as={RouterLink} to="/inventory" p={2} w="full" display="block">
-        Inventory Dashboard
-      </Link>
       <Link as={RouterLink} to="/products" p={2} w="full" display="block">
         Products
       </Link>
