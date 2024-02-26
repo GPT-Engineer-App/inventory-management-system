@@ -21,22 +21,22 @@ const Sidebar = () => (
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          <Link as={RouterLink} to="/products" d="block" my="2">
+          <Link as={RouterLink} to="/products" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             Products
           </Link>
-          <Link as={RouterLink} to="/suppliers" d="block" my="2">
+          <Link as={RouterLink} to="/suppliers" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             Suppliers
           </Link>
-          <Link as={RouterLink} to="/users" d="block" my="2">
+          <Link as={RouterLink} to="/users" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             Users
           </Link>
-          <Link as={RouterLink} to="/warehouse-management" d="block" my="2">
+          <Link as={RouterLink} to="/warehouse-management" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             Warehouse Management
           </Link>
-          <Link as={RouterLink} to="/unit-management" d="block" my="2">
+          <Link as={RouterLink} to="/unit-management" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             Unit Management
           </Link>
-          <Link as={RouterLink} to="/about" d="block" my="2">
+          <Link as={RouterLink} to="/about" d="block" py="2" _hover={{ bg: "gray.100" }} _activeLink={{ color: "teal.500" }}>
             About
           </Link>
         </AccordionPanel>
