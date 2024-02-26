@@ -10,7 +10,6 @@ export default function App() {
       <HStack spacing={0} align="start">
         <Sidebar />
         <Routes>
-          <Route path="/" element={<UserManagement />} />
           <Route path="/users" element={<UserManagement />} />
         </Routes>
       </HStack>

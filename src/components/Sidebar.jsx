@@ -13,10 +13,22 @@ const Sidebar = () => {
           <MenuButton as={Link}>Basic Definitions</MenuButton>
           <MenuList>
             <MenuItem as={RouterLink} to="/">
-              User Management
+              Index
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/dashboard">
+              Inventory Dashboard
             </MenuItem>
             <MenuItem as={RouterLink} to="/users">
               User Management
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/products">
+              Product Management
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/suppliers">
+              Suppliers
+            </MenuItem>
+            <MenuItem as={RouterLink} to="/units">
+              Unit Names
             </MenuItem>
           </MenuList>
         </Menu>
