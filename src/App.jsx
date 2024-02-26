@@ -8,6 +8,7 @@ import ProductManagement from "./pages/ProductManagement.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 import UserManagement from "./pages/UserManagement.jsx";
 import WarehouseManagement from "./pages/WarehouseManagement.jsx";
+import UnitManagement from "./pages/UnitManagement";
 
 // Only a single export of the App function should be present
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/users" element={<UserManagement />} />
+          <Route path="/unit-management" element={<UnitManagement />} />
           <Route path="/unit-names" element={<UnitNames />} />
         </Routes>
       </HStack>
