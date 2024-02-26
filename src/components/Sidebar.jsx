@@ -31,6 +31,9 @@ const Sidebar = () => {
             <MenuItem as={RouterLink} to="/about">
               About
             </MenuItem>
+            <MenuItem as={RouterLink} to="/chat-history">
+              Chat History
+            </MenuItem>
           </MenuList>
         </Menu>
       </VStack>
