@@ -31,9 +31,10 @@ const Suppliers = () => {
   };
 
   const handleSaveClick = (pageIndex) => {
-    supplierController.editSupplier(globalIndex, newSupplier);
+    const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
+    supplierController.editSupplier(globalIndex, editingSupplier);
     setSuppliers(supplierController.suppliers);
-    setEditingIndex(-1);
+    // The line "setEditingIndex(-1);" has been removed as it was causing an error due to 'setEditingIndex' being undefined.
   };
 
   const handleCancelClick = () => {
