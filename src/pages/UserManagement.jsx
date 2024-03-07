@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Switch, Table, Thead, Tbody, Tr, Th, Td, HStack, Select } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { UserController } from "../controllers/UserController";
+
+const userController = new UserController();
 
 const PAGE_SIZE = 5;
 
