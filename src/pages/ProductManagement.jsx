@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { ProductController } from "../controllers/ProductController";
 import { Box, Heading, Button, Input, FormControl, FormLabel, Table, Thead, Tbody, Tr, Th, Td, VStack, HStack } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+
+const productController = new ProductController();
 
 const PAGE_SIZE = 5;
 
@@ -17,8 +20,8 @@ export default function ProductManagement() {
   };
 
   // Rest of the component remains unchanged
-  const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ code: "", name: "", description: "", unit: "", productGroup: "" });
+  const [products, setProducts] = useState(productController.products);
+  const [newProduct, setNewProduct] = useState(productController.newProduct);
 
   const handleNewProductChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -47,8 +50,9 @@ export default function ProductManagement() {
   };
 
   const addNewProduct = () => {
-    setProducts([...products, { ...newProduct }]);
-    setNewProduct({ code: "", name: "", description: "", unit: "", productGroup: "" });
+    productController.addProduct(newProduct);
+    setProducts(productController.products);
+    setNewProduct(productController.newProduct);
   };
 
   return (
