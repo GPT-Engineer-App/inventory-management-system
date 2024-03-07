@@ -9,34 +9,17 @@ const PAGE_SIZE = 5;
 
 const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const fakeUsers = [
-    { username: "user1", role: "Admin", isActive: true },
-    { username: "user2", role: "Editor", isActive: false },
-    { username: "user3", role: "Viewer", isActive: true },
-    { username: "user4", role: "Admin", isActive: false },
-    { username: "user5", role: "Editor", isActive: true },
-    { username: "user6", role: "Viewer", isActive: false },
-    { username: "user7", role: "Admin", isActive: true },
-    { username: "user8", role: "Editor", isActive: true },
-    { username: "user9", role: "Viewer", isActive: false },
-    { username: "user10", role: "Admin", isActive: true },
-  ];
-  const [users, setUsers] = useState(fakeUsers);
+  const [users, setUsers] = useState(userController.users);
   const [newUser, setNewUser] = useState({ username: "", role: "", isActive: true });
 
   const handleUserChange = (e, pageUserIndex) => {
-    const { name, value, checked, type } = e.target;
-    const actualIndex = (currentPage - 1) * PAGE_SIZE + pageUserIndex;
-    setUsers(users.map((user, idx) => (idx === actualIndex ? { ...user, [name]: type === "checkbox" ? checked : value } : user)));
+    userController.handleUserChange(e, pageUserIndex, currentPage);
+    setUsers([...userController.users]);
   };
 
   const addNewUser = () => {
-    if (newUser.username && newUser.role) {
-      setUsers([...users, newUser]);
-      setNewUser({ username: "", role: "", isActive: true });
-    } else {
-      alert("Please fill in all fields.");
-    }
+    userController.addNewUser();
+    setUsers([...userController.users]);
   };
 
   const handleEditUser = (pageUserIndex) => {
@@ -70,8 +53,8 @@ const UserManagement = () => {
   };
 
   const handleDeleteUser = (index) => {
-    const updatedUsers = users.filter((_, idx) => idx !== index);
-    setUsers(updatedUsers);
+    userController.handleDeleteUser(index, currentPage);
+    setUsers([...userController.users]);
   };
 
   return (
