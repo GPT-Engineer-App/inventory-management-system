@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { UnitController } from "../controllers/UnitController";
 import { Box, Heading, VStack, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 
@@ -6,8 +7,9 @@ const PAGE_SIZE = 5;
 
 const UnitManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [units, setUnits] = useState([]);
-  const [newUnit, setNewUnit] = useState({ code: "", name: "" });
+  const unitController = new UnitController();
+  const [units, setUnits] = useState(unitController.units);
+  const [newUnit, setNewUnit] = useState(unitController.newUnit);
   const [editMode, setEditMode] = useState(false);
   const [editUnitIndex, setEditUnitIndex] = useState(-1);
   const [editedUnit, setEditedUnit] = useState({});
@@ -17,29 +19,19 @@ const UnitManagement = () => {
     setNewUnit({ ...newUnit, [name]: value });
   };
 
+  useEffect(() => {
+    setUnits(unitController.units);
+  }, [unitController.units]);
+
   const addUnit = () => {
-    if (editMode) {
-      setUnits(units.map((unit, index) => (index === editUnitIndex ? editedUnit : unit)));
-      setEditMode(false);
-    } else {
-      setUnits([...units, newUnit]);
-    }
-    setNewUnit({ code: "", name: "" });
-    setEditedUnit({});
+    unitController.addUnit(newUnit);
+    setUnits(unitController.units);
+    setNewUnit(unitController.newUnit);
   };
 
-  const handleEditUnitClick = (index) => {
-    setEditMode(true);
-    setEditUnitIndex(index);
-    setEditedUnit(units[index]);
-  };
+  // Remove handleEditUnitClick function
 
-  const handleSaveEdit = () => {
-    setUnits(units.map((unit, index) => (index === editUnitIndex ? editedUnit : unit)));
-    setEditMode(false);
-    setEditUnitIndex(-1);
-    setEditedUnit({});
-  };
+  // Remove handleSaveEdit function
 
   const handleCancelEdit = () => {
     setEditMode(false);
@@ -48,7 +40,8 @@ const UnitManagement = () => {
   };
 
   const handleDeleteUnit = (index) => {
-    setUnits(units.filter((_, idx) => idx !== index));
+    unitController.deleteUnit(index);
+    setUnits(unitController.units);
   };
 
   return (
@@ -95,7 +88,19 @@ const UnitManagement = () => {
                 <Td>
                   {editMode && editUnitIndex === index ? (
                     <>
-                      <Button leftIcon={<FaCheck />} colorScheme="green" size="sm" mr={2} onClick={handleSaveEdit}>
+                      <Button
+                        leftIcon={<FaCheck />}
+                        colorScheme="green"
+                        size="sm"
+                        mr={2}
+                        onClick={() => {
+                          unitController.saveEdit(editUnitIndex, editedUnit);
+                          setUnits(unitController.units);
+                          setEditMode(false);
+                          setEditUnitIndex(-1);
+                          setEditedUnit({});
+                        }}
+                      >
                         Save
                       </Button>
                       <Button leftIcon={<FaTimes />} colorScheme="gray" size="sm" onClick={handleCancelEdit}>
@@ -103,7 +108,17 @@ const UnitManagement = () => {
                       </Button>
                     </>
                   ) : (
-                    <Button leftIcon={<FaEdit />} colorScheme="yellow" size="sm" mr={2} onClick={() => handleEditUnitClick(index)}>
+                    <Button
+                      leftIcon={<FaEdit />}
+                      colorScheme="yellow"
+                      size="sm"
+                      mr={2}
+                      onClick={() => {
+                        setEditMode(true);
+                        setEditUnitIndex(index);
+                        setEditedUnit(units[index]);
+                      }}
+                    >
                       Edit
                     </Button>
                   )}
