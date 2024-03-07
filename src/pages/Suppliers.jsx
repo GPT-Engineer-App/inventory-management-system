@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { SupplierController } from "../controllers/SupplierController";
 import { Box, FormControl, FormLabel, Input, Button, VStack, HStack, Table, Thead, Tbody, Tr, Th, Td, Heading, useToast } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
 
@@ -6,21 +7,10 @@ const PAGE_SIZE = 5;
 
 const Suppliers = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const supplierController = new SupplierController();
+  const [suppliers, setSuppliers] = useState(supplierController.suppliers);
+  const [newSupplier, setNewSupplier] = useState(supplierController.newSupplier);
   const [editingSupplier, setEditingSupplier] = useState(null);
-  // Remove the editIndex state as it's no longer used
-  const toast = useToast();
-  const fakeSuppliers = Array.from({ length: 30 }, (_, index) => {
-    const paddedIndex = (index + 1).toString().padStart(3, "0");
-    return {
-      code: `S${paddedIndex}`,
-      name: `Supplier ${paddedIndex}`,
-      contact: `Contact ${paddedIndex}`,
-      address: `Address ${paddedIndex}`,
-      isEditing: false,
-    };
-  });
-  const [suppliers, setSuppliers] = useState(fakeSuppliers);
-  const [newSupplier, setNewSupplier] = useState({ code: "", name: "", contact: "", address: "", email: "" });
 
   const handleNewSupplierChange = (e) => {
     const { name, value } = e.target;
@@ -41,24 +31,9 @@ const Suppliers = () => {
   };
 
   const handleSaveClick = (pageIndex) => {
-    const supplierToSave = suppliers.find((supplier) => supplier.code === editingSupplier.code);
-    const supplierIndex = suppliers.indexOf(supplierToSave);
-    if (supplierIndex !== -1) {
-      if (!editingSupplier.code || !editingSupplier.name || !editingSupplier.contact || !editingSupplier.address || !editingSupplier.email) {
-        toast({
-          title: "Error",
-          description: "All fields are required.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-        return;
-      }
-      const globalIndex = (currentPage - 1) * PAGE_SIZE + pageIndex;
-      const updatedSuppliers = suppliers.map((supplier, idx) => (idx === supplierIndex ? { ...editingSupplier, isEditing: false } : supplier));
-      setSuppliers(updatedSuppliers);
-      setEditingSupplier(null);
-    }
+    supplierController.editSupplier(globalIndex, newSupplier);
+    setSuppliers(supplierController.suppliers);
+    setEditingIndex(-1);
   };
 
   const handleCancelClick = () => {
@@ -79,21 +54,9 @@ const Suppliers = () => {
   };
 
   const addNewSupplier = () => {
-    const { code, name, contact, address, email } = newSupplier;
-    const isEmpty = !code || !name || !contact || !address || !email;
-    const isDuplicate = suppliers.some((supplier) => supplier.code === code);
-    const isEmailValid = validateEmail(email);
-
-    if (isEmpty) {
-      alert("Please fill in all the fields.");
-    } else if (isDuplicate) {
-      alert("A supplier with this code already exists.");
-    } else if (!isEmailValid) {
-      alert("Please enter a valid email address.");
-    } else {
-      setSuppliers([...suppliers, { code, name, contact, address, email }]);
-      setNewSupplier({ code: "", name: "", contact: "", address: "", email: "" });
-    }
+    supplierController.addSupplier(newSupplier);
+    setSuppliers(supplierController.suppliers);
+    setNewSupplier(supplierController.newSupplier);
   };
 
   const handlePreviousPage = () => {
