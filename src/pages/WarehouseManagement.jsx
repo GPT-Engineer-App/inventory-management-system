@@ -1,69 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { WarehouseController } from "../controllers/WarehouseController";
 const PAGE_SIZE = 5;
 import { Box, VStack, Heading, FormControl, FormLabel, Input, Button, Table, Thead, Tbody, Tr, Th, Td, HStack } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const WarehouseManagement = () => {
+  const warehouseController = new WarehouseController();
   const [currentPage, setCurrentPage] = useState(1);
-  const [warehouses, setWarehouses] = useState([]);
-  const [newWarehouse, setNewWarehouse] = useState({
-    warehouseCode: "",
-    warehouseName: "",
-    warehouseAddress: "",
-    managerName: "",
-    managerPhone: "",
-    managerEmail: "",
-  });
+  const [warehouses, setWarehouses] = useState(warehouseController.warehouses);
+  const [newWarehouse, setNewWarehouse] = useState(warehouseController.newWarehouse);
   const [isEditing, setIsEditing] = useState(false);
-  const [editWarehouse, setEditWarehouse] = useState({});
+  const [editIndex, setEditIndex] = useState(-1);
+  const [editWarehouse, setEditWarehouse] = useState(warehouseController.newWarehouse);
 
-  const handleEditWarehouse = (warehouse) => {
-    setEditWarehouse(warehouse);
-    setIsEditing(true);
-  };
-
-  const handleSaveEditedWarehouse = () => {
-    setWarehouses(warehouses.map((wh) => (wh.warehouseCode === editWarehouse.warehouseCode ? editWarehouse : wh)));
-    setEditWarehouse({});
-    setIsEditing(false);
-  };
-
-  const handleCancelEdit = () => {
-    setEditWarehouse({});
-    setIsEditing(false);
-  };
+  // The useEffect will sync the state with the warehouseController's warehouses
+  useEffect(() => {
+    setWarehouses(warehouseController.warehouses);
+  }, [warehouseController.warehouses]);
 
   const handleWarehouseChange = (e) => {
     const { name, value } = e.target;
-    if (isEditing) {
-      setEditWarehouse({ ...editWarehouse, [name]: value });
-    } else {
-      setNewWarehouse({ ...newWarehouse, [name]: value });
-    }
+    setNewWarehouse({ ...newWarehouse, [name]: value });
   };
 
   const addWarehouse = () => {
-    if (isEditing) {
-      handleSaveEditedWarehouse();
-    } else {
-      if (!newWarehouse.managerName || !newWarehouse.managerPhone || !newWarehouse.managerEmail) {
-        alert("Please fill in all the manager fields.");
-        return;
-      }
-      setWarehouses([...warehouses, newWarehouse]);
-      setNewWarehouse({
-        warehouseCode: "",
-        warehouseName: "",
-        warehouseAddress: "",
-        managerName: "",
-        managerPhone: "",
-        managerEmail: "",
-      });
-    }
+    warehouseController.addWarehouse(newWarehouse);
+    setWarehouses(warehouseController.warehouses);
+    setNewWarehouse(warehouseController.newWarehouse);
   };
 
-  const handleDeleteWarehouse = (warehouseCode) => {
-    setWarehouses(warehouses.filter((warehouse) => warehouse.warehouseCode !== warehouseCode));
+  const handleEditWarehouse = (index) => {
+    setIsEditing(true);
+    setEditIndex(index);
+    setNewWarehouse({ ...warehouses[index] });
+  };
+
+  const handleSaveEditedWarehouse = () => {
+    warehouseController.editWarehouse(editIndex, newWarehouse);
+    setWarehouses(warehouseController.warehouses);
+    setIsEditing(false);
+    setEditIndex(-1);
+    setNewWarehouse(warehouseController.newWarehouse);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditIndex(-1);
+    setNewWarehouse(warehouseController.newWarehouse);
+  };
+
+  const handleDeleteWarehouse = (index) => {
+    warehouseController.deleteWarehouse(index);
+    setWarehouses(warehouseController.warehouses);
   };
 
   return (
